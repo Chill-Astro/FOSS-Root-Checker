@@ -13,6 +13,8 @@ Well that's why I made this App! It is just a simple Root Checker for Newbies bu
 
 App Version : `v1.0`
 
+Package ID : `foss.chillastro.su`
+
 Requirements : `Android Pie and Higher`
 
 Currently in Development. Releasing in March! 🌟
