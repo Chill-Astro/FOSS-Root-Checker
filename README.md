@@ -15,6 +15,8 @@ App Version : `v1.0`
 
 Requirements : `Android Pie and Higher`
 
+Currently in Development. Releasing in March Q4! 🌟
+
 </div>
 
 ---
@@ -42,17 +44,21 @@ By combining these methods, the app accurately detects root access across both l
 
 ## Preview :
 
-<img src="https://github.com/user-attachments/assets/bdd4da2d-d82a-4c81-aa8c-4677cd87908f" width="360px">
-<img src="https://github.com/user-attachments/assets/034caf58-371b-4c5b-bd8f-2e5fa19b7c06" width="360px">
-<img src="https://github.com/user-attachments/assets/6f7b9b41-0821-46d9-a206-f2a4b3330efe" width="360px">
-
----
-
-## Preview [ ROOTED DEVICE ] :
-
-<img src="https://github.com/user-attachments/assets/f0060140-b62c-4631-8813-2f436faccf8e" width="360px">
-<img src="https://github.com/user-attachments/assets/2f9465e7-b452-4b98-b873-894d931e7ccf" width="360px">
-
+<div align="center"> ---- Demonstrated on POCO C55 [ NON-ROOTED ] ---- </div>
+<br>
+<div align="center">
+<img src="https://github.com/user-attachments/assets/bdd4da2d-d82a-4c81-aa8c-4677cd87908f" width="300px">
+<img src="https://github.com/user-attachments/assets/034caf58-371b-4c5b-bd8f-2e5fa19b7c06" width="300px">
+<img src="https://github.com/user-attachments/assets/6f7b9b41-0821-46d9-a206-f2a4b3330efe" width="300px">
+</div>
+<br>
+<div align="center"> ---- Demonstrated on Realme C11 2020 [ ROOTED ] ---- </div>
+<br>
+<div align="center">
+<img src="https://github.com/user-attachments/assets/f0060140-b62c-4631-8813-2f436faccf8e" width="300px">
+<img src="https://github.com/user-attachments/assets/2f9465e7-b452-4b98-b873-894d931e7ccf" width="300px">
+</div>
+<br>
 ---
 
 ## ⚠️ IMPORTANT NOTICE ⚠️
@@ -60,7 +66,7 @@ By combining these methods, the app accurately detects root access across both l
 Please be aware: There are fraudulent repositories on GitHub that are cloning this project's name and using AI-generated readmes, but they contain **completely random and unrelated files in each release**. These are NOT official versions of this project.
 
 **ALWAYS ensure you are downloading or cloning this project ONLY from its official and legitimate source:**
-`https://github.com/Chill-Astro/FOSS-Root=Checker`
+`https://github.com/Chill-Astro/FOSS-Root-Checker`
 
 I am trying my best to report these people.
 
