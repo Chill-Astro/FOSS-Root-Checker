@@ -17,6 +17,8 @@ Requirements : `Android 10 and Higher`
 
 Currently in Development. Releasing in March! 🌟
 
+To be Released on Amazon App Store, UptoDown Store, APKPure and FDroid.
+
 </div>
 
 ---
@@ -44,7 +46,7 @@ By combining these methods, the app accurately detects root access across both l
 
 ## Preview :
 
-<div align="center"> ---- Demonstrated on POCO C55 [ NON-ROOTED ] ---- </div>
+<div align="center"> ---- Demonstrated on POCO C55 ( NON-ROOTED ) ---- </div>
 <br>
 <div align="center">
 <img src="https://github.com/user-attachments/assets/bdd4da2d-d82a-4c81-aa8c-4677cd87908f" width="300px">
@@ -52,7 +54,7 @@ By combining these methods, the app accurately detects root access across both l
 <img src="https://github.com/user-attachments/assets/6f7b9b41-0821-46d9-a206-f2a4b3330efe" width="300px">
 </div>
 <br>
-<div align="center"> ---- Demonstrated on Realme C11 2020 [ ROOTED ] ---- </div>
+<div align="center"> ---- Demonstrated on Realme C11 2020 ( ROOTED ) ---- </div>
 <br>
 <div align="center">
 <img src="https://github.com/user-attachments/assets/f0060140-b62c-4631-8813-2f436faccf8e" width="300px">
@@ -78,7 +80,7 @@ I am trying my best to report these people.
 - [Magisk by @topjohnwu](https://github.com/topjohnwu/Magisk) : For Rooting pretty much anything these days.
 - [KernelSU by @tiann](https://github.com/tiann/KernelSU) : For Kernel-Level Rooting on GKI Devices.
 - [APatch by @bmax121](https://github.com/bmax121/APatch) : For Easy Kernel-Level Rooting.
-- [mtkclient by @bkerler](https://github.com/bkerler/mtkclient) : For allowing MTK Devices to be Rooted Easily.
+- [mtkclient by @bkerler](https://github.com/bkerler/mtkclient) : For allowing MTK Devices to be Rooted Easily ( Including my Phone ).
 
 ## Note from Developer :
 
