@@ -17,10 +17,10 @@ android {
 
     defaultConfig {
         applicationId = "foss.chillastro.su"
-        minSdk = 28
+        minSdk = 29
         targetSdk = 36
         versionCode = 1
-        versionName = "v1.0"
+        versionName = "v36.29.1.0b"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -9,11 +9,11 @@ FOSS ROOT Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-App Version : `v1.0`
+App Version : `v36.29.1.0`
 
 Package ID : `foss.chillastro.su`
 
-Requirements : `Android Pie and Higher`
+Requirements : `Android 10 and Higher`
 
 Currently in Development. Releasing in March! 🌟
 
