@@ -1,11 +1,11 @@
 <p align="center">
   <img src="https://github.com/Chill-Astro/FOSS-Root-Checker/blob/master/logo-nobg.png" width="128px" height="128px" alt="ROOT Checker">
 </p>
-<h1 align="center">FOSS ROOT Checker</h1>
+<h1 align="center">FOSS Root Checker</h1>
 
 <div align="center">
 
-FOSS ROOT Checker as the name suggests is an `Open Source` Root Checker app for verifying `ROOT Access` on Android Mobile Devices. Ever wondered what Root Checker Apps do behind the scenes on your Phones once you give them ROOT Access?
+FOSS ROOT Checker as the name suggests is an `Open Source` Root Checker app for verifying `Root Access` on Android Mobile Devices. Ever wondered what Root Checker Apps do behind the scenes on your Phones once you give them Root Access?
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
@@ -37,10 +37,11 @@ By combining these methods, the app accurately detects root access across both l
 ## Key Features :
 
 - Privacy First Design with full transperancy. ✅
+- No Ads, In-App Purchases and no Data Collection. ✅
 - Modern Material UI. ✅
-- Support for Android 9+ Devices. ✅
+- Support for Android 10+ Devices. ✅
 - Works with Magisk, KernelSU, APatch and any other method. ✅
-- Guidance provided on Rooting. ✅
+- Thorough Guidance provided on Rooting and Unlocking Bootloader. ✅
 
 ---    
 
@@ -49,16 +50,20 @@ By combining these methods, the app accurately detects root access across both l
 <div align="center"> ---- Demonstrated on POCO C55 ( NON-ROOTED ) ---- </div>
 <br>
 <div align="center">
-<img src="https://github.com/user-attachments/assets/bdd4da2d-d82a-4c81-aa8c-4677cd87908f" width="300px">
-<img src="https://github.com/user-attachments/assets/034caf58-371b-4c5b-bd8f-2e5fa19b7c06" width="300px">
-<img src="https://github.com/user-attachments/assets/6f7b9b41-0821-46d9-a206-f2a4b3330efe" width="300px">
+<img src="https://github.com/user-attachments/assets/0ef0d1eb-ce62-42d5-931e-ee83d9303318" width="300px">
+<img src="https://github.com/user-attachments/assets/90844668-70ae-4bda-a48c-29adba4b156d" width="300px">
+<img src="https://github.com/user-attachments/assets/aadd307a-fb67-47aa-a7ee-44da54a94b6a" width="300px">
+<img src="https://github.com/user-attachments/assets/bfd0329c-5787-4fef-bb01-f8e14e3d256c" width="300px">
+<img src="https://github.com/user-attachments/assets/390223f5-eba9-4e7e-ac19-79e929f2f672" width="300px">  
+<img src="https://github.com/user-attachments/assets/03fbd8f8-c67b-4ce9-b8f5-ced33eee117b" width="300px">    
 </div>
 <br>
 <div align="center"> ---- Demonstrated on Realme C11 2020 ( ROOTED ) ---- </div>
 <br>
 <div align="center">
-<img src="https://github.com/user-attachments/assets/f0060140-b62c-4631-8813-2f436faccf8e" width="300px">
-<img src="https://github.com/user-attachments/assets/2f9465e7-b452-4b98-b873-894d931e7ccf" width="300px">
+<img src="https://github.com/user-attachments/assets/dd2633ab-2376-4952-9e72-543fdb57fdca" width="300px">
+<img src="https://github.com/user-attachments/assets/07a71582-d11f-475b-ba71-6531672d774a" width="300px">    
+<img src="https://github.com/user-attachments/assets/35602dc6-f486-43c6-8fe2-2954a50e7f87" width="300px">
 </div>
 <br>
 
