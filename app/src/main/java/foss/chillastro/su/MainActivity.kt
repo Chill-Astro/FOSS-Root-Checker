@@ -271,17 +271,23 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
                         "/data/local/xbin/su",
                         "/data/local/bin/su",
                         "/data/local/su",
-
-                        // KernelSU & APatch Specific
                         "/data/adb/ksu/bin/su",
                         "/data/adb/apatch/bin/su",
                         "/data/adb/magisk/su",
-
-                        // Mount Points & Internal Folders (Huge Red Flags)
-                        "/data/adb/modules",      // If this exists, Magisk/KSU is active
-                        "/data/adb/ksu",          // KernelSU data
-                        "/data/adb/apatch",       // APatch data
-                        "/data/adb/magisk.db",    // Magisk Database
+                        "/data/adb/modules",
+                        "/data/adb/ksu",
+                        "/data/adb/apatch",
+                        "/data/adb/magisk.db",
+                        "/system/bin/su",
+                        "/system/xbin/su",
+                        "/sbin/su",
+                        "/system/sd/xbin/su",
+                        "/system/bin/failsafe/su",
+                        "/data/local/xbin/su",
+                        "/data/local/bin/su",
+                        "/data/local/su",
+                        "/su/bin/su",
+                        "/system/sbin/su"
                     )
 
                     val foundViaPath = paths.any { path ->
