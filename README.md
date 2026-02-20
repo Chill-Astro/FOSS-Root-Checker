@@ -15,7 +15,7 @@ Package ID : `foss.chillastro.su`
 
 Requirements : `Android 10 and Higher`
 
-Currently in Development. Releasing in March! 🌟
+Currently in Development. Releasing on March 26th 2026! 🌟
 
 To be Released on Amazon App Store, UptoDown Store, APKPure and FDroid.
 
