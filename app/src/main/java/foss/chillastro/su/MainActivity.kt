@@ -233,7 +233,6 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
                 }
             }
         }
-
         // --- Status Text ---
         Text(
             text = when(checkState) {
@@ -301,6 +300,7 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
                             } else {
                                 Toast.makeText(ctx, "Root Access Verified", Toast.LENGTH_SHORT).show()
                             }
+                            saveLog(ctx, isRooted)
                             onCheckComplete()
                         }
                     } else {
@@ -321,6 +321,7 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
                             } else {
                                 Toast.makeText(ctx, "Root Access not Available", Toast.LENGTH_SHORT).show()
                             }
+                            saveLog(ctx, isRooted)
                             onCheckComplete()
                         }
                     }
@@ -334,6 +335,7 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
         }
     }
 }
+
 @Composable
 fun WarningCard(bodyText: String) {
     Card(
