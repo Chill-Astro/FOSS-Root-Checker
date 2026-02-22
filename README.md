@@ -9,15 +9,17 @@ FOSS ROOT Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-App Version : `v36.29.1.0`
+App Version : `v36.29.1.0*`
 
 Package ID : `foss.chillastro.su`
 
-Requirements : `Android 10 and Higher`
+Requirements : `Android 10* and Higher`
 
 Currently in Development. Releasing on March 26th 2026! 🌟
 
-To be Released on Amazon App Store, UptoDown Store, APKPure and FDroid.
+To be Released on UptoDown Store, APKPure and FDroid.
+
+* Version Number to be changed to v36.26.1.0 to support older devices.
 
 </div>
 
