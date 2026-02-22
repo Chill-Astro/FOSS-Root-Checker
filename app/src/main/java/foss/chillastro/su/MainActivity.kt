@@ -365,9 +365,7 @@ fun BusyBoxScreen() {
     var checkState by remember { mutableIntStateOf(0) }
     var foundPath by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
-
     Column(Modifier.fillMaxSize().padding(24.dp)) {
-        Text("SYSTEM BINARIES", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(16.dp))
         Box(Modifier.fillMaxWidth().weight(1f).clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(16.dp).verticalScroll(rememberScrollState())) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -425,9 +423,27 @@ fun GuideScreen() {
                     GuideHeader("Rooting : An Introduction", onBack = { menuPath = "MAIN" })
                     WarningCard("Please BE CAREFUL what apps you are giving Root Permissions to. I am not responsible for Data or Money Theft by Malware on your Device.")
                     InfoBlock("Introduction : What is Rooting?", "\nRooting an Android device means gaining full administrative (superuser) control, similar to an administrator on a computer, by unlocking deep system access restricted by manufacturers.")
-                    InfoBlock("Pros :", "\n✓ Bloatware Removal\n✓ System-wide Adblocking\n✓ Overclocking and Underclocking Device\n✓ Modifying User Experience\n✓ Deep level Customization\n✓ Full Data Backups")
-                    InfoBlock("Cons :", "\n✗ Usually Voids Warranty\n✗ Increased Security Risks\n✗ Loss of Hardware Encoding\n✗ No Official Updates (OTA)\n✗ Data loss\n✗ Risk of Bricking Device")
-                    InfoBlock("Suggestion from My Experience :", "\nAs from my little experience from Rooting, use Magisk if you are not sure. It works on almost every device and it can be flashed with PC and Custom Recovery ( like TWRP or OrangeFox ) and does the job very well. Unless your device is old, DO NOT USE EXPLOITS! I had bricked my own device like this so BE CAREFUL! If you want to explore more options, I recommend APatch and KernelSU ( if Supported ). They don't work on every device but are pretty reliable.")
+                    InfoBlock("What is Bootloader?", "\nA bootloader is the first piece of software that runs every time you turn on your Android device. It acts as a security guard and a guide, directing the hardware on how to start up and which operating system to \"hand off\" control to.\n" +
+                            "\n" +
+                            "Since hardware components (like the processor and memory) don't know how to talk to the Android OS immediately upon receiving power, the bootloader provides the necessary instructions to bridge that gap.")
+                    InfoBlock("Functions of Bootloader : ", "\n• Hardware Initialization: It \"wakes up\" the processor, RAM, and storage.\n• Security Check: It verifies the integrity of the boot and recovery partitions to ensure the software hasn't been tampered with (a process known as Android Verified Boot). This is why we Unlock Bootloaders to Root as we are modifying System Partitions.\n• OS Loading: Once verified, it locates the Android kernel and loads it into the system memory to start the actual operating system.\n• Selection Mode: It allows you to boot into different modes, such as Recovery Mode (for system repairs) or Fastboot/Download Mode (for flashing software). ")
+                    InfoBlock("Locked vs Unlocked Bootloader : ","\n- Features of Locked Bootloader : \n\n" +
+                            "• Security: Prevents unauthorized software or malware from being installed at the deepest level of the device.\n" +
+                            "• Stability: Ensures the device only runs the version of Android specifically optimized for its hardware.\n" +
+                            "• Warranty: Modifying the bootloader often voids manufacturer warranties.\n" +
+                            "\n- Features of Unlocked Bootloader : \n\n" +
+                            "• Enables Deep Customization : Allows users to install Custom ROMs (like LineageOS), Generic System Images (GSI) or different versions of Android by allowing us to Boot Third Party Firmware.\n" +
+                            "• Allows Root Access: An unlocked bootloader is usually a prerequisite for gaining \"root\" (administrative) privileges because it allows booting modified boot files.")
+                    InfoBlock("Pros of Rooting :", "\n✓ Bloatware Removal\n✓ System-wide Adblocking\n✓ Overclocking and Underclocking Device\n✓ Modifying User Experience\n✓ Deep level Customization\n✓ Full Data Backups")
+                    InfoBlock("Cons of Rooting :", "\n✗ Usually Voids Warranty\n✗ Increased Security Risks\n✗ Loss of Hardware Encoding\n✗ No Official Updates (OTA)\n✗ Data loss\n✗ Risk of Bricking Device")
+                    InfoBlock("What is Bricking?\n", "Bricking refers to a device becoming completely non-functional, usually due to a corrupted software update or a failed firmware modification.")
+                    InfoBlock("Types of Bricking and How to fix them :\n","1. Soft Brick : A soft brick is a \"recoverable\" state. The device might be stuck in a boot loop (constantly restarting at the logo) or booting straight into recovery mode.\n\n" +
+                            "- The Cause : Usually a minor software error, incompatible app, or a failed \"rooting\" attempt.\n" +
+                            "- The Fix: Can often be fixed by a factory reset, clearing the cache, or reflashing the original firmware using a computer.\n\n" +
+                            "2. Hard Brick : A hard brick is much more serious. The device shows no signs of life. No lights, no vibration, and the screen remains black.\n\n" +
+                            "- The Cause: This happens when the bootloader (the \"first-stage\" software we discussed earlier) or the kernel is corrupted or deleted.\n" +
+                            "- The Fix: This often requires specialized hardware tools to bypass the main software, or in many cases, a physical replacement of the motherboard. Tools suck as SP Flash Tool and MTKClient can do this Work. However FASTBOOT is not Accessible during this time.")
+                    InfoBlock("Suggestion from My Experience :", "\nAs from my little experience from Rooting, use Magisk if you are not sure. It works on almost every device and it can be flashed with PC and Custom Recovery ( like TWRP or OrangeFox ) and does the job very well. Unless your device is old, DO NOT USE EXPLOITS! I had soft-bricked my own device like this so BE CAREFUL! If you want to explore more options, I recommend APatch and KernelSU ( if Supported ). They don't work on every device but are pretty reliable.")
                 }
                 "UNLOCK" -> {
                     GuideHeader("Unlocking Bootloader", onBack = { menuPath = "MAIN" })
@@ -439,13 +455,13 @@ fun GuideScreen() {
                         Text(" • For most devices :")
                         CodeBox("fastboot flashing unlock")
                         Text(" • For some older devices :")
-                        CodeBox("fastboot flashing unlock")
+                        CodeBox("fastboot oem unlock")
                         Text("Pros :\n✓ Unlocking doesn't brick device immediately.\n✓ Safe and Easy to Use.\n\nCons :\n✗ Not available on all devices.\n✗ Xiaomi Devices need permission from Xiaomi Community and then Mi Unlock Tool is used.\n✗ Oppo and Realme Devices use 'Deep Testing' or 'In-Depth Test' for Fastboot Permissions.")
                     }
                     ExpandableMethod("Device Unlock Mode (for Samsung)", Icons.Rounded.Smartphone) {
                         WarningCard("NOTE : I don't own a Samsung Device. This is the General Information I have. Also, this disables KNOX Security permanently and many Samsung Apps Stop Working.")
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("\nStep 1 : Turn on 'OEM Unlocking' in Developer Options.")
+                            Text("Step 1 : Turn on 'OEM Unlocking' in Developer Options.")
                             Text("Step 2 : Connect your Charging Cable to a PC (but not Phone).")
                             Text("Step 3 : Press and hold Volume Up + Volume Down simultaneously.")
                             Text("Step 4 : While holding both buttons, plug the USB cable into your phone.")
@@ -456,7 +472,7 @@ fun GuideScreen() {
                     }
                     ExpandableMethod("MTKClient (For MTK Devices)", Icons.Rounded.Memory) {
                         WarningCard("Please BE CAREFUL as it doesn't work on very new device and can cause 'System is Destroyed' and 'dm-verity corruption' Ensure that your device has no Replay Protected Memory Block (RPMB) before proceeding.")
-                        Text("\nHardware-level bypass for locked MediaTek chipsets.\n\nFirst install USBdk if using Windows (Recommended).\n\nNOTE: For Each Step, Run the Command, Press both Volume Buttons and Connect Phone to PC.\n")
+                        Text("Hardware-level bypass for locked MediaTek chipsets.\n\nFirst install USBdk if using Windows (Recommended).\n\nNOTE: For Each Step, Run the Command, Press both Volume Buttons and Connect Phone to PC.\n")
                         Text("Step 1 : Dump vbmeta (Don't use _a and _b if newer device) : ")
                         CodeBox("python mtk.py r vbmeta_a,vbmeta_b vbmeta_a.img,vbmeta_b.img")
                         Text("Step 2 : Unlock Bootloader : ")
@@ -473,7 +489,7 @@ fun GuideScreen() {
                 }
                 "METHODS" -> {
                     GuideHeader("Rooting Methods", onBack = { menuPath = "MAIN" })
-                    WarningCard("Please download the following apps from their Official Sources. Do not modify or delete System Files. Do not use 'One-Click' Root Apps.")
+                    WarningCard("Please download the following apps from their Official Sources. Do not modify or delete System Files. Do not use 'One-Click' Root Apps. Do not flash them on a Device with a Locked Bootloader.")
                     ExpandableMethodLocal("Magisk (Recommended)", R.drawable.ic_magisk) {
                         Text("First obtain your stock boot.img or init_boot.img and patch it using Magisk App and then Flash it.\n")
                         FlashLogic(isAB, slot, true)
