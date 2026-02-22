@@ -19,7 +19,7 @@ Currently in Development. Releasing on March 26th 2026! 🌟
 
 To be Released on UptoDown Store, APKPure and FDroid.
 
-* Version Number to be changed to v36.26.1.0 to support older devices.
+* Version Number to be changed to v36.28.1.0 to support older devices.
 
 </div>
 
