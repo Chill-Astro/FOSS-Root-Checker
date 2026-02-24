@@ -17,7 +17,9 @@ Requirements : `Android 10 and Higher`
 
 Currently in Development. Releasing on March 26th 2026! 🌟
 
-To be Released on Amazon App Store, UptoDown Store, APKPure and FDroid.
+To be Released on UptoDown Store, APKPure and FDroid.
+
+NOTE : FOSS Root Checker is Designed to be Bleeding Edge for very modern devices. In case of any Lag, I apologise.... I have tested on really bad hardware so uh, "Works for me!"
 
 </div>
 
@@ -66,6 +68,12 @@ By combining these methods, the app accurately detects root access across both l
 <img src="https://github.com/user-attachments/assets/35602dc6-f486-43c6-8fe2-2954a50e7f87" width="300px">
 </div>
 <br>
+
+---
+
+## Building from Source :
+
+To be done after Release.
 
 ---
 
