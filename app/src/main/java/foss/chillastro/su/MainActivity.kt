@@ -537,8 +537,9 @@ fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) {
                 CodeBox("fastboot flash boot patched.img")
             }
         } else {
-            // A-only: boot is first, then init_boot if requested
             CodeBox("fastboot flash boot patched.img")
+            CodeBox("fastboot flash boot_a patched.img")
+            CodeBox("fastboot flash boot_b patched.img")
 
         }
     }
@@ -742,7 +743,28 @@ fun SettingsScreen(
                 .size(160.dp)
                 .clickable(indication = null, interactionSource = noRipple) {
                     logoTaps++
-                    if (logoTaps == 108) showPoem = true
+                    // Words from Netaji Subhas Chandra Bose
+                    if (logoTaps == 5) Toast.makeText(ctx, "It is our duty to pay for our liberty...", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 10) Toast.makeText(ctx, "...with our own blood.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 15) Toast.makeText(ctx, "Give me blood, and I will give you freedom!", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 20) Toast.makeText(ctx, "Delhi Chalo!", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 25) Toast.makeText(ctx, "Success always stands on the pillars of failure.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 30) Toast.makeText(ctx, "No real change in history has ever been achieved...", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 35) Toast.makeText(ctx, "...by discussions alone.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 40) Toast.makeText(ctx, "One individual may die for an idea,", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 45) Toast.makeText(ctx, "but that idea will, after his death,", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 50) Toast.makeText(ctx, "incarnate itself in a thousand lives.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 55) Toast.makeText(ctx, "Freedom is not given, it is taken.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 103) Toast.makeText(ctx, "5 Taps!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 104) Toast.makeText(ctx, "4 Taps!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 105) Toast.makeText(ctx, "3 Taps!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 106) Toast.makeText(ctx, "2 Taps!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 107) Toast.makeText(ctx, "1 Tap!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 108) {
+                        Toast.makeText(ctx, "वन्दे मातरम्!", Toast.LENGTH_SHORT).show() // From Anand Math by Bankim Chandra Chatterjee
+                        showPoem = true // Tarana-e-Milli by Muhammad Iqbal. Patriotism!
+                        logoTaps = 0
+                    }
                 }
         )
 
