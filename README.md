@@ -79,6 +79,26 @@ To be done after Release.
 
 ---
 
+## HALL OF FAME : 
+
+// Will add Forked Repos which are genuinely good.
+
+---
+
+## HALL OF NEUTRALITY :
+
+// Will add Inactive Forks.
+
+---
+
+## HALL OF SHAME :
+
+// Includes Clones who are working against the MIT Licence and Distributing Malware :
+
+- RuotianJoy/FOSS-Root-Checker
+
+---
+
 ## ⚠️ IMPORTANT NOTICE ⚠️
 
 Please be aware: There are fraudulent repositories on GitHub that are cloning this project's name and using AI-generated readmes, but they contain **completely random and unrelated files in each release**. These are NOT official versions of this project.
