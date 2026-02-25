@@ -44,5 +44,6 @@ s License.
 Trademarks & Brand Names
 Samsung & Knox: Trademarks of Samsung Electronics Co., Ltd.
 Fastboot & Android: Trademarks of Google LLC.
-Magisk, KernelSU, APatch: Property of their respective open-source maintainers.
+Magisk, KernelSU, APatch and mtkclient : Property of their respective open-source maintainers.
 These names are used for identification and compatibility guidance only. This project is not endorsed by or affiliated with these entities.
+All Credits are given in App.
