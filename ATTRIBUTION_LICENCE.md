@@ -1,3 +1,14 @@
+Trademarks & Brand Names
+Samsung & Knox: Trademarks of Samsung Electronics Co., Ltd.
+Fastboot & Android: Trademarks of Google LLC.
+MediaTek: Trademark of MediaTek Inc.
+Qualcomm & Snapdragon: Trademarks of Qualcomm Incorporated.
+UNISOC: Trademark of UNISOC (Shanghai) Technologies Co., Ltd.
+Magisk, KernelSU, APatch, and mtkclient: Property of their respective open-source maintainers.
+
+These names are used for identification and compatibility guidance only. This project is not endorsed by or affiliated with these entities.
+All Credits are given in App.
+
 Android Framework & Jetpack Libraries
 ​Copyright (c) The Android Open Source Project / Google LLC.
 ​Licensed under the Apache License, Version 2.0.
@@ -40,10 +51,3 @@ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
 9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with thi
 s License.
-
-Trademarks & Brand Names
-Samsung & Knox: Trademarks of Samsung Electronics Co., Ltd.
-Fastboot & Android: Trademarks of Google LLC.
-Magisk, KernelSU, APatch and mtkclient : Property of their respective open-source maintainers.
-These names are used for identification and compatibility guidance only. This project is not endorsed by or affiliated with these entities.
-All Credits are given in App.
