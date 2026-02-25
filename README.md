@@ -21,6 +21,8 @@ To be Released on UptoDown Store, APKPure and FDroid.
 
 NOTE : FOSS Root Checker is Designed to be Bleeding Edge for very modern devices. In case of any Lag, I apologise.... I have tested on really bad hardware so uh, "Works for me!"
 
+Also ensure to Download this APK only from Trusted Sources such as FDroid, UptoDown, Appteka (thanks for testing my Pre-Release Builds) and so on. Do not trust sources listed in [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) and NEVER TRUST .ZIP FILES PROVIDED IN ANY FORKED / STOLEN REPOSITORY'S READMEs! They Bypass Github's Security Checks and may Compromise your System with Malware and Steal your ENTIRE Data! 
+
 </div>
 
 ---
@@ -84,7 +86,7 @@ Please be aware: There are fraudulent repositories on GitHub that are cloning th
 **ALWAYS ensure you are downloading or cloning this project ONLY from its official and legitimate source:**
 `https://github.com/Chill-Astro/FOSS-Root-Checker`
 
-I am trying my best to report these people.
+Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more details. I am trying my best to report these people.
 
 ---
 
