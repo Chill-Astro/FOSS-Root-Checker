@@ -147,7 +147,7 @@ fun FOSSRootApp(dark: Boolean, onDark: (Boolean) -> Unit, dyn: Boolean, onDyn: (
             ) { target ->
                 when (target) {
                     AppDestinations.HOME -> CheckerScreen(onCheckComplete = refreshLogs)
-                    AppDestinations.BUSYBOX -> BusyBoxScreen()
+                    AppDestinations.BUSYBOX -> busyboxScreen()
                     AppDestinations.GUIDE -> GuideScreen()
                     AppDestinations.SETTINGS -> SettingsScreen(dark, onDark, dyn, onDyn)
                 }
@@ -259,25 +259,31 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
 
                 scope.launch(Dispatchers.IO) {
                     delay(1000) // Visual pause
-
-                    // 1. Path Check (Execution is inside IO thread to prevent lag)
+                    // A Rabbit Hole of a HELL LOT OF PATHS! (Feels like I am a Security Official tbh.)
                     val paths = arrayOf(
-                        // Standard Binaries
-                        "/system/xbin/su",
-                        "/system/bin/su",
-                        "/sbin/su",
-                        "/system/sd/xbin/su",
-                        "/system/bin/failsafe/su",
-                        "/data/local/xbin/su",
-                        "/data/local/bin/su",
-                        "/data/local/su",
-                        "/data/adb/ksu/bin/su",
-                        "/data/adb/apatch/bin/su",
-                        "/data/adb/magisk/su",
-                        "/data/adb/modules",
-                        "/data/adb/ksu",
-                        "/data/adb/apatch",
+                        "/data/adb/magisk",
                         "/data/adb/magisk.db",
+                        "/data/adb/magisk.img",
+                        "/data/adb/modules",
+                        "/data/adb/magisk/su",
+                        "/sbin/.magisk/mirror",
+                        "/dev/com.topjohnwu.magisk.daemon",
+                        "/cache/magisk.log",
+                        "/data/resource-cache/magisk.apk",
+                        "/data/adb/post-fs-data.d",
+                        "/data/adb/service.d",
+                        "/data/adb/env",
+                        // Kernel SU or APatch
+                        "/data/adb/ksu",
+                        "/data/adb/ksu/bin/su",
+                        "/data/adb/apatch",
+                        "/data/adb/apatch/bin/su",
+                        "/data/adb/ap/bin/su",
+                        "/sys/kernel/debug/tracing/su",
+                        "/proc/kernelsu",
+                        "/dev/ksu",
+                        "/dev/apatch",
+                        // Old Root Methods + Other Stuff that need Root.
                         "/system/bin/su",
                         "/system/xbin/su",
                         "/sbin/su",
@@ -287,7 +293,19 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
                         "/data/local/bin/su",
                         "/data/local/su",
                         "/su/bin/su",
-                        "/system/sbin/su"
+                        "/system/sbin/su",
+                        "/system/usr/we-need-root/su-backup",
+                        "/system/xbin/mu",
+                        "/system/bin/.ext/.su",
+                        "/system/app/Superuser.apk",
+                        "/system/app/SuperSU",
+                        "/system/etc/init.d/99SuperSUDaemon",
+                        "/dev/com.koushikdutta.superuser.daemon",
+                        "/system/xbin/busybox",
+                        "/system/bin/busybox",
+                        "/sbin/busybox",
+                        "/vendor/bin/busybox",
+                        "/data/local/busybox"
                     )
 
                     val foundViaPath = paths.any { path ->
@@ -302,7 +320,7 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
                             isRooted = true
                             checkState = 2
                             if (bootloader == "Locked") {
-                                Toast.makeText(ctx, "Root Access is Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show()
+                                Toast.makeText(ctx, "Root Access is Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show() // Some Joking
                             } else {
                                 Toast.makeText(ctx, "Root Access Verified", Toast.LENGTH_SHORT).show()
                             }
@@ -321,7 +339,7 @@ fun CheckerScreen(onCheckComplete: () -> Unit) {
                             checkState = 4
 
                             if (isRooted && bootloader == "Locked") {
-                                Toast.makeText(ctx, "Root Access is Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show()
+                                Toast.makeText(ctx, "Root Access is Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show() // Some Joking (Again)
                             } else if (isRooted) {
                                 Toast.makeText(ctx, "Root Access Verified", Toast.LENGTH_SHORT).show()
                             } else {
@@ -361,22 +379,48 @@ fun WarningCard(bodyText: String) {
 }
 
 @Composable
-fun BusyBoxScreen() {
+fun busyboxScreen() { // Let's hope Busybox isn't Busy!
     var checkState by remember { mutableIntStateOf(0) }
     var foundPath by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
+    val ctx = LocalContext.current
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         Spacer(Modifier.height(16.dp))
         Box(Modifier.fillMaxWidth().weight(1f).clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(16.dp).verticalScroll(rememberScrollState())) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                TerminalLine("NOTE : Most Modern Root Solutions hide their BusyBox Installation to Avoid Detection!")
+                TerminalLine("Install 'BusyBox for NDK Module' if needed...") // Idk turn Android into Linux 😅
+                HorizontalDivider(Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant)
                 TerminalLine("Ready to Verify?")
                 if (checkState == 2) {
-                    if (foundPath.isNotEmpty()) TerminalLine("BusyBox Path: $foundPath", MaterialTheme.colorScheme.primary)
-                    else TerminalLine("Busybox not Found", MaterialTheme.colorScheme.error)
+                    TerminalLine("Searching for BusyBox Paths...  ♪(´▽｀)")
+                    Thread.sleep(1000)
+                    if (foundPath.isNotEmpty()) {
+                        TerminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
+                        TerminalLine("$foundPath", MaterialTheme.colorScheme.primary)
+                        Toast.makeText(ctx, "BusyBox found via Path", Toast.LENGTH_LONG).show()
+                    }
+                    else { TerminalLine("Busybox not Found in Path!", MaterialTheme.colorScheme.error)
+                        Toast.makeText(ctx, "BusyBox not Found. Is it Installed?", Toast.LENGTH_LONG).show()
+                        TerminalLine("Fine, but su Never Lies! ^_~")
+                        TerminalLine("Launching Shell....")
+                        TerminalLine("usr@android $ su")
+                        findBusyBoxPathBySU().takeIf { it.isNotEmpty() }?.let { path ->
+                            // This runs if a path is found
+                            TerminalLine("root@android $ which busybox")
+                            TerminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
+                            Toast.makeText(ctx, "BusyBox found via Path as Root Nice Spoofing! :)", Toast.LENGTH_LONG).show()
+                            TerminalLine(path, MaterialTheme.colorScheme.primary)
+                            TerminalLine("root@android $ exit")
+                        } ?: run {
+                            // This runs if the method returns ""
+                            TerminalLine("Busybox not Found in Path as Root!", MaterialTheme.colorScheme.error)
+                            Toast.makeText(ctx, "BusyBox not Installed.", Toast.LENGTH_LONG).show()
+                        }
+                        // This line displays regardless of the result
+                        TerminalLine("usr@android $ _")
+                    }
                 }
-                HorizontalDivider(Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant)
-                TerminalLine("NOTE: Magisk and other Root Solutions have their own BusyBox but are kept hidden to avoid detection.")
-                TerminalLine("Install 'BusyBox for NDK Module' if really needed. Else its not needed that much.")
             }
         }
         Button(
@@ -450,12 +494,12 @@ fun GuideScreen() {
                     WarningCard("This process will wipe all user data. Ensure you have a backup before proceeding. Also Xiaomi, Oppo and Realme have Additional Steps. Vivo, iQOO and certain Manufacturers don't support Bootloader Unlocking.")
                     ExpandableMethod("Fastboot Method (Recommended)", Icons.Rounded.Computer) {
                         Text("Step 1 : Reboot Phone to Bootloader :")
-                        CodeBox("adb reboot bootloader")
+                        CodeBox("$ adb reboot bootloader")
                         Text("Step 2 : Unlock Bootloader using Fastboot :")
                         Text(" • For most devices :")
-                        CodeBox("fastboot flashing unlock")
+                        CodeBox("$ fastboot flashing unlock")
                         Text(" • For some older devices :")
-                        CodeBox("fastboot oem unlock")
+                        CodeBox("$ fastboot oem unlock")
                         Text("Pros :\n✓ Unlocking doesn't brick device immediately.\n✓ Safe and Easy to Use.\n\nCons :\n✗ Not available on all devices.\n✗ Xiaomi Devices need permission from Xiaomi Community and then Mi Unlock Tool is used.\n✗ Oppo and Realme Devices use 'Deep Testing' or 'In-Depth Test' for Fastboot Permissions.")
                     }
                     ExpandableMethod("Device Unlock Mode (for Samsung)", Icons.Rounded.Smartphone) {
@@ -474,15 +518,15 @@ fun GuideScreen() {
                         WarningCard("Please BE CAREFUL as it doesn't work on very new device and can cause 'System is Destroyed' and 'dm-verity corruption' Ensure that your device has no Replay Protected Memory Block (RPMB) before proceeding.")
                         Text("Hardware-level bypass for locked MediaTek chipsets.\n\nFirst install USBdk if using Windows (Recommended).\n\nNOTE: For Each Step, Run the Command, Press both Volume Buttons and Connect Phone to PC.\n")
                         Text("Step 1 : Dump vbmeta (Don't use _a and _b if newer device) : ")
-                        CodeBox("python mtk.py r vbmeta_a,vbmeta_b vbmeta_a.img,vbmeta_b.img")
+                        CodeBox("$ python mtk.py r vbmeta_a,vbmeta_b vbmeta_a.img,vbmeta_b.img")
                         Text("Step 2 : Unlock Bootloader : ")
-                        CodeBox("python mtk.py da seccfg unlock")
+                        CodeBox("$ python mtk.py da seccfg unlock")
                         Text("Step 3 : Disable dm-verity (Easy Way) :  ")
-                        CodeBox("python mtk.py da vbmeta 3")
+                        CodeBox("$ python mtk.py da vbmeta 3")
                         Text("Step 4 : Erase Userdata : ")
-                        CodeBox("python mtk.py e metadata,userdata")
+                        CodeBox("$ python mtk.py e metadata,userdata")
                         Text("Step 5 : Reboot Device : ")
-                        CodeBox("python mtk.py reset")
+                        CodeBox("$ python mtk.py reset")
                         Text("Pros :\n✓ Easy to Recover with Backups.\n✓ Can fix Hard-Bricks.\n✓ Fast and Easy to Use.\n\nCons :\n✗ Does not Support QualComm and UniSOC Devices.\n✗ High Chances of Bricking.\n✗ Doesn't work on very new devices.\n✗ Fastboot may not be usable as on Realme Devices.\n")
                         LinkCard("mtkclient by @bkerler", "https://github.com/bkerler/mtkclient")
                     }
@@ -523,23 +567,33 @@ fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         if (isAB) {
             if (slot == "a") {
-                CodeBox("fastboot flash boot_a patched.img")
-                if (hasInit) CodeBox("fastboot flash init_boot_a patched.img")
-                CodeBox("fastboot flash boot_b patched.img")
-                if(hasInit) CodeBox("fastboot flash init_boot_b patched.img")
-                CodeBox("fastboot flash boot patched.img")
+                Text("Flash to Active Slot : ")
+                CodeBox("$ fastboot flash boot_a patched.img")
+                if (hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
+                Text("Flash to Inactive Slot if Needed : ")
+                CodeBox("$ fastboot flash boot_b patched.img")
+                if(hasInit) CodeBox("$ fastboot flash init_boot_b patched.img")
+                Text("For Older Devices : ")
+                CodeBox("$ fastboot flash boot patched.img")
             }
             if (slot == "b") {
-                CodeBox("fastboot flash boot_b patched.img")
-                if (hasInit) CodeBox("fastboot flash init_boot_b patched.img")
-                CodeBox("fastboot flash boot_a patched.img")
-                if(hasInit) CodeBox("fastboot flash init_boot_a patched.img")
-                CodeBox("fastboot flash boot patched.img")
+                Text("Flash to Active Slot : ")
+                CodeBox("$ fastboot flash boot_b patched.img")
+                if (hasInit) CodeBox("$ fastboot flash init_boot_b patched.img")
+                Text("Flash to Inactive Slot if Needed : ")
+                CodeBox("$ fastboot flash boot_a patched.img")
+                if(hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
+                Text("For Older Devices : ")
+                CodeBox("$ fastboot flash boot patched.img")
             }
         } else {
-            CodeBox("fastboot flash boot patched.img")
-            CodeBox("fastboot flash boot_a patched.img")
-            CodeBox("fastboot flash boot_b patched.img")
+            Text("For Older Devices : ")
+            CodeBox("$ fastboot flash boot patched.img")
+            Text("Commands not for this Device : ")
+            CodeBox("$ fastboot flash boot_a patched.img")
+            if(hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
+            CodeBox("$ fastboot flash boot_b patched.img")
+            if(hasInit) CodeBox("$ fastboot flash inti_boot_b patched.img")
 
         }
     }
@@ -614,7 +668,7 @@ fun InfoBlock(t: String, d: String) {
 @Composable
 fun CodeBox(cmd: String) {
     Surface(color = Color.Black, shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-        Text(cmd, color = Color.Green, modifier = Modifier.padding(8.dp), fontFamily = FontFamily.Monospace, fontSize = 11.sp)
+        Text(cmd, color = Color.White, modifier = Modifier.padding(8.dp), fontFamily = FontFamily.Monospace, fontSize = 11.sp)
     }
 }
 
@@ -895,10 +949,26 @@ fun isSUWorking(): Boolean {
 }
 
 fun findBusyBoxPath(): String {
-    val paths = arrayOf("/system/xbin/busybox", "/system/bin/busybox", "/data/adb/magisk/busybox")
+    val paths = arrayOf("/system/xbin/busybox", "/system/bin/busybox", "/data/adb/magisk/busybox", "/data/adb/magisk/busybox", "/data/adb/ksu/bin/busybox", "/data/adb/ap/bin/busybox")
     return paths.firstOrNull { java.io.File(it).exists() } ?: ""
 }
+fun findBusyBoxPathBySU(): String {
+    return try {
+        // Removed the extra escaped quotes around "which busybox"
+        val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "which busybox"))
 
+        // Safely read the output and handle the potential null case
+        val output = process.inputStream.bufferedReader().use { it.readLine() }
+
+        process.waitFor()
+
+        // Use ?.isNullOrEmpty() to prevent crashes if output is null
+        if (output.isNullOrEmpty()) "" else output.trim()
+    } catch (e: Exception) {
+        // Catching exceptions (like root denied) ensures the app doesn't crash
+        ""
+    }
+}
 fun saveLog(c: Context, r: Boolean) {
     val p = c.getSharedPreferences("su_logs", Context.MODE_PRIVATE)
     // Original history format relied on 4 parts for the UI to render
