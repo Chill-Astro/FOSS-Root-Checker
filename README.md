@@ -5,7 +5,7 @@
 
 <div align="center">
 
-FOSS ROOT Checker as the name suggests is an `Open Source` Root Checker app for verifying `Root Access` on Android Mobile Devices. Ever wondered what Root Checker Apps do behind the scenes on your Phones once you give them Root Access?
+FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for verifying `Root Access` on Android Mobile Devices. Ever wondered what Root Checker Apps do behind the scenes on your Phones once you give them Root Access?
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
@@ -29,6 +29,8 @@ Also ensure to Download this APK only from Trusted Sources such as FDroid, UptoD
 
 ## How it works? 
 
+// Outdated information. To be Modified as it's Dual Path now.
+
 The **FOSS Root Checker** employs a dual-layered verification strategy to determine system integrity without compromising your privacy:
 
 1. **Functional Execution Check:** The app attempts to spawn a shell process to run the `su -c id` command. If the system returns a User ID of `0`, the app confirms that active SuperUser execution privileges are granted.
@@ -51,26 +53,9 @@ By combining these methods, the app accurately detects root access across both l
 
 ## Preview :
 
-<div align="center"> ---- Demonstrated on POCO C55 ( NON-ROOTED ) ---- </div>
-<br>
-<div align="center">
-<img src="https://github.com/user-attachments/assets/0ef0d1eb-ce62-42d5-931e-ee83d9303318" width="300px">
-<img src="https://github.com/user-attachments/assets/90844668-70ae-4bda-a48c-29adba4b156d" width="300px">
-<img src="https://github.com/user-attachments/assets/aadd307a-fb67-47aa-a7ee-44da54a94b6a" width="300px">
-<img src="https://github.com/user-attachments/assets/bfd0329c-5787-4fef-bb01-f8e14e3d256c" width="300px">
-<img src="https://github.com/user-attachments/assets/390223f5-eba9-4e7e-ac19-79e929f2f672" width="300px">  
-<img src="https://github.com/user-attachments/assets/03fbd8f8-c67b-4ce9-b8f5-ced33eee117b" width="300px">    
-</div>
-<br>
-<div align="center"> ---- Demonstrated on Realme C11 2020 ( ROOTED ) ---- </div>
-<br>
-<div align="center">
-<img src="https://github.com/user-attachments/assets/dd2633ab-2376-4952-9e72-543fdb57fdca" width="300px">
-<img src="https://github.com/user-attachments/assets/07a71582-d11f-475b-ba71-6531672d774a" width="300px">    
-<img src="https://github.com/user-attachments/assets/35602dc6-f486-43c6-8fe2-2954a50e7f87" width="300px">
-</div>
-<br>
+// Will Update to include Screenshots only from Rooted POCO C55 (earth) as idk it looks cleaner + No repetitive screenshots. For old Screenshots, check commits.
 
+// Will add Screen Recording of the App in Action, after Release!
 ---
 
 ## Building from Source :
