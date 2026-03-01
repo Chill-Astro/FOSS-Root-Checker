@@ -118,6 +118,8 @@ Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more
 
 </details>
 
+---
+
 ## Credits :
 
 - [Magisk by @topjohnwu](https://github.com/topjohnwu/Magisk) : For Rooting pretty much anything these days.
