@@ -12,11 +12,11 @@ They Bypass Github's Security Checks and may Compromise your System with Malware
 
 ## ⚠️ Smoking Gun for Danger :
 
+> [!CAUTION]
+> **MALWARE ALERT:** If your downloaded folder looks like the images below, **DO NOT OPEN** any files. Format the drive or delete the folder immediately. Official releases are ONLY `.apk` files.
+
 <details>
 <summary><b>View Details</b></summary>
-  
-**If your download contains any of the following, DELETE IT IMMEDIATELY:**
-
 * **Suspicious Windows Executables:** Files ending in `.exe`, `.bat`, or `.dll` (e.g., `luau.exe`, `StartApp.bat`).
 * **Compressed Archives:** This project is distributed as an **APK**, never as a `.zip` or `.7z` containing Windows binaries.
 * **Hidden Scripts:** Text files like `asm.txt` used to execute malicious code on your PC.
