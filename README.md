@@ -9,7 +9,7 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-App Version : `v36.59.1.0`
+App Version : `v36.27.1.0`
 
 Package ID : `foss.chillastro.root.checker`
 
@@ -22,7 +22,7 @@ To be Released on UptoDown Store, APKPure and FDroid.
 </div>
 
 > [!NOTE]
-> This App is Designed to be Bleeding Edge for very modern devices. In case of any Lag, I apologise.... I have tested on really bad hardware so uh, "Works for me!"
+> This App is EXTRA LIGHTWEIGHT! Release .APKs will be under 2MB!
 
 > [!NOTE]
 > Also ensure to Download this APK only from Trusted Sources such as FDroid, UptoDown, Appteka (thanks for testing my Pre-Release Builds) and so on.
