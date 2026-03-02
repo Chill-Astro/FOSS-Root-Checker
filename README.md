@@ -42,7 +42,7 @@ To be Released on UptoDown Store, APKPure and FDroid.
 
 ## Key Features :
 
-- Ultra Small Footprint. The .APK is 2MB ONLY! ✅
+- Ultra Small Footprint. The .APK is 1.54MB ONLY! ✅
 - Privacy First Design with full transperancy. ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
 - Modern Material UI with Monet Theming. ✅
