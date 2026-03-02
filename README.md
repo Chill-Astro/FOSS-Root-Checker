@@ -9,11 +9,11 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-App Version : `v36.29.1.0`
+App Version : `v36.59.1.0`
 
-Package ID : `foss.chillastro.su`
+Package ID : `foss.chillastro.root.checker`
 
-Requirements : `Android 10 and Higher`
+Requirements : `Android 8.1 and Higher`
 
 Currently in Development. Releasing on March 26th 2026! 🌟
 
@@ -34,14 +34,12 @@ To be Released on UptoDown Store, APKPure and FDroid.
 
 ## How it works? 
 
-// Outdated information. To be Modified as it's Dual Path now.
+> [!NOTE]
+> All checks are performed on a background thread (`Dispatchers.IO`) to ensure your device remains responsive during the scan.
 
-The **FOSS Root Checker** employs a dual-layered verification strategy to determine system integrity without compromising your privacy:
-
-1. **Functional Execution Check:** The app attempts to spawn a shell process to run the `su -c id` command. If the system returns a User ID of `0`, the app confirms that active SuperUser execution privileges are granted.
-2. **Filesystem Signature Scan:** As a secondary fallback, the app performs a manual search through high-priority system paths (such as `/system/xbin/`, `/sbin/`, and `/data/local/`) for the presence of a standalone `su` binary.
-
-By combining these methods, the app accurately detects root access across both legacy environments (Android 9/10) and modern implementations like **Magisk**, **KernelSU**, and **APatch**. All checks are performed on a background thread (`Dispatchers.IO`) to ensure your device remains responsive during the scan.
+- The App First Checks 40+ System Paths to Find Traces of SU Binaries to Verify Root Access. If it finds, Root Acess is Verified. If not it moves onto the next step.
+- Now the App Executes `su -c id` and if it returns 0, Root Access is Verified. Else, Root Access not Available.
+- For BusyBox Checker, it checks BusyBox Specefix Paths. If not Found, the App executes `su -c which busybox` to verify BusyBox Installation.
 
 ---
 
@@ -49,9 +47,9 @@ By combining these methods, the app accurately detects root access across both l
 
 - Privacy First Design with full transperancy. ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
-- Modern Material UI. ✅
-- Support for Android 10+ Devices. ✅
-- Works with Magisk, KernelSU, APatch and any other method. ✅
+- Modern Material UI with Monet Theming. ✅
+- Support for Android 8.1+ Devices. ✅
+- Works with Magisk, KernelSU, KSU Forks, APatch and older Methods ✅
 - Thorough Guidance provided on Rooting and Unlocking Bootloader. ✅
 
 ---    
@@ -61,6 +59,7 @@ By combining these methods, the app accurately detects root access across both l
 // Will Update to include Screenshots only from Rooted POCO C55 (earth) as idk it looks cleaner + No repetitive screenshots. For old Screenshots, check commits.
 
 // Will add Screen Recording of the App in Action, after Release!
+
 ---
 
 ## Building from Source :

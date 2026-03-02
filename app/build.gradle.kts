@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "foss.chillastro.su"
+    namespace = "foss.chillastro.root.checker"
 
     buildFeatures {
         compose = true
@@ -16,18 +16,19 @@ android {
     }
 
     defaultConfig {
-        applicationId = "foss.chillastro.su"
-        minSdk = 29
+        applicationId = "foss.chillastro.root.checker"
+        minSdk = 27
         targetSdk = 36
         versionCode = 1
-        versionName = "v36.29.1.0"
+        versionName = "v36.27.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
