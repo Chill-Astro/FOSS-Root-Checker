@@ -803,7 +803,7 @@ fun settings(
                 @Suppress("DEPRECATION")
                 ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
             }
-        } catch (e: Exception) { "36.27.1.0" }
+        } catch (e: Exception) { "36.23.1.0" }
     }
     fun isNewer(current: String, remote: String): Boolean {
         val currParts = current.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
@@ -824,9 +824,9 @@ fun settings(
                 val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/be9757f468f5bc744eced1bb1a88342b4a78e646/FRC-SU_V.txt"
                 val remoteVersion = URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
-                    if (isNewer(appVersion ?: "36.27.1.0", remoteVersion)) {
+                    if (isNewer(appVersion ?: "36.23.1.0", remoteVersion)) {
                         Toast.makeText(ctx, "🎉 $remoteVersion OUT NOW!", Toast.LENGTH_LONG).show()
-                    } else if (isNewer(appVersion ?: remoteVersion, "36.27.1.0")) {
+                    } else if (isNewer(appVersion ?: remoteVersion, "36.23.1.0")) {
                         Toast.makeText(ctx, "⚠️ You are using an UNSTABLE BUILD!", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(ctx, "🎉 Your Version is UP TO DATE!", Toast.LENGTH_SHORT).show()
@@ -972,7 +972,7 @@ fun settings(
         Text(
             text = buildAnnotatedString {
                 append("Version: ")
-                withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append(appVersion ?: "36.27.1.0") }
+                withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append(appVersion ?: "36.23.1.0") }
             },
             fontWeight = FontWeight.Bold,
             modifier = Modifier.clickable(indication = null, interactionSource = noRipple) {
@@ -1068,7 +1068,7 @@ fun historyContent(logs: List<String>, onClear: () -> Unit) {
                             Icon(if (p[0] == "OK") Icons.Rounded.Check else Icons.Rounded.Close, null, Modifier.padding(8.dp), Color.White)
                         }
                         Spacer(Modifier.width(16.dp))
-                        Column { Text(if (p[0] == "OK") "Rooted ${Build.MODEL}" else "Not Rooted ${Build.MODEL}", fontWeight = FontWeight.Bold); Text("${p[1]} • Android ${p[3]}", style = MaterialTheme.typography.bodySmall, color = Color.Gray) }
+                        Column { Text(if (p[0] == "OK") "Rooted ${Build.MODEL}" else "Non-Rooted ${Build.MODEL}", fontWeight = FontWeight.Bold); Text("${p[1]} • Android ${p[3]}", style = MaterialTheme.typography.bodySmall, color = Color.Gray) }
                     }
                 }
             }
