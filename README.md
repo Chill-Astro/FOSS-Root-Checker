@@ -22,6 +22,9 @@ To be Released on UptoDown Store, APKPure and FDroid.
 </div>
 
 > [!NOTE]
+> This App is EXTRA LIGHTWEIGHT! Release .APKs will be under 2MB!
+
+> [!NOTE]
 > Also ensure to Download this APK only from Trusted Sources such as FDroid, UptoDown, Appteka (thanks for testing my Pre-Release Builds) and so on.
 
 > [!WARNING]
@@ -42,7 +45,6 @@ To be Released on UptoDown Store, APKPure and FDroid.
 
 ## Key Features :
 
-- Ultra Small Footprint. The .APK is 1.54MB ONLY! ✅
 - Privacy First Design with full transperancy. ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
 - Modern Material UI with Monet Theming. ✅
@@ -99,11 +101,10 @@ Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more
 
 ## ⚠️ Smoking Gun for Danger :
 
-> [!CAUTION]
-> **MALWARE ALERT:** If your downloaded folder looks like the images below, **DO NOT OPEN** any files. Format the drive or delete the folder immediately. Official releases are ONLY `.apk` files.
-
 <details>
 <summary><b>View Details</b></summary>
+  
+**If your download contains any of the following, DELETE IT IMMEDIATELY:**
 
 * **Suspicious Windows Executables:** Files ending in `.exe`, `.bat`, or `.dll` (e.g., `luau.exe`, `StartApp.bat`).
 * **Compressed Archives:** This project is distributed as an **APK**, never as a `.zip` or `.7z` containing Windows binaries.
