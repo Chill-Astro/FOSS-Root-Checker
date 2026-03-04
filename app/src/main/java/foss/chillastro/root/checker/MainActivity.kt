@@ -66,6 +66,7 @@ import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.Memory
+import androidx.compose.material.icons.rounded.Nightlight
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Settings
@@ -119,12 +120,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import androidx.core.net.toUri
-import foss.chillastro.su.ui.theme.FOSSRootCheckerTheme
+import foss.chillastro.root.checker.ui.theme.FOSSRootCheckerTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -821,7 +824,7 @@ fun settings(
         scope.launch(Dispatchers.IO) {
             isChecking = true
             try {
-                val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/be9757f468f5bc744eced1bb1a88342b4a78e646/FRC-SU_V.txt"
+                val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/FRC-SU_V.txt"
                 val remoteVersion = URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
                     if (isNewer(appVersion ?: "36.23.1.0", remoteVersion)) {
@@ -834,7 +837,7 @@ fun settings(
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(ctx, "❌ Please Verify Internet Conection!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ctx, "❌ Please Verify Internet Connection!", Toast.LENGTH_SHORT).show()
                 }
             } finally {
                 isChecking = false
@@ -1008,7 +1011,7 @@ fun settings(
             )
             ListItem(
                 headlineContent = { Text("Dark Theme") },
-                leadingContent = { Icon(Icons.Rounded.Brush, null) },
+                leadingContent = { Icon(Icons.Rounded.Nightlight, null) },
                 trailingContent = { Switch(checked = dark, onCheckedChange = onDark) }
             )
             if (Build.VERSION.SDK_INT >= 31) {

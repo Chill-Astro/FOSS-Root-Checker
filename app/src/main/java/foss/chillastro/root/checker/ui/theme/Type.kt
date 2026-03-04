@@ -1,4 +1,4 @@
-package foss.chillastro.su.ui.theme
+package foss.chillastro.root.checker.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
