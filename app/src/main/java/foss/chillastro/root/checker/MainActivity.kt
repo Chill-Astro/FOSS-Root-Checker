@@ -54,7 +54,6 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
 import androidx.compose.material.icons.automirrored.rounded.LibraryBooks
 import androidx.compose.material.icons.automirrored.rounded.MenuBook
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Brush
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Code
@@ -120,8 +119,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -136,6 +133,7 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.system.exitProcess
 
 // Getting Hardware Props (for Decoration I mean for Informing!)
 object HardwareProbe {
@@ -952,9 +950,25 @@ fun settings(
                 .clickable(indication = null, interactionSource = noRipple) {
                     logoTaps++
                     if (logoTaps == 5) Toast.makeText(ctx, "It is our duty to pay for our liberty...", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 5) Toast.makeText(ctx, "It is our duty to pay for our liberty...", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 10) Toast.makeText(ctx, "...with our own blood.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 15) Toast.makeText(ctx, "Give me blood, and I will give you freedom!", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 20) Toast.makeText(ctx, "Delhi Chalo!", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 25) Toast.makeText(ctx, "Success always stands on the pillars of failure.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 30) Toast.makeText(ctx, "No real change in history has ever been achieved...", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 35) Toast.makeText(ctx, "...by discussions alone.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 40) Toast.makeText(ctx, "One individual may die for an idea,", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 45) Toast.makeText(ctx, "but that idea will, after his death,", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 50) Toast.makeText(ctx, "incarnate itself in a thousand lives.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 55) Toast.makeText(ctx, "Freedom is not given, it is taken.", Toast.LENGTH_LONG).show()
+                    if (logoTaps == 103) Toast.makeText(ctx, "5 Taps!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 104) Toast.makeText(ctx, "4 Taps!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 105) Toast.makeText(ctx, "3 Taps!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 106) Toast.makeText(ctx, "2 Taps!", Toast.LENGTH_SHORT).show()
+                    if (logoTaps == 107) Toast.makeText(ctx, "1 Tap!", Toast.LENGTH_SHORT).show()
                     if (logoTaps == 108) {
-                        Toast.makeText(ctx, "वन्दे मातरम्!", Toast.LENGTH_SHORT).show()
-                        showPoem = true
+                        Toast.makeText(ctx, "वन्दे मातरम्!", Toast.LENGTH_SHORT).show() // From Anand Math by Bankim Chandra Chatterjee
+                        showPoem = true // Tarana-e-Milli by Muhammad Iqbal. Patriotism!
                         logoTaps = 0
                     }
                 }
@@ -981,6 +995,19 @@ fun settings(
             modifier = Modifier.clickable(indication = null, interactionSource = noRipple) {
                 vTaps++
                 if (vTaps == 5) Toast.makeText(ctx, "Hi there! You Found me. :)", Toast.LENGTH_SHORT).show()
+                if (vTaps == 10) Toast.makeText(ctx, "I hope you like the App! ^_^", Toast.LENGTH_LONG).show()
+                if (vTaps == 15) Toast.makeText(ctx, "Ok now you are just poking me....", Toast.LENGTH_LONG).show()
+                if (vTaps == 25) Toast.makeText(ctx, "Ok its not funny. Now its hurting my screen!", Toast.LENGTH_LONG).show()
+                if (vTaps == 50) Toast.makeText(ctx, "Does Tapping give you anything?", Toast.LENGTH_LONG).show()
+                if (vTaps == 75) Toast.makeText(ctx, "Are you a Human Autoclicker?", Toast.LENGTH_LONG).show()
+                if (vTaps == 100) Toast.makeText(ctx, "Or maybe you ARE an Autoclicker?", Toast.LENGTH_LONG).show()
+                if (vTaps == 150) {
+                    Toast.makeText(ctx, "Touch Some Grass! 🌿", Toast.LENGTH_LONG).show()
+                    android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                        exitProcess(0)
+                    }, 1000)
+                }
+                else null
             }
         )
         TextButton(

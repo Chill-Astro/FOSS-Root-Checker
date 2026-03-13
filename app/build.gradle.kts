@@ -8,7 +8,7 @@ android {
 
     buildFeatures {
         compose = true
-        buildConfig = true // Add this line to enable the version access
+        buildConfig = true
     }
 
     compileSdk {
