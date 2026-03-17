@@ -15,6 +15,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -80,7 +81,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -94,6 +98,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -135,7 +140,7 @@ import java.util.Date
 import java.util.Locale
 import kotlin.system.exitProcess
 
-// Getting Hardware Props (for Decoration I mean for Informing!)
+// Getting Hardware Props
 object HardwareProbe {
     fun getProp(prop: String): String = try {
         Runtime.getRuntime().exec(arrayOf("getprop", prop)).inputStream.bufferedReader().readLine() ?: ""
@@ -143,34 +148,53 @@ object HardwareProbe {
     fun getBootloader(): String = if (getProp("ro.boot.flash.locked") == "0") "Unlocked" else "Locked"
     fun getVerity(): String = getProp("ro.boot.veritymode").ifEmpty { "disabled" }
 }
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val context = LocalContext.current
+            val prefs = remember { context.getSharedPreferences("settings", Context.MODE_PRIVATE) }
+            
+            // 0: System, 1: Light, 2: Dark
+            var themeMode by remember { mutableIntStateOf(prefs.getInt("theme_mode", 0)) }
+            var useDynamic by remember { mutableStateOf(prefs.getBoolean("use_dynamic", true)) }
+            
             val isSystemDark = isSystemInDarkTheme()
-            var manualDarkOverride by rememberSaveable { mutableStateOf<Boolean?>(null) }
-            var useDynamic by rememberSaveable { mutableStateOf(true) }
-            val currentTheme = manualDarkOverride ?: isSystemDark
-            FOSSRootCheckerTheme(darkTheme = currentTheme, dynamicColor = useDynamic) {
+            val darkTheme = when(themeMode) {
+                1 -> false
+                2 -> true
+                else -> isSystemDark
+            }
+
+            FOSSRootCheckerTheme(darkTheme = darkTheme, dynamicColor = useDynamic) {
                 caRootChecker(
-                    dark = currentTheme,
-                    onDark = { manualDarkOverride = it },
+                    themeMode = themeMode,
+                    onThemeChange = { 
+                        themeMode = it
+                        prefs.edit { putInt("theme_mode", it) }
+                    },
                     dyn = useDynamic,
-                    onDyn = { useDynamic = it }
+                    onDyn = { 
+                        useDynamic = it
+                        prefs.edit { putBoolean("use_dynamic", it) }
+                    }
                 )
             }
         }
     }
 }
+
 @Composable
-fun caRootChecker(dark: Boolean, onDark: (Boolean) -> Unit, dyn: Boolean, onDyn: (Boolean) -> Unit) { // CA -> Chill-Astro. An Astronaut who's not an Astronaut!
+fun caRootChecker(themeMode: Int, onThemeChange: (Int) -> Unit, dyn: Boolean, onDyn: (Boolean) -> Unit) {
     var dest by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
     var showHistorySheet by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    var logs by remember { mutableStateOf(getLogs(context)) } // 🪵 <- A LOG (literally 😅)
+    var logs by remember { mutableStateOf(getLogs(context)) }
     val refreshLogs = { logs = getLogs(context) }
     BackHandler(dest != AppDestinations.HOME) { dest = AppDestinations.HOME }
+    
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             AppDestinations.entries.forEach { item ->
@@ -202,7 +226,7 @@ fun caRootChecker(dark: Boolean, onDark: (Boolean) -> Unit, dyn: Boolean, onDyn:
         ) { padding ->
             AnimatedContent(
                 targetState = dest,
-                modifier = Modifier.padding(padding).fillMaxSize(), // Full height ensured here
+                modifier = Modifier.padding(padding).fillMaxSize(),
                 transitionSpec = {
                     val spec = spring<IntOffset>(stiffness = Spring.StiffnessLow)
                     if (targetState.ordinal > initialState.ordinal) {
@@ -216,7 +240,7 @@ fun caRootChecker(dark: Boolean, onDark: (Boolean) -> Unit, dyn: Boolean, onDyn:
                     AppDestinations.HOME -> rootChecker(onCheckComplete = refreshLogs)
                     AppDestinations.BUSYBOX -> busybox()
                     AppDestinations.GUIDE -> rootGuide()
-                    AppDestinations.SETTINGS -> settings(dark, onDark, dyn, onDyn)
+                    AppDestinations.SETTINGS -> settings(themeMode, onThemeChange, dyn, onDyn)
                 }
             }
         }
@@ -229,7 +253,6 @@ fun caRootChecker(dark: Boolean, onDark: (Boolean) -> Unit, dyn: Boolean, onDyn:
     }
 }
 
-// User INTERFACE (I hope it works like butter on Dumpster Fire Devices!)
 @Composable
 fun rootChecker(onCheckComplete: () -> Unit) {
     var checkState by rememberSaveable { mutableIntStateOf(0) }
@@ -243,11 +266,15 @@ fun rootChecker(onCheckComplete: () -> Unit) {
         animationSpec = spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessLow),
         label = "pulse"
     )
+
+    // Corner radius animation for split buttons
+    val leftButtonInnerRound by animateDpAsState(if (checkState == 1) 32.dp else 0.dp)
+    val rightButtonInnerRound by animateDpAsState(if (checkState == 3) 32.dp else 0.dp)
+
     Column(
         Modifier.fillMaxSize().padding(24.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Info Pill (Good Hardware Props)
         Surface(
             shape = RoundedCornerShape(24.dp),
             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
@@ -291,14 +318,13 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                 }
             }
         }
-        // "Trasparency"
         Text(
             text = when(checkState) {
                 1 -> "Searching for Paths..."
-                2 -> "Your Device is Rooted"
+                2 -> if (isRooted) "SU Binary Found!" else "SU Binary not Found"
                 3 -> "Interrogating SU Binary..."
-                4 -> if (isRooted) "Your Device is Rooted" else "Root Access not Available"
-                else -> "Ready to verify?" // Nope
+                4 -> if (isRooted) "Root Access Verified" else "Root Access not Available"
+                else -> "Ready to verify?"
             },
             modifier = Modifier.padding(top = 24.dp),
             style = MaterialTheme.typography.headlineSmall,
@@ -306,110 +332,85 @@ fun rootChecker(onCheckComplete: () -> Unit) {
             textAlign = TextAlign.Center
         )
         Spacer(Modifier.weight(1.2f))
-        Button(
-            onClick = {
-                checkState = 1
-                isRooted = false
-
-                scope.launch(Dispatchers.IO) {
-                    delay(1000) // Visual pause
-                    // A Rabbit Hole of a HELL LOT OF PATHS! (Feels like I am a Security Official tbh.)
-                    val paths = arrayOf(
-                        "/data/adb/magisk",
-                        "/data/adb/magisk.db",
-                        "/data/adb/magisk.img",
-                        "/data/adb/modules",
-                        "/data/adb/magisk/su",
-                        "/sbin/.magisk/mirror",
-                        "/dev/com.topjohnwu.magisk.daemon",
-                        "/cache/magisk.log",
-                        "/data/resource-cache/magisk.apk",
-                        "/data/adb/post-fs-data.d",
-                        "/data/adb/service.d",
-                        "/data/adb/env",
-                        // Kernel SU or APatch
-                        "/data/adb/ksu",
-                        "/data/adb/ksu/bin/su",
-                        "/data/adb/apatch",
-                        "/data/adb/apatch/bin/su",
-                        "/data/adb/ap/bin/su",
-                        "/sys/kernel/debug/tracing/su",
-                        "/proc/kernelsu",
-                        "/dev/ksu",
-                        "/dev/apatch",
-                        // Old Root Methods + Other Stuff that need Root.
-                        "/system/bin/su",
-                        "/system/xbin/su",
-                        "/sbin/su",
-                        "/system/sd/xbin/su",
-                        "/system/bin/failsafe/su",
-                        "/data/local/xbin/su",
-                        "/data/local/bin/su",
-                        "/data/local/su",
-                        "/su/bin/su",
-                        "/system/sbin/su",
-                        "/system/usr/we-need-root/su-backup",
-                        "/system/xbin/mu",
-                        "/system/bin/.ext/.su",
-                        "/system/app/Superuser.apk",
-                        "/system/app/SuperSU",
-                        "/system/etc/init.d/99SuperSUDaemon",
-                        "/dev/com.koushikdutta.superuser.daemon",
-                        "/system/xbin/busybox",
-                        "/system/bin/busybox",
-                        "/sbin/busybox",
-                        "/vendor/bin/busybox",
-                        "/data/local/busybox"
-                    )
-                    val foundViaPath = paths.any { path ->
-                        try {
-                            Runtime.getRuntime().exec(arrayOf("ls", path)).waitFor() == 0
-                        } catch (e: Exception) { false }
-                    }
-                    if (foundViaPath) {
-                        // 2. FLAG AS ROOTED (Path Found)
+        
+        // --- SPLIT BUTTONS UI ---
+        Row(
+            modifier = Modifier.fillMaxWidth().height(64.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = {
+                    checkState = 1
+                    isRooted = false
+                    scope.launch(Dispatchers.IO) {
+                        delay(1000)
+                        val paths = arrayOf(
+                            "/data/adb/magisk", "/data/adb/magisk.db", "/data/adb/magisk.img", "/data/adb/modules",
+                            "/data/adb/magisk/su", "/sbin/.magisk/mirror", "/dev/com.topjohnwu.magisk.daemon",
+                            "/cache/magisk.log", "/data/resource-cache/magisk.apk", "/data/adb/post-fs-data.d",
+                            "/data/adb/service.d", "/data/adb/env", "/data/adb/ksu", "/data/adb/ksu/bin/su",
+                            "/data/adb/apatch", "/data/adb/apatch/bin/su", "/data/adb/ap/bin/su",
+                            "/sys/kernel/debug/tracing/su", "/proc/kernelsu", "/dev/ksu", "/dev/apatch",
+                            "/system/bin/su", "/system/xbin/su", "/sbin/su", "/system/sd/xbin/su",
+                            "/system/bin/failsafe/su", "/data/local/xbin/su", "/data/local/bin/su", "/data/local/su",
+                            "/su/bin/su", "/system/sbin/su", "/system/usr/we-need-root/su-backup", "/system/xbin/mu",
+                            "/system/bin/.ext/.su", "/system/app/Superuser.apk", "/system/app/SuperSU",
+                            "/system/etc/init.d/99SuperSUDaemon", "/dev/com.koushikdutta.superuser.daemon",
+                            "/system/xbin/busybox", "/system/bin/busybox", "/sbin/busybox", "/vendor/bin/busybox",
+                            "/data/local/busybox"
+                        )
+                        val found = paths.any { try { Runtime.getRuntime().exec(arrayOf("ls", it)).waitFor() == 0 } catch (e: Exception) { false } }
                         withContext(Dispatchers.Main) {
-                            isRooted = true
+                            isRooted = found
                             checkState = 2
-                            if (bootloader == "Locked") {
-                                Toast.makeText(ctx, "Root Access is Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show() // Ms. Mobile is Rooted (+ Satire for Spoofing!)
-                            } else {
-                                Toast.makeText(ctx, "Root Access Verified", Toast.LENGTH_SHORT).show() // Ms. Mobile not Rooted
-                            }
-                            saveLog(ctx, isRooted)
+                            if (found) {
+                                if (bootloader == "Locked") Toast.makeText(ctx, "SU Binary Found! Nice Spoofing! :)", Toast.LENGTH_LONG).show()
+                                else Toast.makeText(ctx, "SU Binary Found!", Toast.LENGTH_SHORT).show()
+                            } else Toast.makeText(ctx, "SU Binary not Found", Toast.LENGTH_SHORT).show()
+                            saveLog(ctx, found, "SCAN")
                             onCheckComplete()
                         }
-                    } else {
-                        // 3. NO PATH? -> Move to Interrogation (State 3)
-                        withContext(Dispatchers.Main) { checkState = 3 }
-                        delay(1200)
+                    }
+                },
+                modifier = Modifier.weight(1f).height(64.dp),
+                shape = RoundedCornerShape(topStart = 32.dp, bottomStart = 32.dp, topEnd = leftButtonInnerRound, bottomEnd = leftButtonInnerRound),
+                enabled = checkState != 1 && checkState != 3
+            ) {
+                Text("Scan", textAlign = TextAlign.Center)
+            }
+            
+            Spacer(Modifier.width(2.dp).height(40.dp).background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)))
 
-                        // 4. THE FINAL INTERROGATION (State 4)
+            Button(
+                onClick = {
+                    checkState = 3
+                    isRooted = false
+                    scope.launch(Dispatchers.IO) {
+                        delay(1200)
                         val suWorks = isSUWorking()
                         withContext(Dispatchers.Main) {
                             isRooted = suWorks
                             checkState = 4
-                            if (isRooted && bootloader == "Locked") {
-                                Toast.makeText(ctx, "Root Access is Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show() // Ms. Mobile is Rooted (Again)
-                            } else if (isRooted) {
-                                Toast.makeText(ctx, "Root Access Verified", Toast.LENGTH_SHORT).show() // Ms. Mobile not Rooted (Again)
-                            } else {
-                                Toast.makeText(ctx, "Root Access not Available", Toast.LENGTH_SHORT).show()
-                            }
-                            saveLog(ctx, isRooted)
+                            if (suWorks) {
+                                if (bootloader == "Locked") Toast.makeText(ctx, "Root Access is Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show()
+                                else Toast.makeText(ctx, "Root Access Verified", Toast.LENGTH_SHORT).show()
+                            } else Toast.makeText(ctx, "Root Access not Available", Toast.LENGTH_SHORT).show()
+                            saveLog(ctx, suWorks, "SU")
                             onCheckComplete()
                         }
                     }
-                }
-            },
-            modifier = Modifier.fillMaxWidth(0.7f).height(64.dp),
-            shape = RoundedCornerShape(32.dp),
-            enabled = checkState != 1 && checkState != 3
-        ) {
-            Text(if (checkState == 0) "Verify Root" else "Verify Root Again")
+                },
+                modifier = Modifier.weight(1f).height(64.dp),
+                shape = RoundedCornerShape(topEnd = 32.dp, bottomEnd = 32.dp, topStart = rightButtonInnerRound, bottomStart = rightButtonInnerRound),
+                enabled = checkState != 1 && checkState != 3
+            ) {
+                Text("Interrogate", textAlign = TextAlign.Center)
+            }
         }
     }
 }
+
 @Composable
 fun WarningCard(bodyText: String) {
     Card(
@@ -429,7 +430,7 @@ fun WarningCard(bodyText: String) {
 }
 
 @Composable
-fun busybox() { // Let's hope Busybox isn't Busy!
+fun busybox() {
     var checkState by remember { mutableIntStateOf(0) }
     var foundPath by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
@@ -439,35 +440,33 @@ fun busybox() { // Let's hope Busybox isn't Busy!
         Box(Modifier.fillMaxWidth().weight(1f).clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(16.dp).verticalScroll(rememberScrollState())) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 terminalLine("NOTE : Most Modern Root Solutions hide their BusyBox Installation to Avoid Detection!")
-                terminalLine("Install 'BusyBox for NDK Module' if needed...") // For turning Android into LINUX ig
+                terminalLine("Install 'BusyBox for NDK Module' if needed...")
                 HorizontalDivider(Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant)
-                terminalLine("Ready to Verify?") // Nope
+                terminalLine("Ready to Verify?")
                 if (checkState == 2) {
                     terminalLine("Searching for BusyBox Paths...  ♪(´▽｀)")
-                    Thread.sleep(1000)
                     if (foundPath.isNotEmpty()) {
                         terminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
-                        terminalLine("$foundPath", MaterialTheme.colorScheme.primary)
+                        terminalLine(foundPath, MaterialTheme.colorScheme.primary)
                         Toast.makeText(ctx, "BusyBox found via Path", Toast.LENGTH_SHORT).show()
                     }
-                    else { terminalLine("Busybox not Found in Path!", MaterialTheme.colorScheme.error)
+                    else { 
+                        terminalLine("Busybox not Found in Path!", MaterialTheme.colorScheme.error)
                         Toast.makeText(ctx, "BusyBox not Found. Is it Installed?", Toast.LENGTH_SHORT).show()
                         terminalLine("Fine, but su Never Lies! ^_~")
                         terminalLine("Launching Shell....")
                         terminalLine("usr@android $ su")
-                        findBusyBoxPathBySU().takeIf { it.isNotEmpty() }?.let { path ->
-                            // This runs if a path is found
+                        val suPath = findBusyBoxPathBySU()
+                        if (suPath.isNotEmpty()) {
                             terminalLine("root@android $ which busybox")
                             terminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
                             Toast.makeText(ctx, "BusyBox found via Path as Root Nice Spoofing! :)", Toast.LENGTH_SHORT).show()
-                            terminalLine(path, MaterialTheme.colorScheme.primary)
+                            terminalLine(suPath, MaterialTheme.colorScheme.primary)
                             terminalLine("root@android $ exit")
-                        } ?: run {
-                            // This runs if the method returns ""
+                        } else {
                             terminalLine("Busybox not Found in Path as Root!", MaterialTheme.colorScheme.error)
                             Toast.makeText(ctx, "BusyBox not Installed.", Toast.LENGTH_SHORT).show()
                         }
-                        // This line displays regardless of the result
                         terminalLine("usr@android $ _")
                     }
                 }
@@ -488,11 +487,12 @@ fun busybox() { // Let's hope Busybox isn't Busy!
         }
     }
 }
+
 @Composable
 fun rootGuide() {
     var menuPath by rememberSaveable { mutableStateOf("MAIN") }
     val slot = remember { HardwareProbe.getProp("ro.boot.slot_suffix").replace("_", "").ifEmpty { "" } }
-    val kernelVersion = remember { HardwareProbe.getProp("ro.kernel.version") } // Calling Ms. Kernel. I hope Madam Responds!
+    val kernelVersion = remember { HardwareProbe.getProp("ro.kernel.version") }
     val isAB = slot.isNotEmpty()
     BackHandler(menuPath != "MAIN") { menuPath = "MAIN" }
     AnimatedContent(
@@ -504,8 +504,6 @@ fun rootGuide() {
     ) { targetPath ->
         Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             when (targetPath) {
-                // CHILL-ASTRO PRESENTS : A GOATED ROOTING GUIDE 🐐🐐🐐🐐🐐🐐🐐🐐🐐
-                // THIS IS NOT AI-GENERATED. I WROTE EVERYTHING! 🥺
                 "MAIN" -> {
                     WarningCard("Never trust 'One-Click Root' Apps and Please BE CAREFUL while following this guide. I am not responsible for any damages to your device.")
                     Text("GUIDE SECTIONS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
@@ -518,51 +516,15 @@ fun rootGuide() {
                     GuideHeader("Rooting : An Introduction", onBack = { menuPath = "MAIN" })
                     WarningCard("Please BE CAREFUL what apps you are giving Root Permissions to. I am not responsible for Data or Money Theft by Malware on your Device.")
                     InfoBlock("Introduction : What is Rooting?", "\nRooting an Android device means gaining full administrative (superuser) control, similar to an administrator on a computer, by unlocking deep system access restricted by manufacturers.")
-                    InfoBlock("What is Bootloader?", "\nA bootloader is the first piece of software that runs every time you turn on your Android device. It acts as a security guard and a guide, directing the hardware on how to start up and which operating system to \"hand off\" control to. This is locked by default to ensure stability and prevent malware from infecting the device.\n" +
-                            "\n" +
-                            "Since hardware components (like the processor and memory) don't know how to talk to the Android OS immediately upon receiving power, the bootloader provides the necessary instructions to bridge that gap.")
+                    InfoBlock("What is Bootloader?", "\nA bootloader is the first piece of software that runs every time you turn on your Android device. It acts as a security guard and a guide, directing the hardware on how to start up and which operating system to \"hand off\" control to. This is locked by default to ensure stability and prevent malware from infecting the device.")
                     InfoBlock("Functions of Bootloader : ", "\n• Hardware Initialization: It \"wakes up\" the processor, RAM, and storage.\n• Security Check: It verifies the integrity of the boot and recovery partitions to ensure the software hasn't been tampered with (a process known as Android Verified Boot). This is why we Unlock Bootloaders to Root as we are modifying System Partitions.\n• OS Loading: Once verified, it locates the Android kernel and loads it into the system memory to start the actual operating system.\n• Selection Mode: It allows you to boot into different modes, such as Recovery Mode (for system repairs) or Fastboot/Download Mode (for flashing software). ")
-                    InfoBlock("Locked vs Unlocked Bootloader : ","\n- Features of Locked Bootloader : \n\n" +
-                            "• Security: Prevents unauthorized software or malware from being installed at the deepest level of the device.\n" +
-                            "• Stability: Ensures the device only runs the version of Android specifically optimized for its hardware.\n" +
-                            "• Warranty: Modifying the bootloader often voids manufacturer warranties.\n" +
-                            "\n- Features of Unlocked Bootloader : \n\n" +
-                            "• Enables Deep Customization : Allows users to install Custom ROMs (like LineageOS), Generic System Images (GSI) or different versions of Android by allowing us to Boot Third Party Firmware.\n" +
-                            "• Allows Root Access: An unlocked bootloader is usually a prerequisite for gaining \"root\" (administrative) privileges because it allows booting modified boot files.")
+                    InfoBlock("Locked vs Unlocked Bootloader : ","\n- Features of Locked Bootloader : \n\n• Security: Prevents unauthorized software or malware from being installed at the deepest level of the device.\n• Stability: Ensures the device only runs the version of Android specifically optimized for its hardware.\n• Warranty: Modifying the bootloader often voids manufacturer warranties.\n\n- Features of Unlocked Bootloader : \n\n• Enables Deep Customization : Allows users to install Custom ROMs (like LineageOS), Generic System Images (GSI) or different versions of Android by allowing us to Boot Third Party Firmware.\n• Allows Root Access: An unlocked bootloader is usually a prerequisite for gaining \"root\" (administrative) privileges because it allows booting modified boot files.")
                     InfoBlock("Pros of Rooting :", "\n✓ Bloatware Removal\n✓ System-wide Adblocking\n✓ Overclocking and Underclocking Device\n✓ Modifying User Experience\n✓ Deep level Customization\n✓ Full Data Backups")
                     InfoBlock("Cons of Rooting :", "\n✗ Usually Voids Warranty\n✗ Increased Security Risks\n✗ Loss of Hardware Encoding\n✗ No Official Updates (OTA)\n✗ Data loss\n✗ Risk of Bricking Device")
                     InfoBlock("What is Bricking?\n", "Bricking refers to a device becoming completely non-functional, usually due to a corrupted software update or a failed firmware modification.")
-                    InfoBlock("Types of Bricking and How to fix them :\n","1. Soft Brick : A soft brick is a \"recoverable\" state. The device might be stuck in a boot loop (constantly restarting at the logo) or booting straight into recovery mode.\n\n" +
-                            "- The Cause : Usually a minor software error, incompatible app, or a failed \"rooting\" attempt.\n" +
-                            "- The Fix: Can often be fixed by a factory reset, clearing the cache, or reflashing the original firmware using a computer.\n\n" +
-                            "2. Hard Brick : A hard brick is much more serious. The device shows no signs of life. No lights, no vibration, and the screen remains black.\n\n" +
-                            "- The Cause: This happens when the bootloader (the \"first-stage\" software we discussed earlier) or the kernel is corrupted or deleted.\n" +
-                            "- The Fix: This often requires specialized hardware tools to bypass the main software, or in many cases, a physical replacement of the motherboard. Tools suck as SP Flash Tool and MTKClient can do this Work. However FASTBOOT is not Accessible during this time.")
+                    InfoBlock("Types of Bricking and How to fix them :\n","1. Soft Brick : A soft brick is a \"recoverable\" state. The device might be stuck in a boot loop (constantly restarting at the logo) or booting straight into recovery mode.\n\n- The Cause : Usually a minor software error, incompatible app, or a failed \"rooting\" attempt.\n- The Fix: Can often be fixed by a factory reset, clearing the cache, or reflashing the original firmware using a computer.\n\n2. Hard Brick : A hard brick is much more serious. The device shows no signs of life. No lights, no vibration, and the screen remains black.\n\n- The Cause: This happens when the bootloader (the \"first-stage\" software we discussed earlier) or the kernel is corrupted or deleted.\n- The Fix: This often requires specialized hardware tools to bypass the main software, or in many cases, a physical replacement of the motherboard. Tools suck as SP Flash Tool and MTKClient can do this Work. However FASTBOOT is not Accessible during this time.")
                     InfoBlock("What is Device Mapper Verity (dm-verity)?\n", "Device Mapper Verity is a transparent integrity checking feature of the Linux kernel. Its sole job is to ensure that the data on critical partitions (like /system, /vendor, or /product) has not been modified even by a single bit. This is why it is Sometimes Patched or Made Blank when Modding.")
-                    InfoBlock("How does dm-verity work?\n", "1. The Layered Hashes\n" +
-                            "\n" +
-                            "The system creates a \"Hash Tree\" (Merkle Tree).\n" +
-                            "\n" +
-                            "• It hashes every 4KB block on the partition.\n" +
-                            "\n" +
-                            "• It then hashes those hashes.\n" +
-                            "\n" +
-                            "• It keeps doing this until only one hash remains at the very top.\n" +
-                            "\n" +
-                            "2. The Root Hash\n" +
-                            "\n" +
-                            "This final single hash is called the Root Hash. This hash is digitally signed by the manufacturer (Google, Samsung, etc.) and stored in a read-only area (the VBMeta partition).\n" +
-                            "3. Real-Time Verification\n" +
-                            "\n" +
-                            "When the Android OS wants to read a file:\n" +
-                            "\n" +
-                            "• The kernel reads the 4KB block from the disk.\n" +
-                            "\n" +
-                            "• It calculates the hash of that block.\n" +
-                            "\n" +
-                            "• It compares it against the \"parent\" hash in the tree, all the way up to the Root Hash.\n" +
-                            "\n" +
-                            "• If the math doesn't match perfectly, it knows the block was tampered with.")
+                    InfoBlock("How does dm-verity work?\n", "1. The Layered Hashes\n\nThe system creates a \"Hash Tree\" (Merkle Tree).\n\n• It hashes every 4KB block on the partition.\n\n• It then hashes those hashes.\n\n• It keeps doing this until only one hash remains at the very top.\n\n2. The Root Hash\n\nThis final single hash is called the Root Hash. This hash is digitally signed by the manufacturer (Google, Samsung, etc.) and stored in a read-only area (the VBMeta partition).\n3. Real-Time Verification\n\nWhen the Android OS wants to read a file:\n\n• The kernel reads the 4KB block from the disk.\n\n• It calculates the hash of that block.\n\n• It compares it against the \"parent\" hash in the tree, all the way up to the Root Hash.\n\n• If the math doesn't match perfectly, it knows the block was tampered with.")
                     InfoBlock("Suggestion from My Experience :", "\nAs from my little experience from Rooting, use Magisk if you are not sure. It works on almost every device and it can be flashed with PC and Custom Recovery ( like TWRP or OrangeFox ) and does the job very well. Unless your device is old, DO NOT USE EXPLOITS! I had soft-bricked my own device like this so BE CAREFUL! If you want to explore more options, I recommend APatch and KernelSU ( if Supported ). They don't work on every device but are pretty reliable.")
                 }
                 "UNLOCK" -> {
@@ -632,7 +594,7 @@ fun rootGuide() {
                     }
                     expandableMethodLocal("Magisk Guide for Samsung", R.drawable.ic_magisk) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Unlike other Manufacturers who use FASTBOOT, Samsung uses ODIN for Flashing. This is one of the Key Reasons why Rooting a Samsung Device is Harder. You don't flash a 32 MB to 64 MB .img File, but the ENTIRE Firmware with a Part Modified. Ok I will Explain!\n\nHere are the Named '.tar' files you get in Stock Firmware :\n\n1. BL -> Contains the Bootloader.\n2. AP -> Contains the Kernel, Recovery and System.\n3. CP -> Conatins Modem Firmware.\n4. CSC -> Contains Region-Specefic Stuff\n5. HOME_CSC -> Same as CSC.\n6. USERDATA -> Contains your Data ( Blank by Default ).\n")
+                            Text("Unlike other Manufacturers who use FASTBOOT, Samsung uses ODIN for Flashing. This is one of the Key Reasons why Rooting a Samsung Device is Harder. You don't flash a 32 MB to 64 MB .img File, but the ENTIRE Firmware with a Part Modified.\n\nHere are the Named '.tar' files you get in Stock Firmware :\n\n1. BL -> Contains the Bootloader.\n2. AP -> Contains the Kernel, Recovery and System.\n3. CP -> Conatins Modem Firmware.\n4. CSC -> Contains Region-Specefic Stuff\n5. HOME_CSC -> Same as CSC.\n6. USERDATA -> Contains your Data ( Blank by Default ).\n")
                             Text("Follow these steps to Flash Modified AP :")
                             Text("STEP 1 : Download Stock Firmware and Transfer the '.tar' having the Text 'AP' in its Name to your Device.")
                             Text("STEP 2 : Patch this '.tar' and Transfer it to PC.")
@@ -642,7 +604,7 @@ fun rootGuide() {
                         }
                     }
                     expandableMethodLocal("KernelSU", R.drawable.ic_ksu) {
-                        if(kernelVersion < "5.10") WarningCard("This Device doesn't Support KernelSU. You have to compile your Device's Kernel and inteegrate KernelSU into it YOURSELF! Else follow these steps on Another Device!")
+                        if(kernelVersion < "5.10") WarningCard("This Device doesn't Support KernelSU. You have to compile your Device's Kernel and inteegrate KernelSU into it YOURSELF!")
                         Text("First obtain your stock boot.img or init_boot.img and patch it using KernelSU App and then Flash it.\n")
                         FlashLogic(isAB, slot, true)
                         Text("Pros :\n✓ Fully Systemless.\n✓ Very hard to detect by Banking Apps.\n✓ Leaves no Traces.\n\nCons :\n✗ Only Supports devices with Generic Kernel Image.\n")
@@ -663,6 +625,7 @@ fun rootGuide() {
         }
     }
 }
+
 @Composable
 fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -695,10 +658,10 @@ fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) {
             if(hasInit) codeBox("$ fastboot flash init_boot_a patched.img")
             codeBox("$ fastboot flash boot_b patched.img")
             if(hasInit) codeBox("$ fastboot flash inti_boot_b patched.img")
-
         }
     }
 }
+
 @Composable
 fun navCard(title: String, icon: ImageVector, onClick: () -> Unit) {
     Card(Modifier.fillMaxWidth().clickable { onClick() }, shape = RoundedCornerShape(16.dp)) {
@@ -710,6 +673,7 @@ fun navCard(title: String, icon: ImageVector, onClick: () -> Unit) {
         }
     }
 }
+
 @Composable
 fun expandableMethod(title: String, icon: ImageVector, content: @Composable ColumnScope.() -> Unit) {
     var expanded by remember { mutableStateOf(false) }
@@ -727,6 +691,7 @@ fun expandableMethod(title: String, icon: ImageVector, content: @Composable Colu
         }
     }
 }
+
 @Composable
 fun expandableMethodLocal(title: String, resId: Int, content: @Composable ColumnScope.() -> Unit) {
     var expanded by remember { mutableStateOf(false) }
@@ -744,6 +709,7 @@ fun expandableMethodLocal(title: String, resId: Int, content: @Composable Column
         }
     }
 }
+
 @Composable
 fun GuideHeader(title: String, onBack: () -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { onBack() }.padding(bottom = 8.dp)) {
@@ -752,6 +718,7 @@ fun GuideHeader(title: String, onBack: () -> Unit) {
         Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.ExtraBold)
     }
 }
+
 @Composable
 fun InfoBlock(t: String, d: String) {
     Column {
@@ -760,16 +727,19 @@ fun InfoBlock(t: String, d: String) {
         Spacer(Modifier.height(8.dp))
     }
 }
+
 @Composable
 fun codeBox(cmd: String) {
     Surface(color = Color.Black, shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
         Text(cmd, color = Color.White, modifier = Modifier.padding(8.dp), fontFamily = FontFamily.Monospace, fontSize = 11.sp)
     }
 }
+
 @Composable
 fun terminalLine(text: String, color: Color = MaterialTheme.colorScheme.onSurfaceVariant) {
     Text(text, color = color, fontFamily = FontFamily.Monospace, fontSize = 13.sp)
 }
+
 @Composable
 fun linkCard(t: String, url: String) {
     val ctx = LocalContext.current
@@ -780,10 +750,11 @@ fun linkCard(t: String, url: String) {
         }
     }
 }
+
 @Composable
 fun settings(
-    dark: Boolean,
-    onDark: (Boolean) -> Unit,
+    themeMode: Int,
+    onThemeChange: (Int) -> Unit,
     dyn: Boolean,
     onDyn: (Boolean) -> Unit
 ) {
@@ -796,6 +767,8 @@ fun settings(
     var logoTaps by remember { mutableIntStateOf(0) }
     var showPoem by remember { mutableStateOf(false) }
     var isChecking by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
+    
     val appVersion = remember {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -806,32 +779,15 @@ fun settings(
             }
         } catch (e: Exception) { "36.23.1.0" }
     }
-    fun isNewer(current: String, remote: String): Boolean {
-        val currParts = current.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
-        val remoteParts = remote.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
-        val maxLength = maxOf(currParts.size, remoteParts.size)
-        for (i in 0 until maxLength) {
-            val currPart = currParts.getOrElse(i) { 0 }
-            val remotePart = remoteParts.getOrElse(i) { 0 }
-            if (remotePart > currPart) return true
-            if (remotePart < currPart) return false
-        }
-        return false
-    }
+
     fun performUpdateCheck() {
         scope.launch(Dispatchers.IO) {
             isChecking = true
             try {
-                val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/FRC-SU_V.txt"
+                val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/be9757f468f5bc744eced1bb1a88342b4a78e646/FRC-SU_V.txt"
                 val remoteVersion = URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
-                    if (isNewer(appVersion ?: "36.23.1.0", remoteVersion)) {
-                        Toast.makeText(ctx, "🎉 $remoteVersion OUT NOW!", Toast.LENGTH_LONG).show()
-                    } else if (isNewer(appVersion ?: remoteVersion, "36.23.1.0")) {
-                        Toast.makeText(ctx, "⚠️ You are using an UNSTABLE BUILD!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(ctx, "🎉 Your Version is UP TO DATE!", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(ctx, "Your Version is UP TO DATE!", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -842,244 +798,92 @@ fun settings(
             }
         }
     }
+
     if (showLicense) {
         BasicAlertDialog(onDismissRequest = { showLicense = false }) {
-            Surface(
-                shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 6.dp,
-                modifier = Modifier
-                    .widthIn(max = 500.dp)
-                    .padding(16.dp)
-            ) {
+            Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surface, tonalElevation = 6.dp, modifier = Modifier.widthIn(max = 500.dp).padding(16.dp)) {
                 Column(modifier = Modifier.padding(24.dp)) {
-                    Text(
-                        text = "MIT License",
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Text(text = "MIT License", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(32.dp))
                     Box(modifier = Modifier.heightIn(max = 300.dp).verticalScroll(rememberScrollState())) {
-                        Text(
-                            text = """
-                            MIT License
-                            
-                            Copyright (c) 2025 Dev. Chill-Astro
-                            
-                            Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-                            
-                            The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-                            
-                            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-                        """.trimIndent(),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        Text(text = "MIT License\n\nCopyright (c) 2025 Dev. Chill-Astro\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Spacer(Modifier.height(24.dp))
-                    TextButton(
-                        modifier = Modifier.align(Alignment.End),
-                        onClick = { showLicense = false }
-                    ) {
-                        Text("Dismiss")
-                    }
+                    TextButton(modifier = Modifier.align(Alignment.End), onClick = { showLicense = false }) { Text("Dismiss") }
                 }
             }
         }
     }
     if (showPoem) {
         BasicAlertDialog(onDismissRequest = { showPoem = false }) {
-            Surface(
-                shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 6.dp,
-                modifier = Modifier.widthIn(max = 400.dp).padding(16.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(Color(0xFFFF9933), Color(0xFFFFFFFF), Color(0xFF128807))
-                                ),
-                                shape = MaterialTheme.shapes.large
-                            )
-                            .padding(24.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "\"यूनान-ओ-मिस्र-ओ-रूमा, सब मिट गए जहाँ से\nअब तक मगर है बाक़ी, नाम-ओ-निशाँ हमारा\nकुछ बात है कि हस्ती मिटती नहीं हमारी\nसदियों रहा है दुश्मन दौर-ए-ज़माँ हमारा\"",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                lineHeight = 30.sp,
-                                color = Color.Black
-                            ),
-                            textAlign = TextAlign.Center
-                        )
+            Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surface, tonalElevation = 6.dp, modifier = Modifier.widthIn(max = 400.dp).padding(16.dp)) {
+                Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(modifier = Modifier.fillMaxWidth().background(brush = Brush.verticalGradient(colors = listOf(Color(0xFFFF9933), Color(0xFFFFFFFF), Color(0xFF128807))), shape = MaterialTheme.shapes.large).padding(24.dp), contentAlignment = Alignment.Center) {
+                        Text(text = "\"यूनान-ओ-मिस्र-ओ-रूमा, सब मिट गए जहाँ से\nअब तक मगर है बाक़ी, नाम-ओ-निशाँ हमारा\nकुछ बात है कि हस्ती मिटती नहीं हमारी\nसदियों रहा है दुश्मन दौर-ए-ज़माँ हमारा\"", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold, lineHeight = 30.sp, color = Color.Black), textAlign = TextAlign.Center)
                     }
                     Spacer(Modifier.height(16.dp))
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = { showPoem = false; logoTaps = 0 },
-                        shape = MaterialTheme.shapes.medium
-                    ) {
-                        Text("Close")
-                    }
+                    Button(modifier = Modifier.fillMaxWidth(), onClick = { showPoem = false; logoTaps = 0 }, shape = MaterialTheme.shapes.medium) { Text("Close") }
                 }
             }
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.root_logo),
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .size(160.dp)
-                .clickable(indication = null, interactionSource = noRipple) {
-                    logoTaps++
-                    if (logoTaps == 5) Toast.makeText(ctx, "It is our duty to pay for our liberty...", Toast.LENGTH_SHORT).show()
-                    if (logoTaps == 5) Toast.makeText(ctx, "It is our duty to pay for our liberty...", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 10) Toast.makeText(ctx, "...with our own blood.", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 15) Toast.makeText(ctx, "Give me blood, and I will give you freedom!", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 20) Toast.makeText(ctx, "Delhi Chalo!", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 25) Toast.makeText(ctx, "Success always stands on the pillars of failure.", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 30) Toast.makeText(ctx, "No real change in history has ever been achieved...", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 35) Toast.makeText(ctx, "...by discussions alone.", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 40) Toast.makeText(ctx, "One individual may die for an idea,", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 45) Toast.makeText(ctx, "but that idea will, after his death,", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 50) Toast.makeText(ctx, "incarnate itself in a thousand lives.", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 55) Toast.makeText(ctx, "Freedom is not given, it is taken.", Toast.LENGTH_LONG).show()
-                    if (logoTaps == 103) Toast.makeText(ctx, "5 Taps!", Toast.LENGTH_SHORT).show()
-                    if (logoTaps == 104) Toast.makeText(ctx, "4 Taps!", Toast.LENGTH_SHORT).show()
-                    if (logoTaps == 105) Toast.makeText(ctx, "3 Taps!", Toast.LENGTH_SHORT).show()
-                    if (logoTaps == 106) Toast.makeText(ctx, "2 Taps!", Toast.LENGTH_SHORT).show()
-                    if (logoTaps == 107) Toast.makeText(ctx, "1 Tap!", Toast.LENGTH_SHORT).show()
-                    if (logoTaps == 108) {
-                        Toast.makeText(ctx, "वन्दे मातरम्!", Toast.LENGTH_SHORT).show() // From Anand Math by Bankim Chandra Chatterjee
-                        showPoem = true // Tarana-e-Milli by Muhammad Iqbal. Patriotism!
-                        logoTaps = 0
+    Column(Modifier.fillMaxSize().padding(24.dp).verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
+        Icon(painter = painterResource(id = R.drawable.root_logo), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(160.dp).clickable(indication = null, interactionSource = noRipple) {
+            logoTaps++
+            if (logoTaps == 108) { Toast.makeText(ctx, "वन्दे मातरम्!", Toast.LENGTH_SHORT).show(); showPoem = true; logoTaps = 0 }
+        })
+        Text(text = buildAnnotatedString { append("Developer: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("Chill-Astro Software") } }, fontWeight = FontWeight.ExtraBold, modifier = Modifier.padding(top = 16.dp).clickable(indication = null, interactionSource = noRipple) { if (++bTaps == 5) { Toast.makeText(ctx, "Chill-Astro Software - TRANSPARENT BY DESIGN", Toast.LENGTH_SHORT).show(); bTaps = 0 } })
+        Text(text = buildAnnotatedString { append("Version: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append(appVersion ?: "36.23.1.0") } }, fontWeight = FontWeight.Bold, modifier = Modifier.clickable(indication = null, interactionSource = noRipple) { vTaps++; if (vTaps == 5) Toast.makeText(ctx, "Hi there! You Found me. :)", Toast.LENGTH_SHORT).show() })
+        TextButton(modifier = Modifier.padding(top = 8.dp), onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/Chill-Astro/FOSS-Root-Checker".toUri())) }) { Icon(Icons.Rounded.Code, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("Official Repository") }
+        TextButton(onClick = { showLicense = true }) { Icon(Icons.Rounded.Info, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("MIT LICENCE") }
+        HorizontalDivider(Modifier.padding(vertical = 24.dp))
+        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(text = "PREFERENCES", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+            
+            ListItem(
+                headlineContent = { Text("Theme") },
+                leadingContent = { Icon(Icons.Rounded.Nightlight, null) },
+                trailingContent = {
+                    Box {
+                        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+                            TextField(
+                                value = when(themeMode) { 1 -> "Light"; 2 -> "Dark"; else -> "System" },
+                                onValueChange = {},
+                                readOnly = true,
+                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                                    unfocusedContainerColor = Color.Transparent,
+                                    focusedContainerColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    focusedIndicatorColor = Color.Transparent
+                                ),
+                                modifier = Modifier.width(140.dp).menuAnchor()
+                            )
+                            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                                DropdownMenuItem(text = { Text("System") }, onClick = { onThemeChange(0); expanded = false })
+                                DropdownMenuItem(text = { Text("Light") }, onClick = { onThemeChange(1); expanded = false })
+                                DropdownMenuItem(text = { Text("Dark") }, onClick = { onThemeChange(2); expanded = false })
+                            }
+                        }
                     }
                 }
-        )
-        Text(
-            text = buildAnnotatedString {
-                append("Developer: ")
-                withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("Chill-Astro Software") }
-            },
-            fontWeight = FontWeight.ExtraBold,
-            modifier = Modifier.padding(top = 16.dp).clickable(indication = null, interactionSource = noRipple) {
-                if (++bTaps == 5) {
-                    Toast.makeText(ctx, "Chill-Astro Software - TRANSPARENT BY DESIGN", Toast.LENGTH_SHORT).show()
-                    bTaps = 0
-                }
-            }
-        )
-        Text(
-            text = buildAnnotatedString {
-                append("Version: ")
-                withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append(appVersion ?: "36.23.1.0") }
-            },
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.clickable(indication = null, interactionSource = noRipple) {
-                vTaps++
-                if (vTaps == 5) Toast.makeText(ctx, "Hi there! You Found me. :)", Toast.LENGTH_SHORT).show()
-                if (vTaps == 10) Toast.makeText(ctx, "I hope you like the App! ^_^", Toast.LENGTH_LONG).show()
-                if (vTaps == 15) Toast.makeText(ctx, "Ok now you are just poking me....", Toast.LENGTH_LONG).show()
-                if (vTaps == 25) Toast.makeText(ctx, "Ok its not funny. Now its hurting my screen!", Toast.LENGTH_LONG).show()
-                if (vTaps == 50) Toast.makeText(ctx, "Does Tapping give you anything?", Toast.LENGTH_LONG).show()
-                if (vTaps == 75) Toast.makeText(ctx, "Are you a Human Autoclicker?", Toast.LENGTH_LONG).show()
-                if (vTaps == 100) Toast.makeText(ctx, "Or maybe you ARE an Autoclicker?", Toast.LENGTH_LONG).show()
-                if (vTaps == 150) {
-                    Toast.makeText(ctx, "Touch Some Grass! 🌿", Toast.LENGTH_LONG).show()
-                    android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                        exitProcess(0)
-                    }, 1000)
-                }
-                else null
-            }
-        )
-        TextButton(
-            modifier = Modifier.padding(top = 8.dp),
-            onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/Chill-Astro/FOSS-Root-Checker".toUri())) }
-        ) {
-            Icon(Icons.Rounded.Code, null, Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-            Text("Official Repository")
-            Spacer(Modifier.width(12.dp))
-        }
-        TextButton(onClick = { showLicense = true }) {
-            Icon(Icons.Rounded.Info, null, Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-            Text("MIT LICENCE")
-        }
-        HorizontalDivider(Modifier.padding(vertical = 24.dp))
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                modifier = Modifier.align(Alignment.Start),
-                text = "PREFERENCES",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary
             )
-            ListItem(
-                headlineContent = { Text("Dark Theme") },
-                leadingContent = { Icon(Icons.Rounded.Nightlight, null) },
-                trailingContent = { Switch(checked = dark, onCheckedChange = onDark) }
-            )
+
             if (Build.VERSION.SDK_INT >= 31) {
-                ListItem(
-                    headlineContent = { Text("Use System Colours") },
-                    leadingContent = { Icon(Icons.Rounded.Palette, null) },
-                    trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn) }
-                )
+                ListItem(headlineContent = { Text("Use System Colours") }, leadingContent = { Icon(Icons.Rounded.Palette, null) }, trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn) })
             }
             Spacer(Modifier.height(16.dp))
-            FilledTonalButton(
-                onClick = { if (!isChecking) performUpdateCheck() },
-                modifier = Modifier.width(220.dp),
-                shape = CircleShape,
-                contentPadding = PaddingValues(vertical = 12.dp)
-            ) {
-                if (isChecking) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(18.dp),
-                        strokeWidth = 2.dp,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer
-                    )
-                } else {
-                    Icon(Icons.Rounded.Refresh, null, Modifier.size(18.dp))
-                    Spacer(Modifier.width(8.dp))
-                    Text("Check for Updates")
-                }
+            FilledTonalButton(onClick = { if (!isChecking) performUpdateCheck() }, modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp), shape = CircleShape) {
+                if (isChecking) CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                else { Icon(Icons.Rounded.Refresh, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("Check for Updates") }
             }
         }
-        HorizontalDivider(
-            modifier = Modifier.padding(vertical = 24.dp).fillMaxWidth(0.3f),
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.outlineVariant
-        )
-        Text(
-            text = "Made with 💖 by Chill-Astro",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        HorizontalDivider(Modifier.padding(vertical = 24.dp).fillMaxWidth(0.3f), thickness = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
+        Text(text = "Made with 💖 by Chill-Astro", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
+
 @Composable
 fun historyContent(logs: List<String>, onClear: () -> Unit) {
     Column(Modifier.fillMaxWidth().padding(24.dp)) {
@@ -1092,55 +896,71 @@ fun historyContent(logs: List<String>, onClear: () -> Unit) {
         else LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(logs) { log ->
                 val p = log.split("|")
-                if (p.size >= 4) Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp)) {
-                    Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Surface(Modifier.size(40.dp), shape = CircleShape, color = if (p[0] == "OK") Color(0xFF4CAF50) else Color(0xFFB00020)) {
-                            Icon(if (p[0] == "OK") Icons.Rounded.Check else Icons.Rounded.Close, null, Modifier.padding(8.dp), Color.White)
+                if (p.size >= 5) {
+                    val isOk = p[0] == "OK"
+                    val type = p[4]
+                    val displayText = if (type == "SCAN") {
+                        if (isOk) "Root Traces Found" else "Root Traces not Found"
+                    } else {
+                        if (isOk) "Root Access Verified" else "Root Access not Available"
+                    }
+                    Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp)) {
+                        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Surface(Modifier.size(40.dp), shape = CircleShape, color = if (isOk) Color(0xFF4CAF50) else Color(0xFFB00020)) {
+                                Icon(if (isOk) Icons.Rounded.Check else Icons.Rounded.Close, null, Modifier.padding(8.dp), Color.White)
+                            }
+                            Spacer(Modifier.width(16.dp))
+                            Column { 
+                                Text(displayText, fontWeight = FontWeight.Bold)
+                                Text("${p[1]} • Android ${p[3]}", style = MaterialTheme.typography.bodySmall, color = Color.Gray) 
+                            }
                         }
-                        Spacer(Modifier.width(16.dp))
-                        Column { Text(if (p[0] == "OK") "Rooted ${Build.MODEL}" else "Non-Rooted ${Build.MODEL}", fontWeight = FontWeight.Bold); Text("${p[1]} • Android ${p[3]}", style = MaterialTheme.typography.bodySmall, color = Color.Gray) }
                     }
                 }
             }
         }
     }
 }
+
 enum class AppDestinations(val label: String, val icon: ImageVector) {
     HOME("Root", Icons.Rounded.Tag),
     BUSYBOX("BusyBox", Icons.Rounded.Terminal),
     GUIDE("Guide", Icons.AutoMirrored.Rounded.MenuBook),
     SETTINGS("Settings", Icons.Rounded.Settings)
 }
+
 fun isSUWorking(): Boolean {
     return try {
         val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "id"))
         val output = process.inputStream.bufferedReader().use { it.readLine() }
         process.waitFor()
-        output?.contains("uid=0") == true // Root User is ALWAYS 0
-    } catch (e: Exception) {
-        false
-    }
+        output?.contains("uid=0") == true
+    } catch (e: Exception) { false }
 }
+
 fun findBusyBoxPath(): String {
-    val paths = arrayOf("/system/xbin/busybox", "/system/bin/busybox", "/data/adb/magisk/busybox", "/data/adb/magisk/busybox", "/data/adb/ksu/bin/busybox", "/data/adb/ap/bin/busybox")
+    val paths = arrayOf("/system/xbin/busybox", "/system/bin/busybox", "/data/adb/magisk/busybox", "/data/adb/ksu/bin/busybox", "/data/adb/ap/bin/busybox")
     return paths.firstOrNull { java.io.File(it).exists() } ?: ""
 }
+
 fun findBusyBoxPathBySU(): String {
     return try {
         val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "which busybox"))
         val output = process.inputStream.bufferedReader().use { it.readLine() }
         process.waitFor()
-        if (output.isNullOrEmpty()) "" else output.trim()
-    } catch (e: Exception) {
-        ""
-    }
+        output?.trim() ?: ""
+    } catch (e: Exception) { "" }
 }
-fun saveLog(c: Context, r: Boolean) {
+
+fun saveLog(c: Context, r: Boolean, type: String) {
     val p = c.getSharedPreferences("su_logs", Context.MODE_PRIVATE)
-    val entry = "${if (r) "OK" else "NO"}|${SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault()).format(Date())}|${Build.MODEL}|${Build.VERSION.RELEASE}"
+    // OK/NO | Date | Model | Android | Type
+    val entry = "${if (r) "OK" else "NO"}|${SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault()).format(Date())}|${Build.MODEL}|${Build.VERSION.RELEASE}|$type"
     val set = p.getStringSet("logs", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
     set.add("${System.currentTimeMillis()}_$entry")
     p.edit { putStringSet("logs", set) }
 }
+
 fun getLogs(c: Context): List<String> = c.getSharedPreferences("su_logs", Context.MODE_PRIVATE).getStringSet("logs", emptySet())?.toList()?.sortedByDescending { it.substringBefore("_") }?.map { it.substringAfter("_") } ?: emptyList()
+
 fun clearLogs(c: Context) = c.getSharedPreferences("su_logs", Context.MODE_PRIVATE).edit { remove("logs") }
