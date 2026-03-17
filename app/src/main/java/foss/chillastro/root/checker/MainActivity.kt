@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 package foss.chillastro.root.checker
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,6 +15,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -21,18 +24,21 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -55,6 +61,7 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
 import androidx.compose.material.icons.automirrored.rounded.LibraryBooks
 import androidx.compose.material.icons.automirrored.rounded.MenuBook
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Animation
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Code
@@ -77,6 +84,7 @@ import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -90,7 +98,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
@@ -100,6 +110,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -112,7 +123,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -138,15 +148,21 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.system.exitProcess
 
 // Getting Hardware Props
 object HardwareProbe {
     fun getProp(prop: String): String = try {
         Runtime.getRuntime().exec(arrayOf("getprop", prop)).inputStream.bufferedReader().readLine() ?: ""
-    } catch (e: Exception) { "" }
+    } catch (_: Exception) { "" }
     fun getBootloader(): String = if (getProp("ro.boot.flash.locked") == "0") "Unlocked" else "Locked"
     fun getVerity(): String = getProp("ro.boot.veritymode").ifEmpty { "disabled" }
+    
+    fun getTotalRAM(context: Context): Long {
+        val actManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val memInfo = ActivityManager.MemoryInfo()
+        actManager.getMemoryInfo(memInfo)
+        return memInfo.totalMem
+    }
 }
 
 class MainActivity : ComponentActivity() {
@@ -161,6 +177,13 @@ class MainActivity : ComponentActivity() {
             var themeMode by remember { mutableIntStateOf(prefs.getInt("theme_mode", 0)) }
             var useDynamic by remember { mutableStateOf(prefs.getBoolean("use_dynamic", true)) }
             
+            val totalRam = remember { HardwareProbe.getTotalRAM(context) }
+            val isLowRam = totalRam < 4L * 1024 * 1024 * 1024 // 4GB
+            
+            var reducedAnimations by remember { 
+                mutableStateOf(if (isLowRam) true else prefs.getBoolean("reduced_animations", false)) 
+            }
+            
             val isSystemDark = isSystemInDarkTheme()
             val darkTheme = when(themeMode) {
                 1 -> false
@@ -169,7 +192,7 @@ class MainActivity : ComponentActivity() {
             }
 
             FOSSRootCheckerTheme(darkTheme = darkTheme, dynamicColor = useDynamic) {
-                caRootChecker(
+                CaRootChecker(
                     themeMode = themeMode,
                     onThemeChange = { 
                         themeMode = it
@@ -179,7 +202,13 @@ class MainActivity : ComponentActivity() {
                     onDyn = { 
                         useDynamic = it
                         prefs.edit { putBoolean("use_dynamic", it) }
-                    }
+                    },
+                    reducedAnimations = reducedAnimations,
+                    onReducedAnimationsChange = {
+                        reducedAnimations = it
+                        prefs.edit { putBoolean("reduced_animations", it) }
+                    },
+                    isLowRam = isLowRam
                 )
             }
         }
@@ -187,7 +216,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun caRootChecker(themeMode: Int, onThemeChange: (Int) -> Unit, dyn: Boolean, onDyn: (Boolean) -> Unit) {
+fun CaRootChecker(
+    themeMode: Int, 
+    onThemeChange: (Int) -> Unit, 
+    dyn: Boolean, 
+    onDyn: (Boolean) -> Unit,
+    reducedAnimations: Boolean,
+    onReducedAnimationsChange: (Boolean) -> Unit,
+    isLowRam: Boolean
+) {
     var dest by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
     var showHistorySheet by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -196,6 +233,7 @@ fun caRootChecker(themeMode: Int, onThemeChange: (Int) -> Unit, dyn: Boolean, on
     BackHandler(dest != AppDestinations.HOME) { dest = AppDestinations.HOME }
     
     NavigationSuiteScaffold(
+        layoutType = NavigationSuiteType.NavigationBar,
         navigationSuiteItems = {
             AppDestinations.entries.forEach { item ->
                 item(
@@ -228,55 +266,70 @@ fun caRootChecker(themeMode: Int, onThemeChange: (Int) -> Unit, dyn: Boolean, on
                 targetState = dest,
                 modifier = Modifier.padding(padding).fillMaxSize(),
                 transitionSpec = {
-                    val spec = spring<IntOffset>(stiffness = Spring.StiffnessLow)
-                    if (targetState.ordinal > initialState.ordinal) {
-                        slideInHorizontally(spec) { it } + fadeIn() togetherWith slideOutHorizontally(spec) { -it } + fadeOut()
+                    if (reducedAnimations) {
+                        (fadeIn(animationSpec = tween(300)) + scaleIn(initialScale = 0.95f)) togetherWith 
+                        (fadeOut(animationSpec = tween(300)) + scaleOut(targetScale = 0.95f))
                     } else {
-                        slideInHorizontally(spec) { -it } + fadeIn() togetherWith slideOutHorizontally(spec) { it } + fadeOut()
+                        val spec = spring<IntOffset>(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow)
+                        if (targetState.ordinal > initialState.ordinal) {
+                            (slideInHorizontally(spec) { it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith 
+                            (slideOutHorizontally(spec) { -it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
+                        } else {
+                            (slideInHorizontally(spec) { -it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith 
+                            (slideOutHorizontally(spec) { it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
+                        }
                     }
                 }, label = "PageTransition"
             ) { target ->
                 when (target) {
-                    AppDestinations.HOME -> rootChecker(onCheckComplete = refreshLogs)
-                    AppDestinations.BUSYBOX -> busybox()
-                    AppDestinations.GUIDE -> rootGuide()
-                    AppDestinations.SETTINGS -> settings(themeMode, onThemeChange, dyn, onDyn)
+                    AppDestinations.HOME -> RootChecker(reducedAnimations, onCheckComplete = refreshLogs)
+                    AppDestinations.BUSYBOX -> Busybox()
+                    AppDestinations.GUIDE -> RootGuide()
+                    AppDestinations.SETTINGS -> Settings(
+                        themeMode, onThemeChange, dyn, onDyn, 
+                        reducedAnimations, onReducedAnimationsChange, isLowRam
+                    )
                 }
             }
         }
 
         if (showHistorySheet) {
-            ModalBottomSheet(onDismissRequest = { showHistorySheet = false }) {
-                historyContent(logs = logs, onClear = { clearLogs(context); refreshLogs() })
+            ModalBottomSheet(
+                onDismissRequest = { showHistorySheet = false },
+                shape = MaterialTheme.shapes.extraLarge
+            ) {
+                HistoryContent(logs = logs, onClear = { clearLogs(context); refreshLogs() })
             }
         }
     }
 }
 
 @Composable
-fun rootChecker(onCheckComplete: () -> Unit) {
+fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
     var checkState by rememberSaveable { mutableIntStateOf(0) }
     var isRooted by rememberSaveable { mutableStateOf(false) }
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
     val bootloader = remember { HardwareProbe.getBootloader() }
     val verity = remember { HardwareProbe.getVerity() }
+    
     val circleScale by animateFloatAsState(
         targetValue = if (checkState == 1 || checkState == 3) 1.15f else 1f,
-        animationSpec = spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessLow),
+        animationSpec = if (reducedAnimations) tween(300) else spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessLow),
         label = "pulse"
     )
 
     // Corner radius animation for split buttons
-    val leftButtonInnerRound by animateDpAsState(if (checkState == 1) 32.dp else 0.dp)
-    val rightButtonInnerRound by animateDpAsState(if (checkState == 3) 32.dp else 0.dp)
+    val cornerSpec = if (reducedAnimations) tween<androidx.compose.ui.unit.Dp>(300) else spring(Spring.DampingRatioNoBouncy, Spring.StiffnessMedium)
+    val leftButtonInnerRound by animateDpAsState(if (checkState == 1) 32.dp else 4.dp, animationSpec = cornerSpec, label = "leftRound")
+    val rightButtonInnerRound by animateDpAsState(if (checkState == 3) 32.dp else 4.dp, animationSpec = cornerSpec, label = "rightRound")
 
     Column(
         Modifier.fillMaxSize().padding(24.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Surface(
-            shape = RoundedCornerShape(24.dp),
+            shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
         ) {
             Row(
@@ -307,7 +360,11 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                 },
                 tonalElevation = 8.dp
             ) {
-                Crossfade(targetState = checkState, label = "icon_fade") { s ->
+                Crossfade(
+                    targetState = checkState, 
+                    label = "icon_fade", 
+                    animationSpec = if (reducedAnimations) tween(300) else spring(stiffness = Spring.StiffnessLow)
+                ) { s ->
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         if (s == 2 || s == 4) {
                             Icon(if (isRooted) Icons.Rounded.Check else Icons.Rounded.Close, null, Modifier.size(72.dp), Color.White)
@@ -321,12 +378,14 @@ fun rootChecker(onCheckComplete: () -> Unit) {
         Text(
             text = when(checkState) {
                 1 -> "Searching for Paths..."
-                2 -> if (isRooted) "SU Binary Found!" else "SU Binary not Found"
+                2 -> if (isRooted) "Root Traces Found" else "No Root Traces Found"
                 3 -> "Interrogating SU Binary..."
                 4 -> if (isRooted) "Root Access Verified" else "Root Access not Available"
                 else -> "Ready to verify?"
             },
-            modifier = Modifier.padding(top = 24.dp),
+            modifier = Modifier.padding(top = 24.dp).animateContentSize(
+                animationSpec = if (reducedAnimations) tween(300) else spring()
+            ),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -339,7 +398,7 @@ fun rootChecker(onCheckComplete: () -> Unit) {
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(
+            SpringButton(
                 onClick = {
                     checkState = 1
                     isRooted = false
@@ -360,7 +419,7 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                             "/system/xbin/busybox", "/system/bin/busybox", "/sbin/busybox", "/vendor/bin/busybox",
                             "/data/local/busybox"
                         )
-                        val found = paths.any { try { Runtime.getRuntime().exec(arrayOf("ls", it)).waitFor() == 0 } catch (e: Exception) { false } }
+                        val found = paths.any { try { Runtime.getRuntime().exec(arrayOf("ls", it)).waitFor() == 0 } catch (_: Exception) { false } }
                         withContext(Dispatchers.Main) {
                             isRooted = found
                             checkState = 2
@@ -375,14 +434,13 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                 },
                 modifier = Modifier.weight(1f).height(64.dp),
                 shape = RoundedCornerShape(topStart = 32.dp, bottomStart = 32.dp, topEnd = leftButtonInnerRound, bottomEnd = leftButtonInnerRound),
-                enabled = checkState != 1 && checkState != 3
+                enabled = checkState != 1 && checkState != 3,
+                reducedAnimations = reducedAnimations
             ) {
                 Text("Search Root", textAlign = TextAlign.Center)
             }
-            
-            Spacer(Modifier.width(2.dp).height(40.dp).background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)))
-
-            Button(
+            Spacer(Modifier.width(4.dp))
+            SpringButton(
                 onClick = {
                     checkState = 3
                     isRooted = false
@@ -403,11 +461,39 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                 },
                 modifier = Modifier.weight(1f).height(64.dp),
                 shape = RoundedCornerShape(topEnd = 32.dp, bottomEnd = 32.dp, topStart = rightButtonInnerRound, bottomStart = rightButtonInnerRound),
-                enabled = checkState != 1 && checkState != 3
+                enabled = checkState != 1 && checkState != 3,
+                reducedAnimations = reducedAnimations
             ) {
-                Text("Interrogate SU", textAlign = TextAlign.Center)
+                Text("Verify Root", textAlign = TextAlign.Center)
             }
         }
+    }
+}
+
+@Composable
+fun SpringButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    shape: androidx.compose.ui.graphics.Shape = ButtonDefaults.shape,
+    reducedAnimations: Boolean = false,
+    content: @Composable () -> Unit
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.95f else 1f,
+        animationSpec = if (reducedAnimations) tween(100) else spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessLow),
+        label = "button_scale"
+    )
+    Button(
+        onClick = onClick,
+        modifier = modifier.graphicsLayer(scaleX = scale, scaleY = scale),
+        enabled = enabled,
+        shape = shape,
+        interactionSource = interactionSource
+    ) {
+        content()
     }
 }
 
@@ -416,7 +502,7 @@ fun WarningCard(bodyText: String) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
-        shape = RoundedCornerShape(24.dp)
+        shape = MaterialTheme.shapes.large
     ) {
         Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Rounded.Warning, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(32.dp))
@@ -430,44 +516,44 @@ fun WarningCard(bodyText: String) {
 }
 
 @Composable
-fun busybox() {
+fun Busybox() {
     var checkState by remember { mutableIntStateOf(0) }
     var foundPath by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val ctx = LocalContext.current
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         Spacer(Modifier.height(16.dp))
-        Box(Modifier.fillMaxWidth().weight(1f).clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(16.dp).verticalScroll(rememberScrollState())) {
+        Box(Modifier.fillMaxWidth().weight(1f).clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(16.dp).verticalScroll(rememberScrollState())) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                terminalLine("NOTE : Most Modern Root Solutions hide their BusyBox Installation to Avoid Detection!")
-                terminalLine("Install 'BusyBox for NDK Module' if needed...")
+                TerminalLine("NOTE : Most Modern Root Solutions hide their BusyBox Installation to Avoid Detection!")
+                TerminalLine("Install 'BusyBox for NDK Module' if needed...")
                 HorizontalDivider(Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant)
-                terminalLine("Ready to Verify?")
+                TerminalLine("Ready to Verify?")
                 if (checkState == 2) {
-                    terminalLine("Searching for BusyBox Paths...  ♪(´▽｀)")
+                    TerminalLine("Searching for BusyBox Paths...  ♪(´▽｀)")
                     if (foundPath.isNotEmpty()) {
-                        terminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
-                        terminalLine(foundPath, MaterialTheme.colorScheme.primary)
+                        TerminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
+                        TerminalLine(foundPath, MaterialTheme.colorScheme.primary)
                         Toast.makeText(ctx, "BusyBox found via Path", Toast.LENGTH_SHORT).show()
                     }
                     else { 
-                        terminalLine("Busybox not Found in Path!", MaterialTheme.colorScheme.error)
+                        TerminalLine("Busybox not Found in Path!", MaterialTheme.colorScheme.error)
                         Toast.makeText(ctx, "BusyBox not Found. Is it Installed?", Toast.LENGTH_SHORT).show()
-                        terminalLine("Fine, but su Never Lies! ^_~")
-                        terminalLine("Launching Shell....")
-                        terminalLine("usr@android $ su")
+                        TerminalLine("Fine, but su Never Lies! ^_~")
+                        TerminalLine("Launching Shell....")
+                        TerminalLine("usr@android $ su")
                         val suPath = findBusyBoxPathBySU()
                         if (suPath.isNotEmpty()) {
-                            terminalLine("root@android $ which busybox")
-                            terminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
+                            TerminalLine("root@android $ which busybox")
+                            TerminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
                             Toast.makeText(ctx, "BusyBox found via Path as Root Nice Spoofing! :)", Toast.LENGTH_SHORT).show()
-                            terminalLine(suPath, MaterialTheme.colorScheme.primary)
-                            terminalLine("root@android $ exit")
+                            TerminalLine(suPath, MaterialTheme.colorScheme.primary)
+                            TerminalLine("root@android $ exit")
                         } else {
-                            terminalLine("Busybox not Found in Path as Root!", MaterialTheme.colorScheme.error)
+                            TerminalLine("Busybox not Found in Path as Root!", MaterialTheme.colorScheme.error)
                             Toast.makeText(ctx, "BusyBox not Installed.", Toast.LENGTH_SHORT).show()
                         }
-                        terminalLine("usr@android $ _")
+                        TerminalLine("usr@android $ _")
                     }
                 }
             }
@@ -481,7 +567,8 @@ fun busybox() {
                 }
             },
             modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-            enabled = checkState != 1
+            enabled = checkState != 1,
+            shape = MaterialTheme.shapes.large
         ) {
             Text(if (checkState == 1) "Searching..." else "Verify BusyBox Installation")
         }
@@ -489,7 +576,7 @@ fun busybox() {
 }
 
 @Composable
-fun rootGuide() {
+fun RootGuide() {
     var menuPath by rememberSaveable { mutableStateOf("MAIN") }
     val slot = remember { HardwareProbe.getProp("ro.boot.slot_suffix").replace("_", "").ifEmpty { "" } }
     val kernelVersion = remember { HardwareProbe.getProp("ro.kernel.version") }
@@ -499,7 +586,8 @@ fun rootGuide() {
         targetState = menuPath,
         modifier = Modifier.fillMaxSize(),
         transitionSpec = {
-            fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
+            (fadeIn(animationSpec = tween(400, easing = FastOutSlowInEasing)) + scaleIn(initialScale = 0.95f)) togetherWith 
+            (fadeOut(animationSpec = tween(400, easing = FastOutSlowInEasing)) + scaleOut(targetScale = 0.95f))
         }, label = "SubMenuTransition"
     ) { targetPath ->
         Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -507,10 +595,10 @@ fun rootGuide() {
                 "MAIN" -> {
                     WarningCard("Never trust 'One-Click Root' Apps and Please BE CAREFUL while following this guide. I am not responsible for any damages to your device.")
                     Text("GUIDE SECTIONS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                    navCard("1. Rooting: An Introduction", Icons.AutoMirrored.Rounded.LibraryBooks) { menuPath = "INTRO" }
-                    navCard("2. Unlocking Bootloader", Icons.Rounded.LockOpen) { menuPath = "UNLOCK" }
-                    navCard("3. Rooting Methods", Icons.Rounded.Tag) { menuPath = "METHODS" }
-                    navCard("4. Root Hiding", Icons.Rounded.VisibilityOff) { menuPath = "HIDING" }
+                    NavCard("1. Rooting: An Introduction", Icons.AutoMirrored.Rounded.LibraryBooks) { menuPath = "INTRO" }
+                    NavCard("2. Unlocking Bootloader", Icons.Rounded.LockOpen) { menuPath = "UNLOCK" }
+                    NavCard("3. Rooting Methods", Icons.Rounded.Tag) { menuPath = "METHODS" }
+                    NavCard("4. Root Hiding", Icons.Rounded.VisibilityOff) { menuPath = "HIDING" }
                 }
                 "INTRO" -> {
                     GuideHeader("Rooting : An Introduction", onBack = { menuPath = "MAIN" })
@@ -530,17 +618,17 @@ fun rootGuide() {
                 "UNLOCK" -> {
                     GuideHeader("Unlocking Bootloader", onBack = { menuPath = "MAIN" })
                     WarningCard("This process will wipe all user data. Ensure you have a backup before proceeding. Also Xiaomi, Oppo and Realme have Additional Steps. Vivo, iQOO and certain Manufacturers don't support Bootloader Unlocking.")
-                    expandableMethod("Fastboot Method (Recommended)", Icons.Rounded.Computer) {
+                    ExpandableMethod("Fastboot Method (Recommended)", Icons.Rounded.Computer) {
                         Text("Step 1 : Reboot Phone to Bootloader :")
-                        codeBox("$ adb reboot bootloader")
+                        CodeBox("$ adb reboot bootloader")
                         Text("Step 2 : Unlock Bootloader using Fastboot :")
                         Text(" • For most devices :")
-                        codeBox("$ fastboot flashing unlock")
+                        CodeBox("$ fastboot flashing unlock")
                         Text(" • For some older devices :")
-                        codeBox("$ fastboot oem unlock")
+                        CodeBox("$ fastboot oem unlock")
                         Text("Pros :\n✓ Unlocking doesn't brick device immediately.\n✓ Safe and Easy to Use.\n\nCons :\n✗ Not available on all devices.\n✗ Xiaomi Devices need permission from Xiaomi Community and then Mi Unlock Tool is used.\n✗ Oppo and Realme Devices use 'Deep Testing' or 'In-Depth Test' for Fastboot Permissions.")
                     }
-                    expandableMethod("Device Unlock Mode (for Samsung)", Icons.Rounded.Smartphone) {
+                    ExpandableMethod("Device Unlock Mode (for Samsung)", Icons.Rounded.Smartphone) {
                         WarningCard("NOTE : I don't own a Samsung Device. This is the General Information I have. Also, this disables KNOX Security permanently and many Samsung Apps Stop Working.")
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text("Step 1 : Turn on 'OEM Unlocking' in Developer Options.")
@@ -552,22 +640,22 @@ fun rootGuide() {
                             Text("Step 7 : Long Press Volume Up for Unlocking Device.")
                         }
                     }
-                    expandableMethod("MTKClient (For MTK Devices)", Icons.Rounded.Memory) {
+                    ExpandableMethod("MTKClient (For MTK Devices)", Icons.Rounded.Memory) {
                         WarningCard("Please BE CAREFUL as it doesn't work on very new device and can cause 'System is Destroyed' and 'dm-verity corruption' Ensure that your device has no Replay Protected Memory Block (RPMB) before proceeding.")
                         Text("Hardware-level bypass for locked MediaTek chipsets.\n\nFirst install USBdk if using Windows (Recommended).\n\nNOTE: For Each Step, Run the Command, Press both Volume Buttons and Connect Phone to PC.\n")
                         Text("Step 1 : Dump vbmeta : ")
-                        codeBox("$ python mtk.py r vbmeta_a,vbmeta_b vbmeta_a.img,vbmeta_b.img")
-                        codeBox("$ python mtk.py r vbmeta vbmeta.img # For Old Devices")
+                        CodeBox("$ python mtk.py r vbmeta_a,vbmeta_b vbmeta_a.img,vbmeta_b.img")
+                        CodeBox("$ python mtk.py r vbmeta vbmeta.img # For Old Devices")
                         Text("Step 2 : Unlock Bootloader : ")
-                        codeBox("$ python mtk.py da seccfg unlock")
+                        CodeBox("$ python mtk.py da seccfg unlock")
                         Text("Step 3 : Disable dm-verity (Easy Way) :  ")
-                        codeBox("$ python mtk.py da vbmeta 3")
+                        CodeBox("$ python mtk.py da vbmeta 3")
                         Text("Step 4 : Erase Userdata : ")
-                        codeBox("$ python mtk.py e metadata,userdata")
+                        CodeBox("$ python mtk.py e metadata,userdata")
                         Text("Step 5 : Reboot Device : ")
-                        codeBox("$ python mtk.py reset")
+                        CodeBox("$ python mtk.py reset")
                         Text("Pros :\n✓ Easy to Recover with Backups.\n✓ Can fix Hard-Bricks.\n✓ Fast and Easy to Use.\n\nCons :\n✗ Does not Support QualComm and UniSOC Devices.\n✗ High Chances of Bricking.\n✗ Doesn't work on very new devices.\n✗ Fastboot may not be usable as on Realme Devices.\n")
-                        linkCard("mtkclient by @bkerler", "https://github.com/bkerler/mtkclient")
+                        LinkCard("mtkclient by @bkerler", "https://github.com/bkerler/mtkclient")
                     }
                 }
                 "HIDING" -> {
@@ -575,24 +663,24 @@ fun rootGuide() {
                     WarningCard("NOTE : This allows you to Bypass Root Checks used by Banking apps for YOUR FINANCIAL SAFETY! Please be cautious while hiding Root.")
                     InfoBlock("Introduction : What is Rooting Hiding?", "\nNow that your Device is Unlocked and Rooted, it's time to Hide this Unlocked Status! Basically, certain Apps like Banking Apps and Game with Anti-Cheat check the prescence of Zygisk, Magisk, the 'su' Binary and many more ( for user safety ). But with the power of Systemless Rooting and 'Modules', the device can give a Software-Level Lie to ALL APPS!\n\nBefore Starting Ensure to Enable 'Zygisk' in 'Magisk Settings' or Install ReZygisk or Zygisk Next (Closed Source) in Magisk ( with Built-in Zygisk turned OFF ) , KernelSU or APatch before Flashing these.\n")
                     InfoBlock("Root Hiding Modules :", "\n1. Tricky Store (Recommended) :\n\nThis Module spoofs Hardware Backed Attestation by Software / Hardware Trusted Execution Environment (TEE) by injecting a Valid 'KeyBox.xml'.\n\nThis combined with Tricky Addon and a WebUI Interface can make this Process EASY!\n\nFirst obtain the .ZIP Files from these two links and Flash them. After Reboot Tap the 'Action' Button under Tricky Store and in WebUI, Select All Apps and Tap 'Set Valid Keybox'.")
-                    linkCard("Tricky Store by @5ec1cff", "https://github.com/5ec1cff/TrickyStore")
-                    linkCard("Tricky Addon by @KOWX712", "https://github.com/KOWX712/Tricky-Addon-Update-Target-List")
+                    LinkCard("Tricky Store by @5ec1cff", "https://github.com/5ec1cff/TrickyStore")
+                    LinkCard("Tricky Addon by @KOWX712", "https://github.com/KOWX712/Tricky-Addon-Update-Target-List")
                     Text("\n2. Shamiko (Closed Source) :\n\nUsed to hide Root Status and ALL TRACES OF ZYGISK AND ROOT PATHS and it Fakes the UNLOCKED Status of Bootloader!\n\nGet the Module from the Latest Release and Flash it.")
-                    linkCard("Shamiko by @LSPosed","https://github.com/LSPosed/LSPosed.github.io/releases/")
-                    Text("\n3. Play Integrity Fix (For Custom ROM Users) :\n\nThis Assigns a Valid Fingerprint of a Locked Device Systemlessly.\n\nFlash any 1 of these Modules and Tap the 'Action' Button under Module on Reboot.")
-                    linkCard("Play Integrity Fork by @osm0sis","https://github.com/osm0sis/PlayIntegrityFork")
-                    linkCard("Play Integrity Fix by @KOWX712","https://github.com/KOWX712/PlayIntegrityFix")
+                    LinkCard("Shamiko by @LSPosed","https://github.com/LSPosed/LSPosed.github.io/releases/")
+                    Text("\n3. Play Integrity Fix (For Custom ROM Users) :\n\nThis Assigns a Valid Fingerprint of a Locked Device Systemlessly.\n\nFlash any 1 of these Modules and Tap the 'Action' Button under Reboot.")
+                    LinkCard("Play Integrity Fork by @osm0sis","https://github.com/osm0sis/PlayIntegrityFork")
+                    LinkCard("Play Integrity Fix by @KOWX712","https://github.com/KOWX712/PlayIntegrityFix")
                 }
                 "METHODS" -> {
                     GuideHeader("Rooting Methods", onBack = { menuPath = "MAIN" })
                     WarningCard("Please download the following apps from their Official Sources. Do not modify or delete System Files. Do not use 'One-Click' Root Apps. Do not flash them on a Device with a Locked Bootloader.")
-                    expandableMethodLocal("Magisk (Recommended)", R.drawable.ic_magisk) {
+                    ExpandableMethodLocal("Magisk (Recommended)", R.drawable.ic_magisk) {
                         Text("First obtain your stock boot.img or init_boot.img and patch it using Magisk App and then Flash it.\n")
                         FlashLogic(isAB, slot, true)
                         Text("Pros :\n✓ Truly Systemless\n✓ Widest Module Support\n✓ Works on pretty much anything.\n✓ Best possible documentation and compatibility.\n\nCons :\n✗ Easily Detectable as it leaves Traces.\n")
-                        linkCard("Magisk by @topjohnwu", "https://github.com/topjohnwu/Magisk")
+                        LinkCard("Magisk by @topjohnwu", "https://github.com/topjohnwu/Magisk")
                     }
-                    expandableMethodLocal("Magisk Guide for Samsung", R.drawable.ic_magisk) {
+                    ExpandableMethodLocal("Magisk Guide for Samsung", R.drawable.ic_magisk) {
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text("Unlike other Manufacturers who use FASTBOOT, Samsung uses ODIN for Flashing. This is one of the Key Reasons why Rooting a Samsung Device is Harder. You don't flash a 32 MB to 64 MB .img File, but the ENTIRE Firmware with a Part Modified.\n\nHere are the Named '.tar' files you get in Stock Firmware :\n\n1. BL -> Contains the Bootloader.\n2. AP -> Contains the Kernel, Recovery and System.\n3. CP -> Conatins Modem Firmware.\n4. CSC -> Contains Region-Specefic Stuff\n5. HOME_CSC -> Same as CSC.\n6. USERDATA -> Contains your Data ( Blank by Default ).\n")
                             Text("Follow these steps to Flash Modified AP :")
@@ -603,22 +691,22 @@ fun rootGuide() {
                             Text("STEP 5 : If the Phone Bootloops and boots into Recovery, Wipe User Data and Reboot Again.")
                         }
                     }
-                    expandableMethodLocal("KernelSU", R.drawable.ic_ksu) {
+                    ExpandableMethodLocal("KernelSU", R.drawable.ic_ksu) {
                         if(kernelVersion < "5.10") WarningCard("This Device doesn't Support KernelSU. You have to compile your Device's Kernel and inteegrate KernelSU into it YOURSELF!")
                         Text("First obtain your stock boot.img or init_boot.img and patch it using KernelSU App and then Flash it.\n")
                         FlashLogic(isAB, slot, true)
                         Text("Pros :\n✓ Fully Systemless.\n✓ Very hard to detect by Banking Apps.\n✓ Leaves no Traces.\n\nCons :\n✗ Only Supports devices with Generic Kernel Image.\n")
-                        linkCard("KernelSU by @tiann", "https://github.com/tiann/KernelSU")
-                        terminalLine("Alternative Forks for Older Devices :", MaterialTheme.colorScheme.primary)
-                        linkCard("KernelSU Next by @KernelSU-Next", "https://github.com/KernelSU-Next/KernelSU-Next")
-                        linkCard("SkiSU Ultra by @SkiSU-Ultra", "https://github.com/SkiSU-Ultra/SkiSU-Ultra")
+                        LinkCard("KernelSU by @tiann", "https://github.com/tiann/KernelSU")
+                        TerminalLine("Alternative Forks for Older Devices :", MaterialTheme.colorScheme.primary)
+                        LinkCard("KernelSU Next by @KernelSU-Next", "https://github.com/KernelSU-Next/KernelSU-Next")
+                        LinkCard("SkiSU Ultra by @SkiSU-Ultra", "https://github.com/SkiSU-Ultra/SkiSU-Ultra")
                     }
-                    expandableMethodLocal("APatch", R.drawable.ic_apatch) {
-                        if(kernelVersion < "5.10") WarningCard("This device may or may not Support APatch! Use it AT YOUR OWN RISK!")
+                    ExpandableMethodLocal("APatch", R.drawable.ic_apatch) {
+                        if(kernelVersion < "5.10") WarningCard("this device may or may not Support APatch! Use it AT YOUR OWN RISK!")
                         Text("First obtain your stock boot.img and patch it using Apatch App and then Flash it.\n")
                         FlashLogic(isAB, slot, false)
                         Text("Pros :\n✓ Fully Systemless.\n✓ Very hard to detect by Banking Apps.\n✓ Leaves no Traces.\n✓ Doesn't need a GKI Device.\n\nCons :\n✗ Doesn't work on every device.\n")
-                        linkCard("APatch by @bmax121", "https://github.com/bmax121/APatch")
+                        LinkCard("APatch by @bmax121", "https://github.com/bmax121/APatch")
                     }
                 }
             }
@@ -632,39 +720,39 @@ fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) {
         if (isAB) {
             if (slot == "a") {
                 Text("Flash to Active Slot : ")
-                codeBox("$ fastboot flash boot_a patched.img")
-                if (hasInit) codeBox("$ fastboot flash init_boot_a patched.img")
+                CodeBox("$ fastboot flash boot_a patched.img")
+                if (hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
                 Text("Flash to Inactive Slot if Needed : ")
-                codeBox("$ fastboot flash boot_b patched.img")
-                if(hasInit) codeBox("$ fastboot flash init_boot_b patched.img")
+                CodeBox("$ fastboot flash boot_b patched.img")
+                if(hasInit) CodeBox("$ fastboot flash init_boot_b patched.img")
                 Text("For Older Devices : ")
-                codeBox("$ fastboot flash boot patched.img")
+                CodeBox("$ fastboot flash boot patched.img")
             }
             if (slot == "b") {
                 Text("Flash to Active Slot : ")
-                codeBox("$ fastboot flash boot_b patched.img")
-                if (hasInit) codeBox("$ fastboot flash init_boot_b patched.img")
+                CodeBox("$ fastboot flash boot_b patched.img")
+                if (hasInit) CodeBox("$ fastboot flash init_boot_b patched.img")
                 Text("Flash to Inactive Slot if Needed : ")
-                codeBox("$ fastboot flash boot_a patched.img")
-                if(hasInit) codeBox("$ fastboot flash init_boot_a patched.img")
+                CodeBox("$ fastboot flash boot_a patched.img")
+                if(hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
                 Text("For Older Devices : ")
-                codeBox("$ fastboot flash boot patched.img")
+                CodeBox("$ fastboot flash boot patched.img")
             }
         } else {
             Text("For Older Devices : ")
-            codeBox("$ fastboot flash boot patched.img")
+            CodeBox("$ fastboot flash boot patched.img")
             Text("Commands not for this Device : ")
-            codeBox("$ fastboot flash boot_a patched.img")
-            if(hasInit) codeBox("$ fastboot flash init_boot_a patched.img")
-            codeBox("$ fastboot flash boot_b patched.img")
-            if(hasInit) codeBox("$ fastboot flash inti_boot_b patched.img")
+            CodeBox("$ fastboot flash boot_a patched.img")
+            if(hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
+            CodeBox("$ fastboot flash boot_b patched.img")
+            if(hasInit) CodeBox("$ fastboot flash inti_boot_b patched.img")
         }
     }
 }
 
 @Composable
-fun navCard(title: String, icon: ImageVector, onClick: () -> Unit) {
-    Card(Modifier.fillMaxWidth().clickable { onClick() }, shape = RoundedCornerShape(16.dp)) {
+fun NavCard(title: String, icon: ImageVector, onClick: () -> Unit) {
+    Card(Modifier.fillMaxWidth().clickable { onClick() }, shape = MaterialTheme.shapes.medium) {
         Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.width(16.dp))
@@ -675,9 +763,9 @@ fun navCard(title: String, icon: ImageVector, onClick: () -> Unit) {
 }
 
 @Composable
-fun expandableMethod(title: String, icon: ImageVector, content: @Composable ColumnScope.() -> Unit) {
+fun ExpandableMethod(title: String, icon: ImageVector, content: @Composable ColumnScope.() -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }, shape = RoundedCornerShape(16.dp)) {
+    Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }.animateContentSize(), shape = MaterialTheme.shapes.medium) {
         Column(Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
@@ -693,9 +781,9 @@ fun expandableMethod(title: String, icon: ImageVector, content: @Composable Colu
 }
 
 @Composable
-fun expandableMethodLocal(title: String, resId: Int, content: @Composable ColumnScope.() -> Unit) {
+fun ExpandableMethodLocal(title: String, resId: Int, content: @Composable ColumnScope.() -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }, shape = RoundedCornerShape(16.dp)) {
+    Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }.animateContentSize(), shape = MaterialTheme.shapes.medium) {
         Column(Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(painterResource(id = resId), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
@@ -729,21 +817,21 @@ fun InfoBlock(t: String, d: String) {
 }
 
 @Composable
-fun codeBox(cmd: String) {
-    Surface(color = Color.Black, shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+fun CodeBox(cmd: String) {
+    Surface(color = Color.Black, shape = MaterialTheme.shapes.extraSmall, modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
         Text(cmd, color = Color.White, modifier = Modifier.padding(8.dp), fontFamily = FontFamily.Monospace, fontSize = 11.sp)
     }
 }
 
 @Composable
-fun terminalLine(text: String, color: Color = MaterialTheme.colorScheme.onSurfaceVariant) {
+fun TerminalLine(text: String, color: Color = MaterialTheme.colorScheme.onSurfaceVariant) {
     Text(text, color = color, fontFamily = FontFamily.Monospace, fontSize = 13.sp)
 }
 
 @Composable
-fun linkCard(t: String, url: String) {
+fun LinkCard(t: String, url: String) {
     val ctx = LocalContext.current
-    OutlinedCard(onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, url.toUri())) }, modifier = Modifier.fillMaxWidth()) {
+    OutlinedCard(onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, url.toUri())) }, modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(t, Modifier.weight(1f), fontWeight = FontWeight.Bold, fontSize = 12.sp)
             Icon(Icons.AutoMirrored.Rounded.OpenInNew, null, Modifier.size(14.dp))
@@ -752,11 +840,14 @@ fun linkCard(t: String, url: String) {
 }
 
 @Composable
-fun settings(
+fun Settings(
     themeMode: Int,
     onThemeChange: (Int) -> Unit,
     dyn: Boolean,
-    onDyn: (Boolean) -> Unit
+    onDyn: (Boolean) -> Unit,
+    reducedAnimations: Boolean,
+    onReducedAnimationsChange: (Boolean) -> Unit,
+    isLowRam: Boolean
 ) {
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -764,8 +855,6 @@ fun settings(
     var showLicense by remember { mutableStateOf(false) }
     var bTaps by remember { mutableIntStateOf(0) }
     var vTaps by remember { mutableIntStateOf(0) }
-    var logoTaps by remember { mutableIntStateOf(0) }
-    var showPoem by remember { mutableStateOf(false) }
     var isChecking by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     
@@ -777,7 +866,7 @@ fun settings(
                 @Suppress("DEPRECATION")
                 ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
             }
-        } catch (e: Exception) { "36.23.1.0" }
+        } catch (_: Exception) { "36.23.1.0" }
     }
 
     fun performUpdateCheck() {
@@ -785,11 +874,11 @@ fun settings(
             isChecking = true
             try {
                 val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/be9757f468f5bc744eced1bb1a88342b4a78e646/FRC-SU_V.txt"
-                val remoteVersion = URL(url).readText().trim()
+                URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
                     Toast.makeText(ctx, "Your Version is UP TO DATE!", Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(ctx, "❌ Please Verify Internet Connection!", Toast.LENGTH_SHORT).show()
                 }
@@ -814,41 +903,35 @@ fun settings(
             }
         }
     }
-    if (showPoem) {
-        BasicAlertDialog(onDismissRequest = { showPoem = false }) {
-            Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surface, tonalElevation = 6.dp, modifier = Modifier.widthIn(max = 400.dp).padding(16.dp)) {
-                Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Box(modifier = Modifier.fillMaxWidth().background(brush = Brush.verticalGradient(colors = listOf(Color(0xFFFF9933), Color(0xFFFFFFFF), Color(0xFF128807))), shape = MaterialTheme.shapes.large).padding(24.dp), contentAlignment = Alignment.Center) {
-                        Text(text = "\"यूनान-ओ-मिस्र-ओ-रूमा, सब मिट गए जहाँ से\nअब तक मगर है बाक़ी, नाम-ओ-निशाँ हमारा\nकुछ बात है कि हस्ती मिटती नहीं हमारी\nसदियों रहा है दुश्मन दौर-ए-ज़माँ हमारा\"", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold, lineHeight = 30.sp, color = Color.Black), textAlign = TextAlign.Center)
-                    }
-                    Spacer(Modifier.height(16.dp))
-                    Button(modifier = Modifier.fillMaxWidth(), onClick = { showPoem = false; logoTaps = 0 }, shape = MaterialTheme.shapes.medium) { Text("Close") }
-                }
-            }
-        }
-    }
 
     Column(Modifier.fillMaxSize().padding(24.dp).verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(painter = painterResource(id = R.drawable.root_logo), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(160.dp).clickable(indication = null, interactionSource = noRipple) {
-            logoTaps++
-            if (logoTaps == 108) { Toast.makeText(ctx, "वन्दे मातरम्!", Toast.LENGTH_SHORT).show(); showPoem = true; logoTaps = 0 }
-        })
+        Icon(painter = painterResource(id = R.drawable.root_logo), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(160.dp).clickable(indication = null, interactionSource = noRipple) {})
         Text(text = buildAnnotatedString { append("Developer: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("Chill-Astro Software") } }, fontWeight = FontWeight.ExtraBold, modifier = Modifier.padding(top = 16.dp).clickable(indication = null, interactionSource = noRipple) { if (++bTaps == 5) { Toast.makeText(ctx, "Chill-Astro Software - TRANSPARENT BY DESIGN", Toast.LENGTH_SHORT).show(); bTaps = 0 } })
         Text(text = buildAnnotatedString { append("Version: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append(appVersion ?: "36.23.1.0") } }, fontWeight = FontWeight.Bold, modifier = Modifier.clickable(indication = null, interactionSource = noRipple) { vTaps++; if (vTaps == 5) Toast.makeText(ctx, "Hi there! You Found me. :)", Toast.LENGTH_SHORT).show() })
         TextButton(modifier = Modifier.padding(top = 8.dp), onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/Chill-Astro/FOSS-Root-Checker".toUri())) }) { Icon(Icons.Rounded.Code, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("Official Repository") }
         TextButton(onClick = { showLicense = true }) { Icon(Icons.Rounded.Info, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("MIT LICENCE") }
         HorizontalDivider(Modifier.padding(vertical = 24.dp))
-        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(text = "PREFERENCES", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
             
-            ListItem(
-                headlineContent = { Text("Theme") },
-                leadingContent = { Icon(Icons.Rounded.Nightlight, null) },
-                trailingContent = {
-                    Box {
-                        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+            // Theme Box
+            Card(
+                shape = MaterialTheme.shapes.medium,
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                modifier = Modifier.fillMaxWidth(),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
+            ) {
+                ListItem(
+                    headlineContent = { Text("Theme") },
+                    leadingContent = { Icon(Icons.Rounded.Palette, null) },
+                    trailingContent = {
+                        ExposedDropdownMenuBox(
+                            expanded = expanded,
+                            onExpandedChange = { expanded = !expanded },
+                            modifier = Modifier.width(130.dp).padding(end = 4.dp)
+                        ) {
                             TextField(
-                                value = when(themeMode) { 1 -> "Light"; 2 -> "Dark"; else -> "System" },
+                                value = when (themeMode) { 1 -> "Light"; 2 -> "Dark"; else -> "System" },
                                 onValueChange = {},
                                 readOnly = true,
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -858,7 +941,8 @@ fun settings(
                                     unfocusedIndicatorColor = Color.Transparent,
                                     focusedIndicatorColor = Color.Transparent
                                 ),
-                                modifier = Modifier.width(140.dp).menuAnchor()
+                                modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable, true),
+                                textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp)
                             )
                             ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                                 DropdownMenuItem(text = { Text("System") }, onClick = { onThemeChange(0); expanded = false })
@@ -866,13 +950,54 @@ fun settings(
                                 DropdownMenuItem(text = { Text("Dark") }, onClick = { onThemeChange(2); expanded = false })
                             }
                         }
-                    }
-                }
-            )
-
-            if (Build.VERSION.SDK_INT >= 31) {
-                ListItem(headlineContent = { Text("Use System Colours") }, leadingContent = { Icon(Icons.Rounded.Palette, null) }, trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn) })
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
             }
+
+            // System Colors Box
+            if (Build.VERSION.SDK_INT >= 31) {
+                Card(
+                    shape = MaterialTheme.shapes.medium,
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                    modifier = Modifier.fillMaxWidth(),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
+                ) {
+                    ListItem(
+                        headlineContent = { Text("Use System Colours") },
+                        leadingContent = { Icon(Icons.Rounded.Palette, null) },
+                        trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn) },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            }
+
+            // Reduced Animations Box
+            Card(
+                shape = MaterialTheme.shapes.medium,
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                modifier = Modifier.fillMaxWidth(),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
+            ) {
+                ListItem(
+                    headlineContent = { Text("Reduced Animations") },
+                    supportingContent = { if (isLowRam) Text("Forced on Low RAM Devices (<4GB)", color = MaterialTheme.colorScheme.primary) },
+                    leadingContent = { Icon(Icons.Rounded.Animation, null) },
+                    trailingContent = { 
+                        Switch(
+                            checked = reducedAnimations, 
+                            onCheckedChange = onReducedAnimationsChange,
+                            enabled = !isLowRam
+                        ) 
+                    },
+                    colors = ListItemDefaults.colors(
+                        containerColor = Color.Transparent,
+                        disabledHeadlineColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                        disabledLeadingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                    )
+                )
+            }
+
             Spacer(Modifier.height(16.dp))
             FilledTonalButton(onClick = { if (!isChecking) performUpdateCheck() }, modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp), shape = CircleShape) {
                 if (isChecking) CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
@@ -885,7 +1010,7 @@ fun settings(
 }
 
 @Composable
-fun historyContent(logs: List<String>, onClear: () -> Unit) {
+fun HistoryContent(logs: List<String>, onClear: () -> Unit) {
     Column(Modifier.fillMaxWidth().padding(24.dp)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Text("History", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.ExtraBold)
@@ -900,11 +1025,11 @@ fun historyContent(logs: List<String>, onClear: () -> Unit) {
                     val isOk = p[0] == "OK"
                     val type = p[4]
                     val displayText = if (type == "SCAN") {
-                        if (isOk) "Root Traces Found" else "Root Traces not Found"
+                        if (isOk) "Root Traces Found" else "No Root Traces Found"
                     } else {
                         if (isOk) "Root Access Verified" else "Root Access not Available"
                     }
-                    Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp)) {
+                    Card(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
                         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                             Surface(Modifier.size(40.dp), shape = CircleShape, color = if (isOk) Color(0xFF4CAF50) else Color(0xFFB00020)) {
                                 Icon(if (isOk) Icons.Rounded.Check else Icons.Rounded.Close, null, Modifier.padding(8.dp), Color.White)
@@ -935,7 +1060,7 @@ fun isSUWorking(): Boolean {
         val output = process.inputStream.bufferedReader().use { it.readLine() }
         process.waitFor()
         output?.contains("uid=0") == true
-    } catch (e: Exception) { false }
+    } catch (_: Exception) { false }
 }
 
 fun findBusyBoxPath(): String {
@@ -949,7 +1074,7 @@ fun findBusyBoxPathBySU(): String {
         val output = process.inputStream.bufferedReader().use { it.readLine() }
         process.waitFor()
         output?.trim() ?: ""
-    } catch (e: Exception) { "" }
+    } catch (_: Exception) { "" }
 }
 
 fun saveLog(c: Context, r: Boolean, type: String) {
