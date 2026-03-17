@@ -365,9 +365,9 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                             isRooted = found
                             checkState = 2
                             if (found) {
-                                if (bootloader == "Locked") Toast.makeText(ctx, "SU Binary Found! Nice Spoofing! :)", Toast.LENGTH_LONG).show()
-                                else Toast.makeText(ctx, "SU Binary Found!", Toast.LENGTH_SHORT).show()
-                            } else Toast.makeText(ctx, "SU Binary not Found", Toast.LENGTH_SHORT).show()
+                                if (bootloader == "Locked") Toast.makeText(ctx, "Root Traces Found. Nice Spoofing! :)", Toast.LENGTH_LONG).show()
+                                else Toast.makeText(ctx, "Root Traces Found", Toast.LENGTH_SHORT).show()
+                            } else Toast.makeText(ctx, "Root Traces not Found", Toast.LENGTH_SHORT).show()
                             saveLog(ctx, found, "SCAN")
                             onCheckComplete()
                         }
@@ -377,7 +377,7 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                 shape = RoundedCornerShape(topStart = 32.dp, bottomStart = 32.dp, topEnd = leftButtonInnerRound, bottomEnd = leftButtonInnerRound),
                 enabled = checkState != 1 && checkState != 3
             ) {
-                Text("Scan", textAlign = TextAlign.Center)
+                Text("Search Root", textAlign = TextAlign.Center)
             }
             
             Spacer(Modifier.width(2.dp).height(40.dp).background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)))
@@ -393,7 +393,7 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                             isRooted = suWorks
                             checkState = 4
                             if (suWorks) {
-                                if (bootloader == "Locked") Toast.makeText(ctx, "Root Access is Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show()
+                                if (bootloader == "Locked") Toast.makeText(ctx, "Root Access Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show()
                                 else Toast.makeText(ctx, "Root Access Verified", Toast.LENGTH_SHORT).show()
                             } else Toast.makeText(ctx, "Root Access not Available", Toast.LENGTH_SHORT).show()
                             saveLog(ctx, suWorks, "SU")
@@ -405,7 +405,7 @@ fun rootChecker(onCheckComplete: () -> Unit) {
                 shape = RoundedCornerShape(topEnd = 32.dp, bottomEnd = 32.dp, topStart = rightButtonInnerRound, bottomStart = rightButtonInnerRound),
                 enabled = checkState != 1 && checkState != 3
             ) {
-                Text("Interrogate", textAlign = TextAlign.Center)
+                Text("Interrogate SU", textAlign = TextAlign.Center)
             }
         }
     }
