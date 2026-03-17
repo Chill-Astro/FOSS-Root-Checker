@@ -34,16 +34,17 @@ To be Released on UptoDown Store, APKPure and FDroid.
 > [!NOTE]
 > All checks are performed on a background thread (`Dispatchers.IO`) to ensure your device remains responsive during the scan.
 
-- The App First Checks 40+ System Paths to Find Traces of SU Binaries to Verify Root Access. If it finds, Root Acess is Verified. If not it moves onto the next step.
-- Now the App Executes `su -c id` and if it returns 0, Root Access is Verified. Else, Root Access not Available.
+- If "Search Root" is pressed, it Checke 40+ System Paths to Find Traces of Root Access. If it finds, Root Traces are Found. If not it is clearly shown.
+- Now if "Verify Root" is pressed the App Executes `su -c id` and if it returns 0, Root Access is Verified. Else, Root Access not Available.
 - For BusyBox Checker, it checks BusyBox Specefix Paths. If not Found, the App executes `su -c which busybox` to verify BusyBox Installation.
 
 ---
 
 ## Key Features :
 
-- Ultra Low Footprint of 1.54MB ONLY!
+- Ultra Low Footprint of 1.73MB ONLY!
 - Privacy First Design with full transperancy. ✅
+- Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB ). ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
 - Modern Material UI with Monet Theming. ✅
 - Support for Android 6+ Devices. ✅
