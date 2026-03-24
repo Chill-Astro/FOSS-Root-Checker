@@ -1,7 +1,8 @@
 <p align="center">
-  <img src="https://github.com/Chill-Astro/FOSS-Root-Checker/blob/master/logo-nobg.png" width="128px" height="128px" alt="ROOT Checker">
+  <kbd>
+  <img src="https://github.com/user-attachments/assets/d67a16dc-2b4d-41dd-b6ca-77c3d505607f" width="1920px" height="1080px" alt="Root Checker Promo"> 
+  </kbd>
 </p>
-<h1 align="center">FOSS Root Checker</h1>
 
 <div align="center">
 
