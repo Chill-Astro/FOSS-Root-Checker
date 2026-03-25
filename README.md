@@ -157,7 +157,7 @@ STEP 4 : Build :
 
 // Includes Clones who are working against the MIT Licence and Distributing Malware. All Flaws are mentioned. 😑
 
-- RuotianJoy/FOSS-Root-Checker (Cloned + Distributing Malware 👎 )
+- RuotianJoy/FOSS-Root-Checker ( Cloned + Distributing Malware 👎 )
 
 ---
 
