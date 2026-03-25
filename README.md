@@ -16,20 +16,24 @@ Package ID : `foss.chillastro.root.checker`
 
 Requirements : `Android 6 and Higher`
 
+| Github Releases | Appteka ( Third Party ) |
+| :---: | :---: |
+| <a href="https://github.com/Chill-Astro/FOSS-Root-Checker/releases/latest" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Get%20it%20on%20GitHub&color=2ECC71&labelColor=000000&style=for-the-badge&logo=github&logoColor=2ECC71" height="80" alt="Get it on GitHub"></a> | <a href="https://appteka.store/apps/c07r276228" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Get%20it%20on%20Appteka&color=FFD700&labelColor=000000&style=for-the-badge&logo=android&logoColor=FFD700" height="80" alt="Get it on Appteka"></a> |
+
 An Online Version of the App's Guide is given [here](https://github.com/Chill-Astro/Android-Rooting-Guide).
 
-To be Released on UptoDown Store and FDroid.
+---
 
 </div>
 
 > [!NOTE]
-> Also ensure to Download this APK only from Trusted Sources.
-> 
-> Will Submit to FDroid.
+> Also ensure to Download this APK only from Trusted Sources. Currently Appteka has a Verified Release ( Released by a 3rd Party User ).
 > 
 > Waiting for Approval on UptoDown.
-> 
-> Requested an Update on Appteka
+>
+> Submitted to IzzyonDroid
+>
+> Will Reach FDroid if Approved after the approval of IzzyonDroid
 
 > [!IMPORTANT]
 > This Project is not Affiliated with Google, Magisk, and other Open Source / Closed Source Referenced in this Project. Certain Brands mentioned are for General Information Only.
