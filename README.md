@@ -76,7 +76,7 @@ STEP 4 : Hit Build > Generate App Bundles or APKs > Generate APK as shown.
   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8a7a12e1-c9ca-4fc9-94d1-ac8ddf062380" />
 </kbd>
 
-Alternatively Hit Build > Signed App Bundle or Apk. You will have to provide your OWN Certificate ( As mine is Private ).
+Alternatively Hit Build > Signed App Bundle or Apk. You will have to provide your OWN Certificate.
 
 This method is RECOMMENDED as this is how I build myself.
 
