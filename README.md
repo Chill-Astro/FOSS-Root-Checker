@@ -23,7 +23,12 @@ To be Released on UptoDown Store and FDroid.
 </div>
 
 > [!NOTE]
-> Also ensure to Download this APK only from Trusted Sources such as FDroid, UptoDown, Appteka (thanks for testing my Pre-Release Builds) and so on.
+
+> [!NOTE]
+> Also ensure to Download this APK only from Trusted Sources.
+> Will Submit to FDroid.
+> Waiting for Approval on UptoDown.
+> Requested an Update on Appteka
 
 > [!IMPORTANT]
 > This Project is not Affiliated with Google, Magisk, and other Open Source / Closed Source Referenced in this Project. Certain Brands mentioned are for General Information Only.
