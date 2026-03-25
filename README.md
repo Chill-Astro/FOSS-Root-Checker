@@ -23,11 +23,12 @@ To be Released on UptoDown Store and FDroid.
 </div>
 
 > [!NOTE]
-
-> [!NOTE]
 > Also ensure to Download this APK only from Trusted Sources.
+> 
 > Will Submit to FDroid.
+> 
 > Waiting for Approval on UptoDown.
+> 
 > Requested an Update on Appteka
 
 > [!IMPORTANT]
