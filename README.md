@@ -25,6 +25,9 @@ To be Released on UptoDown Store, APKPure and FDroid.
 > [!NOTE]
 > Also ensure to Download this APK only from Trusted Sources such as FDroid, UptoDown, Appteka (thanks for testing my Pre-Release Builds) and so on.
 
+> [!IMPORTANT]
+> This Project is not Affiliated with Google, Magisk, and other Open Source / Closed Source Referenced in this Project. Certain Brands mentioned are for General Information Only.
+
 > [!WARNING]
 > Do not trust sources listed in [this page](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) and NEVER TRUST .ZIP FILES PROVIDED IN ANY FORKED / STOLEN REPOSITORY'S READMEs! They Bypass Github's Security Checks and may Compromise your System with Malware and Steal your ENTIRE Data!
 
@@ -196,6 +199,20 @@ Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more
 - [KernelSU by @tiann](https://github.com/tiann/KernelSU) : For Kernel-Level Rooting on GKI Devices.
 - [APatch by @bmax121](https://github.com/bmax121/APatch) : For Easy Kernel-Level Rooting.
 - [mtkclient by @bkerler](https://github.com/bkerler/mtkclient) : For allowing MTK Devices to be Rooted Easily ( Including my Phone ).
+- [Shamiko by @LSPosed](https://github.com/LSPosed/LSPosed.github.io/releases/) : For hiding root traces and faking bootloader status.
+- [Tricky Store by @5ec1cff](https://github.com/5ec1cff/TrickyStore) : For spoofing Hardware Backed Attestation.
+- [Tricky Addon by @KOWX712](https://github.com/KOWX712/Tricky-Addon-Update-Target-List) : For making the Tricky Store process accessible via WebUI.
+- [Zygisk Next by @Dr-TSNG](https://github.com/Dr-TSNG/ZygiskNext) : For providing a standalone Zygisk implementation.
+- [ReZygisk by @PerformanC](https://github.com/PerformanC/ReZygisk) : For an alternative Zygisk implementation.
+- [Zygisk Assistant by @snake-4](https://github.com/snake-4/Zygisk-Assistant) : For helping hide Zygisk from detection.
+- [Play Integrity Fix by @KOWX712](https://github.com/KOWX712/PlayIntegrityFix) : For maintaining Google Play Integrity standards.
+- [Play Integrity Fork by @osm0sis](https://github.com/osm0sis/PlayIntegrityFork) : For the widely used community fork of the integrity fix.
+- [TEESimulator by @JingMatrix](https://github.com/JingMatrix/TEESimulator) : An open-source alternative for TEE spoofing.
+- [NoHello by @MhmRdd](https://github.com/MhmRdd/NoHello) : An open-source alternative for hiding root.
+- [Tricky Store OSS by @beakthoven](https://github.com/beakthoven/TrickyStoreOSS) : For providing an open-source version of Tricky Store.
+- [KernelSU Next by @KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) : For the continued development and community fork of KSU.
+- [SkiSU Ultra by @SkiSU-Ultra](https://github.com/SkiSU-Ultra/SkiSU-Ultra) : For providing specialized kernel-level rooting features.
+- [TWRP & OrangeFox](https://twrp.me/) : For the custom recoveries that make flashing these modules possible.
 
 ## Note from Developer :
 
