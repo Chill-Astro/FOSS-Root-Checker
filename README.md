@@ -25,11 +25,13 @@ To be Released on UptoDown Store and FDroid.
 > [!NOTE]
 > Also ensure to Download this APK only from Trusted Sources.
 > 
-> Will Submit to FDroid.
+> Will Submit to FDroid. ( Currently stuck in Gitlab Captcha )
 > 
 > Waiting for Approval on UptoDown.
 > 
 > Requested an Update on Appteka
+>
+> Submitted to IzzyonDroid
 
 > [!IMPORTANT]
 > This Project is not Affiliated with Google, Magisk, and other Open Source / Closed Source Referenced in this Project. Certain Brands mentioned are for General Information Only.
