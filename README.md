@@ -65,6 +65,17 @@ To be Released on UptoDown Store and FDroid.
 <img width="1920" height="1080" alt="Root Checker Preview" src="https://github.com/user-attachments/assets/51a3629a-0ebc-409a-9907-3df47b411c90" />  
 </kbd>
 
+
+</div>
+
+---
+
+## Screen Recording :
+
+<div align="center">
+
+https://github.com/user-attachments/assets/bd46f527-2f41-4370-9d6e-16280c75624f
+
 </div>
 
 ---
