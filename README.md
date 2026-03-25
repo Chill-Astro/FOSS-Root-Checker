@@ -43,7 +43,7 @@ To be Released on UptoDown Store, APKPure and FDroid.
 
 ## Key Features :
 
-- Ultra Low Footprint of 1.73MB ONLY!
+- Ultra Low Footprint of 1.54MB ONLY!
 - Privacy First Design with full transperancy. ✅
 - Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB ). ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
