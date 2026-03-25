@@ -38,7 +38,7 @@ To be Released on UptoDown Store and FDroid.
 > [!NOTE]
 > All checks are performed on a background thread (`Dispatchers.IO`) to ensure your device remains responsive during the scan.
 
-- If "Search Root" is pressed, it Checke 40+ System Paths to Find Traces of Root Access. If it finds, Root Traces are Found. If not it is clearly shown.
+- If "Search Root" is pressed, it Checks 40+ System Paths to Find Traces of Root Access. If it finds, Root Traces are Found. If not it is clearly shown.
 - Now if "Verify Root" is pressed the App Executes `su -c id` and if it returns 0, Root Access is Verified. Else, Root Access not Available.
 - For BusyBox Checker, it checks BusyBox Specefix Paths. If not Found, the App executes `su -c which busybox` to verify BusyBox Installation.
 
