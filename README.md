@@ -64,7 +64,7 @@ To be Released on UptoDown Store, APKPure and FDroid.
 
 STEP 1 : Get Android Studio from [here](https://developer.android.com/studio)
 
-STEP 2 : Clone this Repository :
+STEP 2 : Clone this Repository 
 
     git clone https://github.com/Chill-Astro/FOSS-Root-Checker.git
 
@@ -84,7 +84,7 @@ This method is RECOMMENDED as this is how I build myself.
 
 ## Building from Source ( Without Android Studio ) :
 
-STEP 1 : Install Prerequisites :
+STEP 1 : Install Prerequisites 
   - JDK 17 (Java Development Kit)
   - Command Line tools from [here](https://developer.android.com/tools)
     
@@ -96,12 +96,12 @@ STEP 2: Set Environment Variables : Set your ANDROID_HOME environment variable t
 
   - Windows: Set ANDROID_HOME in System Environment Variables to `C:\Users\<Username>\AppData\Local\Android\Sdk`
 
-STEP 3 : Clone this Repository :
+STEP 3 : Clone this Repository 
 
     git clone https://github.com/Chill-Astro/FOSS-Root-Checker.git
     cd FOSS-Root-Checker
 
-STEP 4 : Build :
+STEP 4 : Build 
 
   - Linux / MacOS :
 
@@ -117,7 +117,7 @@ STEP 4 : Create a Certificate ( Modify this as needed ) :
 
         keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-alias
 
-STEP 5: Configure Environment Variables ( Modify as Needed ) :
+STEP 5: Configure Environment Variables ( Modify as Needed ) 
 
   RELEASE_STORE_FILE=path/to/your/my-release-key.jks
 
@@ -127,9 +127,7 @@ STEP 5: Configure Environment Variables ( Modify as Needed ) :
 
   RELEASE_KEY_PASSWORD=your_key_password        
 
-STEP 6 : Build :
-
-STEP 4 : Build :
+STEP 6 : Build 
 
   - Linux / MacOS :
 
