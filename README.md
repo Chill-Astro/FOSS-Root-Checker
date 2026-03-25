@@ -18,16 +18,25 @@ Requirements : `Android 6 and Higher`
 
 An Online Version of the App's Guide is given [here](https://github.com/Chill-Astro/Android-Rooting-Guide).
 
-To be Released on UptoDown Store and FDroid.
+TRUSTED DOWNLOAD SOURCES ( Green : Official | Yellow : Third Party Release ) :
+
+<a href="https://github.com/Chill-Astro/FOSS-Root-Checker/releases/latest" target="_blank" rel="noopener noreferrer" aria-label="Get it on GitHub">
+    <img src="https://img.shields.io/static/v1?label=%20&message=Get%20it%20on%20GitHub&color=2ECC71&labelColor=000000&style=for-the-badge&logo=github&logoColor=2ECC71" 
+         height="80" 
+         alt="Get it on GitHub">
+</a>
+<a href="https://appteka.store/apps/c07r276228" target="_blank" rel="noopener noreferrer" aria-label="Get it on Appteka">
+    <img src="https://img.shields.io/static/v1?label=%20&message=Get%20it%20on%20Appteka&color=FFD700&labelColor=000000&style=for-the-badge&logo=android&logoColor=FFD700" 
+         height="80" 
+         alt="Get it on Appteka">
+</a>
 
 </div>
 
 > [!NOTE]
-> Also ensure to Download this APK only from Trusted Sources.
+> Also ensure to Download this APK only from Trusted Sources. Currently Appteka has a Verified Release ( Released by a 3rd Party User ).
 > 
 > Waiting for Approval on UptoDown.
-> 
-> Requested an Update on Appteka
 >
 > Submitted to IzzyonDroid
 >
