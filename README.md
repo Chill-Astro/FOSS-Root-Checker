@@ -57,9 +57,15 @@ To be Released on UptoDown Store and FDroid.
 
 ---    
 
-## Preview :
+## Screenshots :
 
-// Will add Screen Recording of the App in Action, after Release!
+<div align="center">
+
+<kbd>
+<img width="1920" height="1080" alt="Root Checker Preview" src="https://github.com/user-attachments/assets/51a3629a-0ebc-409a-9907-3df47b411c90" />  
+</kbd>
+
+</div>
 
 ---
 
@@ -82,63 +88,6 @@ STEP 4 : Hit Build > Generate App Bundles or APKs > Generate APK as shown.
 Alternatively Hit Build > Signed App Bundle or Apk. You will have to provide your OWN Certificate.
 
 This method is RECOMMENDED as this is how I build myself.
-
----
-
-## Building from Source ( Without Android Studio ) :
-
-STEP 1 : Install Prerequisites 
-  - JDK 17 (Java Development Kit)
-  - Command Line tools from [here](https://developer.android.com/tools)
-    
-STEP 2: Set Environment Variables : Set your ANDROID_HOME environment variable to point to your SDK location.
-
-  - Linux/macOS:
-
-        export ANDROID_HOME=$HOME/Android/Sdk
-
-  - Windows: Set ANDROID_HOME in System Environment Variables to `C:\Users\<Username>\AppData\Local\Android\Sdk`
-
-STEP 3 : Clone this Repository 
-
-    git clone https://github.com/Chill-Astro/FOSS-Root-Checker.git
-    cd FOSS-Root-Checker
-
-STEP 4 : Build 
-
-  - Linux / MacOS :
-
-        ./gradlew assembleDebug
-    
-  - Windows :
-
-        gradlew.bat assembleDebug
-
-Alternatively for Release Builds :
-
-STEP 4 : Create a Certificate ( Modify this as needed ) :
-
-        keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-alias
-
-STEP 5: Configure Environment Variables ( Modify as Needed ) 
-
-  RELEASE_STORE_FILE=path/to/your/my-release-key.jks
-
-  RELEASE_STORE_PASSWORD=your_keystore_password
-
-  RELEASE_KEY_ALIAS=my-alias
-
-  RELEASE_KEY_PASSWORD=your_key_password        
-
-STEP 6 : Build 
-
-  - Linux / MacOS :
-
-        ./gradlew assembleRelease
-    
-  - Windows :
-
-        gradlew.bat assembleRelease
 
 ---
 
