@@ -56,8 +56,6 @@ To be Released on UptoDown Store, APKPure and FDroid.
 
 ## Preview :
 
-// Will Update to include Screenshots only from Rooted POCO C55 (earth) as idk it looks cleaner + No repetitive screenshots. For old Screenshots, check commits.
-
 // Will add Screen Recording of the App in Action, after Release!
 
 ---

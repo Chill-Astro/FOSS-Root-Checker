@@ -4,6 +4,7 @@ package foss.chillastro.root.checker
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import androidx.compose.ui.graphics.Brush
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -936,31 +937,50 @@ fun Settings(
         }
     }
     if (showPoem) { // God comes with Dedication and so does FREEDOM. So tap 108 times ig for an Easter egg!
-        BasicAlertDialog(onDismissRequest = { showPoem = false }) {
-            Surface(
-                shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 6.dp,
-                modifier = Modifier.widthIn(max = 500.dp).padding(16.dp)
-            ) {
-                Column(modifier = Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "Tarana-e-Milli", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                    Spacer(Modifier.height(24.dp))
-                    Box(modifier = Modifier.heightIn(max = 300.dp).verticalScroll(rememberScrollState())) {
-                        Text(
-                            // Tarana-e-Milli by Muhammad Iqbal. Patriotism!
-                            text = "\"यूनान-ओ-मिस्र-ओ-रूमा, सब मिट गए जहाँ से\nअब तक मगर है बाक़ी, नाम-ओ-निशाँ हमारा\nकुछ बात है कि हस्ती मिटती नहीं हमारी\nसदियों रहा है दुश्मन दौर-ए-ज़माँ हमारा\"",
-                            style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.Center,
-                            lineHeight = 28.sp,
-                            modifier = Modifier.fillMaxWidth()
-                        )
+            BasicAlertDialog(onDismissRequest = { showPoem = false }) {
+                Surface(
+                    shape = MaterialTheme.shapes.extraLarge,
+                    color = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 6.dp,
+                    modifier = Modifier.widthIn(max = 400.dp).padding(16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    brush = Brush.verticalGradient(
+                                        colors = listOf(Color(0xFFFF9933), Color(0xFFFFFFFF), Color(0xFF128807))
+                                    ),
+                                    shape = MaterialTheme.shapes.large
+                                )
+                                .padding(24.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "\"यूनान-ओ-मिस्र-ओ-रूमा, सब मिट गए जहाँ से\nअब तक मगर है बाक़ी, नाम-ओ-निशाँ हमारा\nकुछ बात है कि हस्ती मिटती नहीं हमारी\nसदियों रहा है दुश्मन दौर-ए-ज़माँ हमारा\"",
+                                style = MaterialTheme.typography.titleMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    lineHeight = 30.sp,
+                                    color = Color.Black
+                                ),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                        Spacer(Modifier.height(16.dp))
+                        Button(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = { showPoem = false; logoTaps = 0 },
+                            shape = MaterialTheme.shapes.medium
+                        ) {
+                            Text("Close")
+                        }
                     }
-                    Spacer(Modifier.height(24.dp))
-                    TextButton(onClick = { showPoem = false }, modifier = Modifier.align(Alignment.End)) { Text("Jai Hind!") }
                 }
             }
-        }
     }
     if (showLicense) {
         BasicAlertDialog(onDismissRequest = { showLicense = false }) {
