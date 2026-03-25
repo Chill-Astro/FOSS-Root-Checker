@@ -1,0 +1,23 @@
+FOSS Root Checker is an open-source utility for verifying Root Access on Android devices with absolute transparency. 
+
+Ever wondered what Root Checker apps do behind the scenes once you grant them permission? This app is designed for users who value simplicity and want to see exactly how their device is being audited.
+
+How it works:
+- Search Root: Checks 40+ system paths to find traces of root access.
+- Verify Root: Executes the command `su -c id`. If it returns 0, access is verified.
+- BusyBox: Checks specific paths and executes `su -c which busybox` to verify installation.
+- Performance: All checks run on a background thread (Dispatchers.IO) to keep your device responsive.
+
+Key Features:
+- Ultra Low Footprint: Only 1.54MB.
+- Privacy First: No ads, no data collection, and no internet permission.
+- Optimization: Reduced animations for devices with less than 4GB RAM.
+- Modern UI: Material You design with Monet theming support.
+- Wide Compatibility: Supports Android 6.0 and higher.
+- Universal: Works with Magisk, KernelSU, APatch, and older methods.
+
+Credits and Resources:
+This project acknowledges the incredible work of the following developers and tools: Magisk, KernelSU, APatch, mtkclient, Shamiko, Tricky Store, Zygisk Next, Play Integrity Fix, and the TWRP/OrangeFox teams.
+
+Note from Developer:
+If you find this tool helpful, please consider starring the project on GitHub!
