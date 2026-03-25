@@ -16,9 +16,9 @@ Package ID : `foss.chillastro.root.checker`
 
 Requirements : `Android 6 and Higher`
 
-Currently in Development. Releasing on March 26th 2026! 🌟
+An Online Version of the App's Guide is given [here](https://github.com/Chill-Astro/Android-Rooting-Guide).
 
-To be Released on UptoDown Store, APKPure and FDroid.
+To be Released on UptoDown Store and FDroid.
 
 </div>
 
