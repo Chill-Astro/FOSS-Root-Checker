@@ -876,6 +876,7 @@ fun Settings(
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
     val noRipple = remember { MutableInteractionSource() }
+    val isOfflineVersion = remember { ctx.packageName.endsWith(".offline") }
 
     // States for Easter Eggs & Dialogs
     var showLicense by rememberSaveable { mutableStateOf(false) }
@@ -1137,13 +1138,21 @@ fun Settings(
                 )
             }
             Spacer(Modifier.height(16.dp))
-            FilledTonalButton(
-                onClick = { if (!isChecking) performUpdateCheck() },
-                modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp),
-                shape = CircleShape
-            ) {
-                if (isChecking) CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
-                else { Icon(Icons.Rounded.Refresh, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("Check for Updates") }
+            if (!isOfflineVersion) {
+                // Show your "Check for Updates" button only for the Official version
+                FilledTonalButton(
+                    onClick = { if (!isChecking) performUpdateCheck() },
+                    modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp),
+                    shape = CircleShape
+                ) {
+                    if (isChecking) {
+                        CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                    } else {
+                        Icon(Icons.Rounded.Refresh, null, Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text("Check for Updates")
+                    }
+                }
             }
         }
         HorizontalDivider(Modifier.padding(vertical = 24.dp).fillMaxWidth(0.3f), thickness = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
