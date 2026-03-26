@@ -12,7 +12,9 @@ Well that's why I made this App! It is just a simple Root Checker for Newbies bu
 
 App Version : `v36.23.1.0`
 
-Package ID : `foss.chillastro.root.checker`
+Package ID : `foss.chillastro.root.checker` 
+
+Offline Release ID : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
 
 Requirements : `Android 6 and Higher`
 
