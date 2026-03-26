@@ -1139,7 +1139,7 @@ fun Settings(
             }
             Spacer(Modifier.height(16.dp))
             if (!isOfflineVersion) {
-                // Show your "Check for Updates" button only for the Official version
+                // Show the "Check for Updates" button only for the Official version
                 FilledTonalButton(
                     onClick = { if (!isChecking) performUpdateCheck() },
                     modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp),
