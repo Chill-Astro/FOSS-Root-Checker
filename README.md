@@ -125,7 +125,7 @@ This method is RECOMMENDED as this is how I build myself.
 
 // Includes Clones who are working against the MIT Licence and Distributing Malware. All Flaws are mentioned. 😑
 
-- RuotianJoy/FOSS-Root-Checker ( Cloned + Distributing Malware 👎 )
+- ~~RuotianJoy/FOSS-Root-Checker ( Cloned + Distributing Malware 👎 )~~ ( Removed Successfully )
 
 ---
 
