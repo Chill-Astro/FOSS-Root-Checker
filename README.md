@@ -28,6 +28,8 @@ _- TRUSTED SOURCES -_
 <a href="https://sourceforge.net/projects/foss-root-checker/" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=SourceForge&color=EE7034&labelColor=000000&style=for-the-badge&logo=sourceforge&logoColor=EE7034" height="80" alt="SourceForge"></a> 
 <a href="https://appteka.store/apps/568r276436" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Appteka&color=2ECC71&labelColor=000000&style=for-the-badge&logo=android&logoColor=2ECC71" height="80" alt="Appteka"></a> 
 
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/foss.chillastro.root.checker.offline)
+
 ---
 
 </div>
