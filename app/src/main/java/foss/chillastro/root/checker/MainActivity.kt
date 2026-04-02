@@ -4,7 +4,6 @@ package foss.chillastro.root.checker
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import androidx.compose.ui.graphics.Brush
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -63,6 +62,7 @@ import androidx.compose.material.icons.automirrored.rounded.LibraryBooks
 import androidx.compose.material.icons.automirrored.rounded.MenuBook
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Animation
+import androidx.compose.material.icons.rounded.Brush
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Code
@@ -78,7 +78,6 @@ import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.BasicAlertDialog
@@ -122,9 +121,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -241,7 +242,19 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
         navigationSuiteItems = {
             AppDestinations.entries.forEach { item ->
                 item(
-                    icon = { Icon(item.icon, null) },
+                    icon = {
+                        // Logic to handle both Library Icons and your Custom Box XML
+                        val iconPainter = when (val icon = item.icon) {
+                            is ImageVector -> rememberVectorPainter(icon)
+                            is Int -> painterResource(id = icon) // This catches R.drawable.ic_box
+                            else -> error("Invalid icon type")
+                        }
+
+                        Icon(
+                            painter = iconPainter,
+                            contentDescription = item.label
+                        )
+                    },
                     label = { Text(text = item.label) },
                     selected = dest == item,
                     onClick = { dest = item }
@@ -896,7 +909,7 @@ fun Settings(
                 @Suppress("DEPRECATION")
                 ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
             }
-        } catch (_: Exception) { "36.23.1.0" }
+        } catch (_: Exception) { "36.23.1.1" }
     }
 
     // Version Comparison Logic
@@ -919,18 +932,18 @@ fun Settings(
                 val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/FRC-SU_V.txt"
                 val remoteVersion = URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
-                    val current = appVersion ?: "36.23.1.0"
+                    val current = appVersion ?: "36.23.1.1"
                     if (isNewer(current, remoteVersion)) {
-                        Toast.makeText(ctx, "🎉 $remoteVersion OUT NOW!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(ctx, "$remoteVersion OUT NOW! 🎉", Toast.LENGTH_LONG).show()
                     } else if (isNewer(remoteVersion, current)) {
-                        Toast.makeText(ctx, "⚠️ You are using a DEV. BUILD!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(ctx, "You are using a DEV. BUILD! ⚠️", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(ctx, "🎉 Your Version is UP TO DATE!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(ctx, "Your Version is UP TO DATE! 🎉", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (_: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(ctx, "❌ Please Verify Internet Connection!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ctx, "Please Verify Internet Connection! ❌", Toast.LENGTH_SHORT).show()
                 }
             } finally {
                 isChecking = false
@@ -985,7 +998,7 @@ fun Settings(
     }
     if (showLicense) {
         BasicAlertDialog(onDismissRequest = { showLicense = false }) {
-            Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surface, tonalElevation = 6.dp, modifier = Modifier.widthIn(max = 500.dp).padding(16.dp)) {
+            Surface(shape = MaterialTheme.shapes.extraLarge, color = MaterialTheme.colorScheme.surface, tonalElevation = 6.dp, modifier = Modifier.widthIn(max = 500.dp).padding(10.dp)) {
                 Column(modifier = Modifier.padding(24.dp)) {
                     Text(text = "MIT License", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(32.dp))
@@ -1122,7 +1135,7 @@ fun Settings(
                 Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                     ListItem(
                         headlineContent = { Text("Use System Colours") },
-                        leadingContent = { Icon(Icons.Rounded.Palette, null) },
+                        leadingContent = { Icon(Icons.Rounded.Brush, null) },
                         trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn) },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
@@ -1137,9 +1150,9 @@ fun Settings(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
             }
-            Spacer(Modifier.height(16.dp))
             if (!isOfflineVersion) {
                 // Show the "Check for Updates" button only for the Official version
+                Spacer(Modifier.height(16.dp))
                 FilledTonalButton(
                     onClick = { if (!isChecking) performUpdateCheck() },
                     modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp),
@@ -1196,9 +1209,9 @@ fun HistoryContent(logs: List<String>, onClear: () -> Unit) { // This History do
         }
     }
 }
-enum class AppDestinations(val label: String, val icon: ImageVector) {
+enum class AppDestinations(val label: String, val icon: Any) {
     HOME("Root", Icons.Rounded.Tag),
-    BUSYBOX("BusyBox", Icons.Rounded.Terminal),
+    BUSYBOX("BusyBox", R.drawable.ic_box),
     GUIDE("Guide", Icons.AutoMirrored.Rounded.MenuBook),
     SETTINGS("Settings", Icons.Rounded.Settings)
 }
