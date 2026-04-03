@@ -63,7 +63,9 @@ import androidx.compose.material.icons.automirrored.rounded.MenuBook
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Animation
 import androidx.compose.material.icons.rounded.Brush
+import androidx.compose.material.icons.rounded.Cancel
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.Computer
@@ -76,8 +78,10 @@ import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.ReportProblem
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Tag
+import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.BasicAlertDialog
@@ -88,6 +92,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -233,6 +238,7 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
 ) {
     var dest by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
     var showHistorySheet by remember { mutableStateOf(false) }
+    var showInfoSheet by remember { mutableStateOf(false) }
     val context = LocalContext.current
     var logs by remember { mutableStateOf(getLogs(context)) }
     val refreshLogs = { logs = getLogs(context) }
@@ -243,13 +249,11 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
             AppDestinations.entries.forEach { item ->
                 item(
                     icon = {
-                        // Logic to handle both Library Icons and your Custom Box XML
                         val iconPainter = when (val icon = item.icon) {
                             is ImageVector -> rememberVectorPainter(icon)
-                            is Int -> painterResource(id = icon) // This catches R.drawable.ic_box
+                            is Int -> painterResource(id = icon)
                             else -> error("Invalid icon type")
                         }
-
                         Icon(
                             painter = iconPainter,
                             contentDescription = item.label
@@ -268,10 +272,14 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                     title = {
                         Text(buildAnnotatedString {
                             append("ROOT CHECKER ")
-                            withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("[ FOSS ]") }
                         }, fontWeight = FontWeight.ExtraBold, fontFamily = FontFamily.Monospace)
                     },
-                    actions = {
+                    navigationIcon = { // Info button
+                        IconButton(onClick = { showInfoSheet = true }) {
+                            Icon(Icons.Rounded.Info, contentDescription = "Info") // Useful / Useless Facts About your Hardware
+                        }
+                    },
+                    actions = { // History button
                         IconButton(onClick = { showHistorySheet = true }) {
                             Icon(Icons.Rounded.History, contentDescription = "History") // Not the Boring History from School
                         }
@@ -318,7 +326,149 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                 HistoryContent(logs = logs, onClear = { clearLogs(context); refreshLogs() })
             }
         }
+        if (showInfoSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showInfoSheet = false },
+                shape = MaterialTheme.shapes.extraLarge,
+                containerColor = MaterialTheme.colorScheme.background
+            ) {
+                SystemInfo()
+            }
+        }
     }
+}
+@Composable
+fun SystemInfo() {
+    val scrollState = rememberScrollState()
+    val lspData = listOf(
+        "/data/adb/lspd", "/system/framework/lsposed.jar",
+        "/system/etc/init/hw/init.lsposed.rc", "/data/adb/lspd.db"
+    ).map { it to safeExists(it) }
+    val rootData = listOf(
+        "/system/bin/su", "/system/xbin/su", "/sbin/su", "/data/local/xbin/su",
+        "/sbin/su_magisk_arm64", "/system/xbin/magisk", "/data/adb/magisk"
+    ).map { it to safeExists(it) }
+    val busyBoxData = listOf(
+        "/system/bin/busybox", "/system/xbin/busybox", "/vendor/bin/busybox",
+        "/sbin/busybox", "/data/local/bin/busybox"
+    ).map { it to safeExists(it) }
+    val zygiskFound = try {
+        java.io.File("/proc/self/mounts").readText().contains("zygisk", ignoreCase = true)
+    } catch(_: Exception) { false }
+    val seLinux = try {
+        val p = getProp("selinux.get", "")
+        p.ifBlank {
+            if (java.io.File("/sys/fs/selinux/enforce")
+                    .exists()
+            ) "Enforcing" else "Enforcing (Protected)"
+        }
+    } catch(_: Exception) { "Enforcing" }
+    val debuggable = getProp("ro.debuggable", "0")
+    val secure = getProp("ro.secure", "1")
+    val isSafe = lspData.none { it.second } &&
+            rootData.none { it.second } &&
+            busyBoxData.none { it.second } &&
+            !zygiskFound &&
+            debuggable != "1" &&
+            secure != "0"
+    Column(
+        modifier = Modifier.fillMaxWidth().verticalScroll(scrollState).padding(bottom = 40.dp)
+    ) {
+        ElevatedCard(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.primary)
+        ) {
+            Row(modifier = Modifier.padding(24.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Rounded.Info, null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(28.dp))
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = if(isSafe) "Device is Normal" else "Device is Modified",
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        }
+        CategoryGroup("LSPosed Framework", lspData)
+        CategoryGroup("Root Binaries", rootData)
+        CategoryGroup("BusyBox Traces", busyBoxData)
+        SectionLabel("System Security")
+        StatRow(label = "SELinux Policy", value = seLinux, ok = !seLinux.contains("Disabled", true))
+        StatRow(label = "ro.debuggable", value = debuggable, ok = debuggable != "1")
+        StatRow(label = "ro.secure", value = secure, ok = secure != "0")
+        PathRow(path = "Zygisk Traces (Mounts)", found = zygiskFound)
+    }
+}
+fun getProp(key: String, default: String): String {
+    return try {
+        val c = Class.forName("android.os.SystemProperties")
+        val get = c.getMethod("get", String::class.java)
+        val result = get.invoke(c, key) as String
+        if (result.isNullOrBlank()) {
+            val process = Runtime.getRuntime().exec("getprop $key")
+            val output = process.inputStream.bufferedReader().use { it.readLine() }
+            if (output.isNullOrBlank()) "ACCESS DENIED" else output
+        } else result
+    } catch (_: Exception) {
+        "ACCESS DENIED"
+    }
+}
+fun safeExists(path: String): Boolean = try {
+    val file = java.io.File(path)
+    file.exists() && file.canRead()
+} catch (_: Exception) {
+    false
+}
+@Composable
+fun RowLayout(ok: Boolean, content: @Composable ColumnScope.() -> Unit) {
+    Surface(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
+        shape = RoundedCornerShape(12.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.25f),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
+    ) {
+        Row(modifier = Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (ok) Icons.Rounded.CheckCircle else Icons.Rounded.Cancel,
+                contentDescription = null,
+                tint = if (ok) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
+                modifier = Modifier.size(22.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(modifier = Modifier.weight(1f)) { content() }
+        }
+    }
+}
+@Composable
+fun PathRow(path: String, found: Boolean) {
+    RowLayout(ok = !found) {
+        Text(
+            text = path,
+            style = MaterialTheme.typography.bodySmall,
+            fontFamily = FontFamily.Monospace,
+            modifier = Modifier.fillMaxWidth(),
+            softWrap = true
+        )
+    }
+}
+@Composable
+fun StatRow(label: String, value: String, ok: Boolean) {
+    RowLayout(ok = ok) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text(label, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.weight(1f))
+            Text(value, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace, color = if(ok) Color.Unspecified else MaterialTheme.colorScheme.error)
+        }
+    }
+}
+@Composable
+fun SectionLabel(text: String) {
+    Text(text, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Black, modifier = Modifier.padding(horizontal = 24.dp, vertical = 14.dp), color = MaterialTheme.colorScheme.primary)
+}
+@Composable
+fun CategoryGroup(title: String, data: List<Pair<String, Boolean>>) {
+    SectionLabel(title)
+    data.forEach { (p, e) -> PathRow(path = p, found = e) }
 }
 // User INTERFACE (I hope it works like butter on Dumpster Fire Devices!)
 @Composable
@@ -425,7 +575,7 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                         delay(1000)
                         val paths = arrayOf(
                             // A Rabbit Hole of a HELL LOT OF PATHS! (Feels like I am a Security Official tbh.)
-                            // Magisk
+                            // Magisk & Stealth Modules
                             "/data/adb/magisk",
                             "/data/adb/magisk.db",
                             "/data/adb/magisk.img",
@@ -438,6 +588,10 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                             "/data/adb/post-fs-data.d",
                             "/data/adb/service.d",
                             "/data/adb/env",
+                            "/data/adb/shamiko",
+                            "/data/adb/tricky_store",
+                            "/data/adb/zygisk_next",
+                            "/data/adb/riru",
                             // KernelSU & APatch
                             "/data/adb/ksu",
                             "/data/adb/ksu/bin/su",
@@ -446,6 +600,7 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                             "/data/adb/apatch",
                             "/data/adb/apatch/bin/su",
                             "/data/adb/ap/bin/su",
+                            "/data/adb/ap/patch",
                             "/dev/apatch",
                             "/sys/kernel/debug/tracing/su",
                             // Others
@@ -466,11 +621,13 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                             "/system/app/SuperSU",
                             "/system/etc/init.d/99SuperSUDaemon",
                             "/dev/com.koushikdutta.superuser.daemon",
+                            "/data/data/com.noshufou.android.su",
                             "/system/xbin/busybox",
                             "/system/bin/busybox",
                             "/sbin/busybox",
                             "/vendor/bin/busybox",
-                            "/data/local/busybox"
+                            "/data/local/busybox",
+                            "/data/local/xbin/busybox"
                         )
                         val found = paths.any { try { Runtime.getRuntime().exec(arrayOf("ls", it)).waitFor() == 0 } catch (_: Exception) { false } }
                         withContext(Dispatchers.Main) {
@@ -909,7 +1066,7 @@ fun Settings(
                 @Suppress("DEPRECATION")
                 ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
             }
-        } catch (_: Exception) { "36.23.1.1" }
+        } catch (_: Exception) { "36.23.2.0" }
     }
 
     // Version Comparison Logic
@@ -932,7 +1089,7 @@ fun Settings(
                 val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/FRC-SU_V.txt"
                 val remoteVersion = URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
-                    val current = appVersion ?: "36.23.1.1"
+                    val current = appVersion ?: "36.23.2.0"
                     if (isNewer(current, remoteVersion)) {
                         Toast.makeText(ctx, "$remoteVersion OUT NOW! 🎉", Toast.LENGTH_LONG).show()
                     } else if (isNewer(remoteVersion, current)) {
