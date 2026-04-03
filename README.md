@@ -1,6 +1,6 @@
 <p align="center">
   <kbd>
-  <img src="https://github.com/user-attachments/assets/303643a8-6518-408c-9447-81dc9be7f291" width="1920px" height="1080px" alt="Root Checker Promo"> 
+  <img width="1920" height="1080" alt="Rooting Revolution" src="https://github.com/user-attachments/assets/fc8d67f6-df19-496b-9960-60786e22886d" />
   </kbd>
 </p>
 
@@ -10,7 +10,7 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-App Version : `v36.23.1.0`
+App Version : `v36.23.2.0`
 
 Package ID : `foss.chillastro.root.checker` 
 
@@ -55,7 +55,7 @@ _- TRUSTED SOURCES -_
 
 ## Key Features :
 
-- Ultra Low Footprint of 1.54MB ONLY!
+- Ultra Low Footprint of 1.55MB ONLY!
 - Privacy First Design with full transperancy. ✅
 - Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB ). ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
@@ -69,12 +69,9 @@ _- TRUSTED SOURCES -_
 ## Screenshots :
 
 <div align="center">
-
 <kbd>
-<img width="1920" height="1080" alt="Root Checker Preview" src="https://github.com/user-attachments/assets/51a3629a-0ebc-409a-9907-3df47b411c90" />  
+ <img width="1920" height="1080" alt="Root Checker Preview" src="https://github.com/user-attachments/assets/b736eec2-f626-4b69-87b9-1698eee5bffc" />
 </kbd>
-
-
 </div>
 
 ---
@@ -83,7 +80,7 @@ _- TRUSTED SOURCES -_
 
 <div align="center">
 
-https://github.com/user-attachments/assets/bd46f527-2f41-4370-9d6e-16280c75624f
+https://github.com/user-attachments/assets/f5d7bd5e-6e76-47ff-a945-2cdacab0fba7
 
 </div>
 
