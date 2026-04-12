@@ -66,6 +66,31 @@ _- TRUSTED SOURCES -_
 
 ---    
 
+## Version Structure :
+
+Now if you are visiting this Repository from Reddit, or found this while Searching, you must be wondering, 
+
+*"Why does the App Start from v36????? It has only 2 Releases!"*
+
+Well let's break this down first :
+
+<div align="center">
+
+<H2>
+
+v`36`.`23`.`2`.`0`
+
+</H2>
+
+</div>
+
+- `36` -> Target SDK ( Her Target SDK is Android 16 whose API Level is '36' )
+- `23` -> Minimum SDK ( She installs on Android 6 and Higher whose API Level is '23' )
+- `2` -> Major Update ( Refers to the Info Panel Update ) 
+- `0` -> Minor Update ( Currently there hasn't been any Changes in v2 Series. )
+
+---
+
 ## Screenshots :
 
 <div align="center">
