@@ -146,6 +146,7 @@ This method is RECOMMENDED as this is how I build myself.
 
 - RamsesAupart/FOSS-Root-Checker
 - vloco2417-lab/FOSS-Root-Checker
+- puichay012889/FOSS-Root-Checker
 
 ---
 
