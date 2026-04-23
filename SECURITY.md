@@ -11,6 +11,8 @@ ALWAYS ensure to Download this APK only from Trusted Sources such as Appteka, Iz
 
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/foss.chillastro.root.checker.offline)
 
+<a href="https://www.openapk.net/root-checker/foss.chillastro.root.checker.offline/"><img src="https://www.openapk.net/images/openapk-badge.png" height="82" alt="OpenAPK.net"></a>
+
 ---
 
 </div>
