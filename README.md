@@ -14,13 +14,11 @@ App Version : `v36.23.2.0`
 
 Package ID : `foss.chillastro.root.checker` 
 
-Offline Release ID : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
+Offline Flavour : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
 
 Requirements : `Android 6 and Higher`
 
 An Online Version of the App's Guide is given [here](https://github.com/Chill-Astro/Android-Rooting-Guide).
-
-Waiting for Approval on Uptodown Store and IzzyonDroid.
 
 _- TRUSTED SOURCES -_
 
@@ -44,6 +42,20 @@ _- TRUSTED SOURCES -_
 
 > [!WARNING]
 > Do not trust sources listed in [this page](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) and NEVER TRUST .ZIP FILES PROVIDED IN ANY FORKED / STOLEN REPOSITORY'S READMEs! They Bypass Github's Security Checks and may Compromise your System with Malware and Steal your ENTIRE Data!
+
+---
+
+## TRAILER on @chill-astro-sfs :
+
+<div align="center">
+  <kbd>
+  <a href="https://www.youtube.com/watch?v=ikYPs2zk7Yc">
+    <img src="https://img.youtube.com/vi/ikYPs2zk7Yc/maxresdefault.jpg" alt="Watch the FOSS Root Checker Trailer"style="border-radius:10px;">
+    <br>
+    <b><h3>▶ Click to Watch the Official Trailer</h3></b>
+  </a>
+</kbd>
+</div>
 
 ---
 
