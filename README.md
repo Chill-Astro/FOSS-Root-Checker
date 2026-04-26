@@ -16,6 +16,8 @@ Package ID : `foss.chillastro.root.checker`
 
 Offline Flavour : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
 
+Internal Codename : FRC-SU
+
 Requirements : `Android 6 and Higher`
 
 An Online Version of the App's Guide is given [here](https://github.com/Chill-Astro/Android-Rooting-Guide).
