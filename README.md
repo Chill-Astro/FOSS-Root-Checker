@@ -10,15 +10,15 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-App Version : `v36.23.2.0`
+**App Version** : `v36.23.2.0`
 
-Package ID : `foss.chillastro.root.checker` 
+**Package ID** : `foss.chillastro.root.checker` 
 
-Offline Flavour : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
+**Offline Flavour** : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
 
-Internal Codename : FRC-SU
+**Codename** : `FRC-SU`
 
-Requirements : `Android 6 and Higher`
+**Requirements** : `Android 6 and Higher`
 
 An Online Version of the App's Guide is given [here](https://github.com/Chill-Astro/Android-Rooting-Guide).
 
