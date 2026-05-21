@@ -10,7 +10,7 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-**App Version** : `v36.23.2.0`
+**App Version** : `v36.23.2.1`
 
 **Package ID** : `foss.chillastro.root.checker` 
 
@@ -76,11 +76,11 @@ _- TRUSTED SOURCES -_
 
 - Ultra Low Footprint of 1.55MB ONLY!
 - Privacy First Design with full transperancy. ✅
-- Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB ). ✅
+- Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB or CPU < 2Ghz ). ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
 - Modern Material UI with Monet Theming. ✅
 - Support for Android 6+ Devices. ✅
-- Works with Magisk, KernelSU, KSU Forks, APatch and older Methods ✅
+- Works with Magisk, KernelSU, KSU Forks, APatch and older Methods. ✅
 - Thorough Guidance provided on Rooting and Unlocking Bootloader. ✅
 
 ---    
@@ -97,7 +97,7 @@ Well let's break this down first :
 
 <H2>
 
-v`36`.`23`.`2`.`0`
+v`36`.`23`.`2`.`1`
 
 </H2>
 
@@ -106,7 +106,7 @@ v`36`.`23`.`2`.`0`
 - `36` -> Target SDK ( Her Target SDK is Android 16 whose API Level is '36' )
 - `23` -> Minimum SDK ( She installs on Android 6 and Higher whose API Level is '23' )
 - `2` -> Major Update ( Refers to the Info Panel Update ) 
-- `0` -> Minor Update ( Currently there hasn't been any Changes in v2 Series. )
+- `1` -> Minor Update ( Minor Maintenance Update )
 
 ---
 
@@ -170,7 +170,7 @@ This method is RECOMMENDED as this is how I build myself.
 
 ## HALL OF SHAME 👎 :
 
-// Includes Clones who are working against the MIT Licence and Distributing Malware. All Flaws are mentioned. 😑
+// Includes Clones who are working against the MIT License and Distributing Malware. All Flaws are mentioned. 😑
 
 - ~~RuotianJoy/FOSS-Root-Checker ( Cloned + Distributing Malware 👎 )~~ ( Removed Successfully )
 
