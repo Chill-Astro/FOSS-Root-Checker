@@ -78,10 +78,8 @@ import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material.icons.rounded.ReportProblem
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.BasicAlertDialog
@@ -162,12 +160,39 @@ object HardwareProbe {
     } catch (_: Exception) { "" }
     fun getBootloader(): String = if (getProp("ro.boot.flash.locked") == "0") "Unlocked" else "Locked"
     fun getVerity(): String = getProp("ro.boot.veritymode").ifEmpty { "disabled" }
-    
     fun getTotalRAM(context: Context): Long {
         val actManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memInfo = ActivityManager.MemoryInfo()
         actManager.getMemoryInfo(memInfo)
         return memInfo.totalMem
+    }
+    private fun getMaxCpuFreqKhz(): Long {
+        return try {
+            // Prepended java.io. to fix the unresolved reference
+            val reader = java.io.RandomAccessFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq", "r")
+            val line = reader.readLine()
+            reader.close()
+            line?.trim()?.toLong() ?: 0L
+        } catch (_: Exception) {
+            0L
+        }
+    }
+    fun isTrashDevice(context: Context): Boolean { // I Hope your Device ain't Dedotated!
+        // 1. Check RAM Threshold (4GB = 4,000,000,000 bytes roughly)
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val memoryInfo = ActivityManager.MemoryInfo()
+        activityManager.getMemoryInfo(memoryInfo)
+
+        // Total RAM converted to Gigabytes
+        val totalRamGb = memoryInfo.totalMem / (1024.0 * 1024.0 * 1024.0)
+        if (totalRamGb < 4.0) return true
+
+        // 2. Check CPU Clock Speed Threshold (2.0 GHz = 2,000,000 kHz)
+        val maxCpuKhz = getMaxCpuFreqKhz()
+        val maxCpuGhz = maxCpuKhz / 1000000.0
+        if (maxCpuGhz < 2.0) return true
+
+        return false
     }
 }
 
@@ -188,12 +213,11 @@ class MainActivity : ComponentActivity() {
             // 0: System, 1: Light, 2: Dark
             var themeMode by remember { mutableIntStateOf(prefs.getInt("theme_mode", 0)) }
             var useDynamic by remember { mutableStateOf(prefs.getBoolean("use_dynamic", true)) }
-            
-            val totalRam = remember { HardwareProbe.getTotalRAM(context) }
-            val isLowRam = totalRam < 4L * 1000 * 1000 * 1000 // 4000MB of DEDOTATAED RAM!
+
+            val isTrashHardware = remember { HardwareProbe.isTrashDevice(context) }
             
             var reducedAnimations by remember { 
-                mutableStateOf(if (isLowRam) true else prefs.getBoolean("reduced_animations", false)) 
+                mutableStateOf(if (isTrashHardware) true else prefs.getBoolean("reduced_animations", false))
             }
             
             val isSystemDark = isSystemInDarkTheme()
@@ -216,11 +240,16 @@ class MainActivity : ComponentActivity() {
                         prefs.edit { putBoolean("use_dynamic", it) }
                     },
                     reducedAnimations = reducedAnimations,
-                    onReducedAnimationsChange = {
-                        reducedAnimations = it
-                        prefs.edit { putBoolean("reduced_animations", it) }
+                    onReducedAnimationsChange = { newValue ->
+                        // Prevent the user from toggling if it's forced by hardware metrics
+                        if (isTrashHardware) {
+                            reducedAnimations = true
+                        } else {
+                            reducedAnimations = newValue
+                            prefs.edit { putBoolean("reduced_animations", newValue) }
+                        }
                     },
-                    isLowRam = isLowRam
+                    isLowRam = isTrashHardware
                 )
             }
         }
@@ -1066,13 +1095,13 @@ fun Settings(
                 @Suppress("DEPRECATION")
                 ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
             }
-        } catch (_: Exception) { "36.23.2.0" }
+        } catch (_: Exception) { "36.23.2.1" }
     }
 
     // Version Comparison Logic
     fun isNewer(current: String, remote: String): Boolean {
-        val currParts = current.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
-        val remoteParts = remote.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
+        val currParts = current.split(".").mapNotNull { it.toIntOrNull() }
+        val remoteParts = remote.split(".").mapNotNull { it.toIntOrNull() }
         val maxLength = maxOf(currParts.size, remoteParts.size)
         for (i in 0 until maxLength) {
             val currPart = currParts.getOrElse(i) { 0 }
@@ -1089,9 +1118,9 @@ fun Settings(
                 val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/FRC-SU_V.txt"
                 val remoteVersion = URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
-                    val current = appVersion ?: "36.23.2.0"
+                    val current = appVersion ?: "36.23.2.1"
                     if (isNewer(current, remoteVersion)) {
-                        Toast.makeText(ctx, "$remoteVersion OUT NOW! 🎉", Toast.LENGTH_LONG).show()
+                        Toast.makeText(ctx, "v$remoteVersion OUT NOW! 🎉", Toast.LENGTH_LONG).show()
                     } else if (isNewer(remoteVersion, current)) {
                         Toast.makeText(ctx, "You are using a DEV. BUILD! ⚠️", Toast.LENGTH_SHORT).show()
                     } else {
@@ -1203,7 +1232,7 @@ fun Settings(
             }
         )
         Text(
-            text = buildAnnotatedString { append("Developer: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("Chill-Astro Software") } },
+            text = buildAnnotatedString { append("Developer : "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("Chill-Astro Software") } },
             fontWeight = FontWeight.ExtraBold,
             modifier = Modifier.padding(top = 16.dp).clickable(indication = null, interactionSource = noRipple) {
                 if (++bTaps == 5) {
@@ -1214,7 +1243,7 @@ fun Settings(
         )
 
         Text(
-            text = buildAnnotatedString { append("Version: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append(appVersion) } },
+            text = buildAnnotatedString { append("Version : "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("v$appVersion") } },
             fontWeight = FontWeight.Bold,
             modifier = Modifier.clickable(indication = null, interactionSource = noRipple) {
                 vTaps++
@@ -1301,7 +1330,7 @@ fun Settings(
             Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                 ListItem(
                     headlineContent = { Text("Reduced Animations") },
-                    supportingContent = { if (isLowRam) Text("Forced on Low RAM Devices (<4GB)", color = MaterialTheme.colorScheme.primary) },
+                    supportingContent = { if (isLowRam) Text("Forced on Low End Devices", color = MaterialTheme.colorScheme.primary) },
                     leadingContent = { Icon(Icons.Rounded.Animation, null) },
                     trailingContent = { Switch(checked = reducedAnimations, onCheckedChange = onReducedAnimationsChange, enabled = !isLowRam) },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)

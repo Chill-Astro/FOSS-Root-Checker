@@ -36,8 +36,8 @@ android {
         applicationId = "foss.chillastro.root.checker"
         minSdk = 23
         targetSdk = 36
-        versionCode = 2
-        versionName = "v36.23.2.0"
+        versionCode = 3
+        versionName = "36.23.2.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
