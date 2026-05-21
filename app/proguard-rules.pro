@@ -1,19 +1,22 @@
-# --- UI & Framework (Compose Core Protection) ---
--keep class androidx.compose.** { *; }
--dontwarn androidx.compose.**
--keepattributes com.google.errorprone.annotations.DoNotMock
+# ====================================================================
+# 1. CORE OPTIMIZATIONS & SHRINKING
+# ====================================================================
 
-# --- Kotlin Coroutines (Prevents startup crashes) ---
--keep class kotlinx.coroutines.android.** { *; }
+# Enable maximum compression passes to strip dead space
+-optimizationpasses 5
 
-# --- Data Persistence ---
--keepclassmembers class ** {
-    @androidx.room.* *;
-    @kotlinx.serialization.SerialName <fields>;
-}
+# Keep standard debugging attributes for useful crash stack traces
+-keepattributes SourceFile, LineNumberTable, Signature, *Annotation*, InnerClasses, EnclosingMethod
+-renamesourcefileattribute SourceFile
 
-# --- Root Detection & Hardware Logic ---
+# ====================================================================
+# 2. APPLICATION LOGIC (Your Root Checker Details)
+# ====================================================================
+
+# Keep your main probing utility class intact so reflection or logic handles don't break
 -keep class foss.chillastro.root.checker.HardwareProbe { *; }
+
+# Keep specific method names that you might call via strings or rely on for log lookups
 -keepclassmembers class foss.chillastro.root.checker.** {
     *** isTrashDevice(...);
     *** isSUWorking(...);
@@ -22,19 +25,19 @@
     *** getLogs(...);
 }
 
-# --- Compose & Kotlin Metadata ---
--keep class kotlin.Metadata { *; }
+# Protect SharedPreferences/serialization field mappings if you use data models
+-keepclassmembers class * {
+    @kotlinx.serialization.SerialName <fields>;
+}
 
-# --- Prevents "Method Not Found" in Serialization ---
--keepattributes *Annotation*, InnerClasses, EnclosingMethod, Signature
--keepclassmembernames class kotlinx.serialization.json.** { *; }
+# ====================================================================
+# 3. JETPACK COMPOSE & COROUTINES (Rely on library-shipped defaults)
+# ====================================================================
 
-# --- Hardware & Shell Exec Extras ---
--keep class java.lang.Runtime { *; }
--keep class java.lang.Process { *; }
--keep class java.lang.ProcessBuilder { *; }
--keep class java.io.File { *; }
+# Do NOT keep whole androidx.compose packages. The compiler injects its own rules.
+# We only add a fallback to suppress harmless warning noise during compilation.
+-dontwarn androidx.compose.**
+-dontwarn kotlinx.coroutines.**
 
-# --- Debugging & Stacktraces ---
--keepattributes SourceFile,LineNumberTable
--renamesourcefileattribute SourceFile
+# Keep errorprone check attributes without keeping the underlying framework classes
+-keepattributes com.google.errorprone.annotations.DoNotMock
