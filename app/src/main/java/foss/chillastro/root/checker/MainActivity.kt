@@ -78,8 +78,10 @@ import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.ReportProblem
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Tag
+import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.BasicAlertDialog
@@ -160,39 +162,12 @@ object HardwareProbe {
     } catch (_: Exception) { "" }
     fun getBootloader(): String = if (getProp("ro.boot.flash.locked") == "0") "Unlocked" else "Locked"
     fun getVerity(): String = getProp("ro.boot.veritymode").ifEmpty { "disabled" }
+
     fun getTotalRAM(context: Context): Long {
         val actManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memInfo = ActivityManager.MemoryInfo()
         actManager.getMemoryInfo(memInfo)
         return memInfo.totalMem
-    }
-    private fun getMaxCpuFreqKhz(): Long {
-        return try {
-            // Prepended java.io. to fix the unresolved reference
-            val reader = java.io.RandomAccessFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq", "r")
-            val line = reader.readLine()
-            reader.close()
-            line?.trim()?.toLong() ?: 0L
-        } catch (_: Exception) {
-            0L
-        }
-    }
-    fun isTrashDevice(context: Context): Boolean { // I Hope your Device ain't Dedotated!
-        // 1. Check RAM Threshold (4GB = 4,000,000,000 bytes roughly)
-        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val memoryInfo = ActivityManager.MemoryInfo()
-        activityManager.getMemoryInfo(memoryInfo)
-
-        // Total RAM converted to Gigabytes
-        val totalRamGb = memoryInfo.totalMem / (1024.0 * 1024.0 * 1024.0)
-        if (totalRamGb < 4.0) return true
-
-        // 2. Check CPU Clock Speed Threshold (2.0 GHz = 2,000,000 kHz)
-        val maxCpuKhz = getMaxCpuFreqKhz()
-        val maxCpuGhz = maxCpuKhz / 1000000.0
-        if (maxCpuGhz < 2.0) return true
-
-        return false
     }
 }
 
@@ -209,17 +184,18 @@ class MainActivity : ComponentActivity() {
             }
             val context = LocalContext.current
             val prefs = remember { context.getSharedPreferences("settings", MODE_PRIVATE) }
-            
+
             // 0: System, 1: Light, 2: Dark
             var themeMode by remember { mutableIntStateOf(prefs.getInt("theme_mode", 0)) }
             var useDynamic by remember { mutableStateOf(prefs.getBoolean("use_dynamic", true)) }
 
-            val isTrashHardware = remember { HardwareProbe.isTrashDevice(context) }
-            
-            var reducedAnimations by remember { 
-                mutableStateOf(if (isTrashHardware) true else prefs.getBoolean("reduced_animations", false))
+            val totalRam = remember { HardwareProbe.getTotalRAM(context) }
+            val isLowRam = totalRam < 4L * 1000 * 1000 * 1000 // 4000MB of DEDOTATAED RAM!
+
+            var reducedAnimations by remember {
+                mutableStateOf(if (isLowRam) true else prefs.getBoolean("reduced_animations", false))
             }
-            
+
             val isSystemDark = isSystemInDarkTheme()
             val darkTheme = when(themeMode) {
                 1 -> false
@@ -230,26 +206,21 @@ class MainActivity : ComponentActivity() {
             FOSSRootCheckerTheme(darkTheme = darkTheme, dynamicColor = useDynamic) {
                 CARootChecker(
                     themeMode = themeMode,
-                    onThemeChange = { 
+                    onThemeChange = {
                         themeMode = it
                         prefs.edit { putInt("theme_mode", it) }
                     },
                     dyn = useDynamic,
-                    onDyn = { 
+                    onDyn = {
                         useDynamic = it
                         prefs.edit { putBoolean("use_dynamic", it) }
                     },
                     reducedAnimations = reducedAnimations,
-                    onReducedAnimationsChange = { newValue ->
-                        // Prevent the user from toggling if it's forced by hardware metrics
-                        if (isTrashHardware) {
-                            reducedAnimations = true
-                        } else {
-                            reducedAnimations = newValue
-                            prefs.edit { putBoolean("reduced_animations", newValue) }
-                        }
+                    onReducedAnimationsChange = {
+                        reducedAnimations = it
+                        prefs.edit { putBoolean("reduced_animations", it) }
                     },
-                    isLowRam = isTrashHardware
+                    isLowRam = isLowRam
                 )
             }
         }
@@ -257,9 +228,9 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor uses Astro.
-    themeMode: Int, 
-    onThemeChange: (Int) -> Unit, 
-    dyn: Boolean, 
+    themeMode: Int,
+    onThemeChange: (Int) -> Unit,
+    dyn: Boolean,
     onDyn: (Boolean) -> Unit,
     reducedAnimations: Boolean,
     onReducedAnimationsChange: (Boolean) -> Unit,
@@ -321,16 +292,16 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                 modifier = Modifier.padding(padding).fillMaxSize(),
                 transitionSpec = {
                     if (reducedAnimations) {
-                        (fadeIn(animationSpec = tween(300)) + scaleIn(initialScale = 0.95f)) togetherWith 
-                        (fadeOut(animationSpec = tween(300)) + scaleOut(targetScale = 0.95f))
+                        (fadeIn(animationSpec = tween(300)) + scaleIn(initialScale = 0.95f)) togetherWith
+                                (fadeOut(animationSpec = tween(300)) + scaleOut(targetScale = 0.95f))
                     } else {
                         val spec = spring<IntOffset>(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow)
                         if (targetState.ordinal > initialState.ordinal) {
-                            (slideInHorizontally(spec) { it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith 
-                            (slideOutHorizontally(spec) { -it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
+                            (slideInHorizontally(spec) { it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith
+                                    (slideOutHorizontally(spec) { -it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
                         } else {
-                            (slideInHorizontally(spec) { -it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith 
-                            (slideOutHorizontally(spec) { it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
+                            (slideInHorizontally(spec) { -it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith
+                                    (slideOutHorizontally(spec) { it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
                         }
                     }
                 }, label = "PageTransition"
@@ -340,7 +311,7 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                     AppDestinations.BUSYBOX -> Busybox()
                     AppDestinations.GUIDE -> RootGuide()
                     AppDestinations.SETTINGS -> Settings(
-                        themeMode, onThemeChange, dyn, onDyn, 
+                        themeMode, onThemeChange, dyn, onDyn,
                         reducedAnimations, onReducedAnimationsChange, isLowRam
                     )
                 }
@@ -561,8 +532,8 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                 tonalElevation = 8.dp
             ) {
                 Crossfade(
-                    targetState = checkState, 
-                    label = "icon_fade", 
+                    targetState = checkState,
+                    label = "icon_fade",
                     animationSpec = if (reducedAnimations) tween(300) else spring(stiffness = Spring.StiffnessLow)
                 ) { s ->
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -774,7 +745,7 @@ fun Busybox() { // Let's hope She ain't Busy!
                         TerminalLine(foundPath, MaterialTheme.colorScheme.primary)
                         Toast.makeText(ctx, "BusyBox found via Path", Toast.LENGTH_SHORT).show() // Ay did u forgot to hide?
                     }
-                    else { 
+                    else {
                         TerminalLine("Busybox not Found in Path!", MaterialTheme.colorScheme.error)
                         Toast.makeText(ctx, "BusyBox not Found. Is it Installed?", Toast.LENGTH_SHORT).show()
                         TerminalLine("Fine, but su Never Lies! ^_~") // SU
@@ -832,8 +803,8 @@ fun RootGuide() {
         targetState = menuPath,
         modifier = Modifier.fillMaxSize(),
         transitionSpec = {
-            (fadeIn(animationSpec = tween(400, easing = FastOutSlowInEasing)) + scaleIn(initialScale = 0.95f)) togetherWith 
-            (fadeOut(animationSpec = tween(400, easing = FastOutSlowInEasing)) + scaleOut(targetScale = 0.95f))
+            (fadeIn(animationSpec = tween(400, easing = FastOutSlowInEasing)) + scaleIn(initialScale = 0.95f)) togetherWith
+                    (fadeOut(animationSpec = tween(400, easing = FastOutSlowInEasing)) + scaleOut(targetScale = 0.95f))
         }, label = "SubMenuTransition"
     ) { targetPath ->
         Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -1095,13 +1066,13 @@ fun Settings(
                 @Suppress("DEPRECATION")
                 ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
             }
-        } catch (_: Exception) { "36.23.2.1" }
+        } catch (_: Exception) { "36.23.2.0" }
     }
 
     // Version Comparison Logic
     fun isNewer(current: String, remote: String): Boolean {
-        val currParts = current.split(".").mapNotNull { it.toIntOrNull() }
-        val remoteParts = remote.split(".").mapNotNull { it.toIntOrNull() }
+        val currParts = current.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
+        val remoteParts = remote.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
         val maxLength = maxOf(currParts.size, remoteParts.size)
         for (i in 0 until maxLength) {
             val currPart = currParts.getOrElse(i) { 0 }
@@ -1118,9 +1089,9 @@ fun Settings(
                 val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/FRC-SU_V.txt"
                 val remoteVersion = URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
-                    val current = appVersion ?: "36.23.2.1"
+                    val current = appVersion ?: "36.23.2.0"
                     if (isNewer(current, remoteVersion)) {
-                        Toast.makeText(ctx, "v$remoteVersion OUT NOW! 🎉", Toast.LENGTH_LONG).show()
+                        Toast.makeText(ctx, "$remoteVersion OUT NOW! 🎉", Toast.LENGTH_LONG).show()
                     } else if (isNewer(remoteVersion, current)) {
                         Toast.makeText(ctx, "You are using a DEV. BUILD! ⚠️", Toast.LENGTH_SHORT).show()
                     } else {
@@ -1137,50 +1108,50 @@ fun Settings(
         }
     }
     if (showPoem) { // God comes with Dedication and so does FREEDOM. So tap 108 times ig for an Easter egg!
-            BasicAlertDialog(onDismissRequest = { showPoem = false }) {
-                Surface(
-                    shape = MaterialTheme.shapes.extraLarge,
-                    color = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 6.dp,
-                    modifier = Modifier.widthIn(max = 400.dp).padding(16.dp)
+        BasicAlertDialog(onDismissRequest = { showPoem = false }) {
+            Surface(
+                shape = MaterialTheme.shapes.extraLarge,
+                color = MaterialTheme.colorScheme.surface,
+                tonalElevation = 6.dp,
+                modifier = Modifier.widthIn(max = 400.dp).padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(
-                                    brush = Brush.verticalGradient(
-                                        colors = listOf(Color(0xFFFF9933), Color(0xFFFFFFFF), Color(0xFF128807))
-                                    ),
-                                    shape = MaterialTheme.shapes.large
-                                )
-                                .padding(24.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "\"यूनान-ओ-मिस्र-ओ-रूमा, सब मिट गए जहाँ से\nअब तक मगर है बाक़ी, नाम-ओ-निशाँ हमारा\nकुछ बात है कि हस्ती मिटती नहीं हमारी\nसदियों रहा है दुश्मन दौर-ए-ज़माँ हमारा\"",
-                                style = MaterialTheme.typography.titleMedium.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    lineHeight = 30.sp,
-                                    color = Color.Black
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color(0xFFFF9933), Color(0xFFFFFFFF), Color(0xFF128807))
                                 ),
-                                textAlign = TextAlign.Center
+                                shape = MaterialTheme.shapes.large
                             )
-                        }
-                        Spacer(Modifier.height(16.dp))
-                        Button(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = { showPoem = false; logoTaps = 0 },
-                            shape = MaterialTheme.shapes.medium
-                        ) {
-                            Text("Close")
-                        }
+                            .padding(24.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "\"यूनान-ओ-मिस्र-ओ-रूमा, सब मिट गए जहाँ से\nअब तक मगर है बाक़ी, नाम-ओ-निशाँ हमारा\nकुछ बात है कि हस्ती मिटती नहीं हमारी\nसदियों रहा है दुश्मन दौर-ए-ज़माँ हमारा\"",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                lineHeight = 30.sp,
+                                color = Color.Black
+                            ),
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                    Spacer(Modifier.height(16.dp))
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { showPoem = false; logoTaps = 0 },
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Text("Close")
                     }
                 }
             }
+        }
     }
     if (showLicense) {
         BasicAlertDialog(onDismissRequest = { showLicense = false }) {
@@ -1189,7 +1160,7 @@ fun Settings(
                     Text(text = "MIT License", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(32.dp))
                     Box(modifier = Modifier.heightIn(max = 300.dp).verticalScroll(rememberScrollState())) {
-                        Text(text = "MIT License\n\nCopyright (c) 2026 Chill-Astro Software\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(text = "MIT License\n\nCopyright (c) 2025 Dev. Chill-Astro\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Spacer(Modifier.height(24.dp))
                     TextButton(modifier = Modifier.align(Alignment.End), onClick = { showLicense = false }) { Text("Close") }
@@ -1232,7 +1203,7 @@ fun Settings(
             }
         )
         Text(
-            text = buildAnnotatedString { append("Developer : "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("Chill-Astro Software") } },
+            text = buildAnnotatedString { append("Developer: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("Chill-Astro Software") } },
             fontWeight = FontWeight.ExtraBold,
             modifier = Modifier.padding(top = 16.dp).clickable(indication = null, interactionSource = noRipple) {
                 if (++bTaps == 5) {
@@ -1243,7 +1214,7 @@ fun Settings(
         )
 
         Text(
-            text = buildAnnotatedString { append("Version : "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("v$appVersion") } },
+            text = buildAnnotatedString { append("Version: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append(appVersion) } },
             fontWeight = FontWeight.Bold,
             modifier = Modifier.clickable(indication = null, interactionSource = noRipple) {
                 vTaps++
@@ -1330,7 +1301,7 @@ fun Settings(
             Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                 ListItem(
                     headlineContent = { Text("Reduced Animations") },
-                    supportingContent = { if (isLowRam) Text("Forced on Low End Devices", color = MaterialTheme.colorScheme.primary) },
+                    supportingContent = { if (isLowRam) Text("Forced on Low RAM Devices (<4GB)", color = MaterialTheme.colorScheme.primary) },
                     leadingContent = { Icon(Icons.Rounded.Animation, null) },
                     trailingContent = { Switch(checked = reducedAnimations, onCheckedChange = onReducedAnimationsChange, enabled = !isLowRam) },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
@@ -1384,9 +1355,9 @@ fun HistoryContent(logs: List<String>, onClear: () -> Unit) { // This History do
                                 Icon(if (isOk) Icons.Rounded.Check else Icons.Rounded.Close, null, Modifier.padding(8.dp), Color.White)
                             }
                             Spacer(Modifier.width(16.dp))
-                            Column { 
+                            Column {
                                 Text(displayText, fontWeight = FontWeight.Bold)
-                                Text("${p[1]} • Android ${p[3]}", style = MaterialTheme.typography.bodySmall, color = Color.Gray) 
+                                Text("${p[1]} • Android ${p[3]}", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
                             }
                         }
                     }
