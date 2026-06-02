@@ -55,7 +55,7 @@ _- TRUSTED SOURCES -_
 
 ## LTS NOTICE :
 
-- Project FRC-SU is now on LTS> Yearly Updates on SDK and Little Changes will be given!
+- Project FRC-SU is now on LTS! Yearly Updates on SDK and Little Changes will be given.
 - 1 Guaranteed Update per Year.
 - Additional Feature Updates MAY come.
 
