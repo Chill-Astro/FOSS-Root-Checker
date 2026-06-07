@@ -10,25 +10,30 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-App Version : `v36.23.2.0`
+**App Version** : `v36.23.2.0`
 
-Package ID : `foss.chillastro.root.checker`
+**Package ID** : `foss.chillastro.root.checker` 
 
-Offline Release ID : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
+**Offline Flavour** : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
 
-Requirements : `Android 6 and Higher`
+**Codename** : `FRC-SU`
+
+**Requirements** : `Android 6 and Higher`
 
 An Online Version of the App's Guide is given [here](https://github.com/Chill-Astro/Android-Rooting-Guide).
 
-Waiting for Approval on Uptodown Store and IzzyonDroid.
-
 _- TRUSTED SOURCES -_
 
-<a href="https://github.com/Chill-Astro/FOSS-Root-Checker/releases/latest" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=GitHub&color=FFFFFF&labelColor=000000&style=for-the-badge&logo=github&logoColor=FFFFFF" height="80" alt="GitHub"></a>
-<a href="https://sourceforge.net/projects/foss-root-checker/" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=SourceForge&color=EE7034&labelColor=000000&style=for-the-badge&logo=sourceforge&logoColor=EE7034" height="80" alt="SourceForge"></a>
-<a href="https://appteka.store/apps/568r276436" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Appteka&color=2ECC71&labelColor=000000&style=for-the-badge&logo=android&logoColor=2ECC71" height="80" alt="Appteka"></a>
+<a href="https://github.com/Chill-Astro/FOSS-Root-Checker/releases/latest" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=GitHub&color=FFFFFF&labelColor=000000&style=for-the-badge&logo=github&logoColor=FFFFFF" height="80" alt="GitHub"></a> 
+<a href="https://sourceforge.net/projects/foss-root-checker/" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=SourceForge&color=EE7034&labelColor=000000&style=for-the-badge&logo=sourceforge&logoColor=EE7034" height="80" alt="SourceForge"></a> 
+<a href="https://appteka.store/apps/760r278239" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Appteka&color=2ECC71&labelColor=000000&style=for-the-badge&logo=android&logoColor=2ECC71" height="80" alt="Appteka"></a> 
+<a href="https://www.androidfreeware.net/download-root-checker-apk.html" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=ANDROIDFREEWARE.NET&color=3498DB&labelColor=000000&style=for-the-badge&logo=android&logoColor=3498DB" height="80" alt="AndroidFreeware.net"></a>
 
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/foss.chillastro.root.checker.offline)
+
+<a href='https://foss-chillastro-root-checker.en.uptodown.com/android' title='Download Root Checker' ><img src='https://stc.utdstc.com/img/mediakit/download-gio-big.png' alt='Download Root Checker'></a>
+
+<a href="https://www.openapk.net/root-checker/foss.chillastro.root.checker.offline/"><img src="https://www.openapk.net/images/openapk-badge.png" height="82" alt="OpenAPK.net"></a>
 
 ---
 
@@ -42,22 +47,22 @@ _- TRUSTED SOURCES -_
 
 ---
 
-## How it works?
-
-> [!NOTE]
-> All checks are performed on a background thread (`Dispatchers.IO`) to ensure your device remains responsive during the scan.
-
-- If "Search Root" is pressed, it Checks 40+ System Paths to Find Traces of Root Access. If it finds, Root Traces are Found. If not it is clearly shown.
-- Now if "Verify Root" is pressed the App Executes `su -c id` and if it returns 0, Root Access is Verified. Else, Root Access not Available.
-- For BusyBox Checker, it checks BusyBox Specefix Paths. If not Found, the App executes `su -c which busybox` to verify BusyBox Installation.
-
----
-
 ## HALT ON DEVELOPMENT :
 
 - This Project is now a "Complete Product" in my Vision. So I have no other Ideas.
   
 --- 
+
+## How it works? 
+
+> [!NOTE]
+> All checks are performed on a background thread (`Dispatchers.IO`) to ensure your device remains responsive during the scan.
+
+- If "Search Root" is pressed, she Checks 40+ System Paths to Find Traces of Root Access. If it finds, Root Traces are Found. If not it is clearly shown.
+- Now if "Verify Root" is pressed the App Executes `su -c id` and if it returns 0, Root Access is Verified. Else, Root Access not Available.
+- For BusyBox Checker, she checks BusyBox Specefix Paths. If not Found, the App executes `su -c which busybox` to verify BusyBox Installation.
+
+---
 
 ## Key Features :
 
@@ -71,6 +76,46 @@ _- TRUSTED SOURCES -_
 - Thorough Guidance provided on Rooting and Unlocking Bootloader. ✅
 
 ---    
+
+## Version Structure :
+
+Now if you are visiting this Repository from Reddit, or found this while Searching, you must be wondering, 
+
+*"Why does the App Start from v36????? It has only 2 Releases!"*
+
+Well let's break this down first :
+
+<div align="center">
+
+<H2>
+
+v`36`.`23`.`2`.`0`
+
+</H2>
+
+</div>
+
+- `36` -> Target SDK ( Her Target SDK is Android 16 whose API Level is '36' )
+- `23` -> Minimum SDK ( She installs on Android 6 and Higher whose API Level is '23' )
+- `2` -> Major Update ( Refers to the Info Panel Update ) 
+- `0` -> Minor Update ( Currently there hasn't been any Changes in v2 Series. )
+
+---
+
+
+## TRAILER on @chill-astro-sfs :
+
+<div align="center">
+  <kbd>
+  <a href="https://www.youtube.com/watch?v=ikYPs2zk7Yc">
+    <img src="https://img.youtube.com/vi/ikYPs2zk7Yc/maxresdefault.jpg" alt="Watch the FOSS Root Checker Trailer"style="border-radius:10px;">
+    <br>
+    <b><h3>▶ Click to Watch the Official Trailer</h3></b>
+  </a>
+</kbd>
+</div>
+
+---
 
 ## Screenshots :
 
@@ -96,7 +141,7 @@ https://github.com/user-attachments/assets/f5d7bd5e-6e76-47ff-a945-2cdacab0fba7
 
 STEP 1 : Get Android Studio from [here](https://developer.android.com/studio)
 
-STEP 2 : Clone this Repository
+STEP 2 : Clone this Repository 
 
     git clone https://github.com/Chill-Astro/FOSS-Root-Checker.git
 
@@ -114,7 +159,7 @@ This method is RECOMMENDED as this is how I build myself.
 
 ---
 
-## HALL OF FAME 👍 :
+## HALL OF FAME 👍 : 
 
 // Will add Forked Repos which are genuinely good. 🤩 I will list everything Good about them.
 
@@ -123,6 +168,10 @@ This method is RECOMMENDED as this is how I build myself.
 ## HALL OF NEUTRALITY 😐 :
 
 // Will add Inactive Forks. Uh yeah that's it atleast it's Forking not Cloning! 😅
+
+- RamsesAupart/FOSS-Root-Checker
+- vloco2417-lab/FOSS-Root-Checker
+- puichay012889/FOSS-Root-Checker
 
 ---
 
@@ -149,7 +198,7 @@ Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more
 
 <details>
 <summary><b>View Details</b></summary>
-
+  
 **If your download contains any of the following, DELETE IT IMMEDIATELY:**
 
 * **Suspicious Windows Executables:** Files ending in `.exe`, `.bat`, or `.dll` (e.g., `luau.exe`, `StartApp.bat`).
