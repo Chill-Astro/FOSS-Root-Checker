@@ -1,3 +1,5 @@
+
+
 <p align="center">
   <kbd>
   <img width="1920" height="1080" alt="Rooting Revolution" src="https://github.com/user-attachments/assets/fc8d67f6-df19-496b-9960-60786e22886d" />
@@ -10,7 +12,7 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-**App Version** : `v36.23.2.0`
+**App Version** : `v36.23.2.1`
 
 **Package ID** : `foss.chillastro.root.checker` 
 
