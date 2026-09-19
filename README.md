@@ -47,13 +47,14 @@ _- TRUSTED SOURCES -_
 
 ---
 
-## SOME TWEAKS ARE COMING!
+## SOME TWEAKS ARE COMING! ( v37.23.3.0 ) 
 
 <kbd>
 <img width="1920" height="1200" alt="Screenshot_2026-09-20-00-08-14-24_541dab10fd96987a258b9d40c9817fe9" src="https://github.com/user-attachments/assets/5fae5f30-b769-4e80-a833-0ed92f7607b2" />
+  This Update is Currently in Development and Undergoing Testing Phase!
 </kbd>
 
-<br>
+<br><br>
 
 - Better Iconography.
 - Better Readability in Guide Section.
@@ -61,7 +62,7 @@ _- TRUSTED SOURCES -_
 - Removed "Nice Spoofing" Messages and Toasts on Root Checker and BusyBox checker.
 - Made the Update Checker open a popup not toast.
 - Monochrome Mode : Using the Signature Black & White Theme from [chill-astro.github.io](https://chill-astro.github.io/)!
-- Monochrome mode is used by default on Devices < Android 12 ( Not Enforced )
+- Monochrome mode is used by default on Devices < Android 12 ( Not Enforced ).
   
 --- 
 
@@ -79,11 +80,12 @@ _- TRUSTED SOURCES -_
 ## Key Features :
 
 - Ultra Low Footprint of 1.55MB ONLY!
-- Privacy First Design with full transperancy. ✅
+- Privacy First Design with full transparency. ✅
 - Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB ). ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
 - Modern Material UI with Monet Theming. ✅
 - Support for Android 6+ Devices. ✅
+- Monochrome Mode for Minimalists. ✅
 - Works with Magisk, KernelSU, KSU Forks, APatch and older Methods ✅
 - Thorough Guidance provided on Rooting and Unlocking Bootloader. ✅
 
@@ -91,31 +93,25 @@ _- TRUSTED SOURCES -_
 
 ## Version Structure :
 
-Now if you are visiting this Repository from Reddit, or found this while Searching, you must be wondering, 
-
-*"Why does the App Start from v36????? It has only 2 Releases!"*
-
-Well let's break this down first :
-
 <div align="center">
 
 <H2>
 
-v`36`.`23`.`2`.`0`
+v`37`.`23`.`3`.`0`
 
 </H2>
 
 </div>
 
-- `36` -> Target SDK ( Her Target SDK is Android 16 whose API Level is '36' )
+- `37` -> Target SDK ( Her Target SDK is Android 17 whose API Level is '37' )
 - `23` -> Minimum SDK ( She installs on Android 6 and Higher whose API Level is '23' )
-- `2` -> Major Update ( Refers to the Info Panel Update ) 
-- `0` -> Minor Update ( Currently there hasn't been any Changes in v2 Series. )
+- `3` -> Major Update ( Refers to the QOL Update ) 
+- `0` -> Minor Update ( Currently there hasn't been any Changes in v3 Series. )
 
 ---
 
 
-## TRAILER on @chill-astro-sfs :
+## TRAILER on @delta-v-sfs :
 
 <div align="center">
   <kbd>
