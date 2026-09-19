@@ -10,7 +10,7 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-**App Version** : `v36.23.2.0`
+**App Version** : `v37.23.3.0 ( Coming Soon )`
 
 **Package ID** : `foss.chillastro.root.checker` 
 
@@ -47,9 +47,21 @@ _- TRUSTED SOURCES -_
 
 ---
 
-## HALT ON DEVELOPMENT :
+## SOME TWEAKS ARE COMING!
 
-- This Project is now a "Complete Product" in my Vision. So I have no other Ideas.
+<kbd>
+<img width="1920" height="1200" alt="Screenshot_2026-09-20-00-08-14-24_541dab10fd96987a258b9d40c9817fe9" src="https://github.com/user-attachments/assets/5fae5f30-b769-4e80-a833-0ed92f7607b2" />
+</kbd>
+
+<br>
+
+- Better Iconography.
+- Better Readability in Guide Section.
+- Cleaned up & Revamped BusyBox Checker.
+- Removed "Nice Spoofing" Messages and Toasts on Root Checker and BusyBox checker.
+- Made the Update Checker open a popup not toast.
+- Monochrome Mode : Using the Signature Black & White Theme from [chill-astro.github.io](https://chill-astro.github.io/)!
+- Monochrome mode is used by default on Devices < Android 12 ( Not Enforced )
   
 --- 
 
