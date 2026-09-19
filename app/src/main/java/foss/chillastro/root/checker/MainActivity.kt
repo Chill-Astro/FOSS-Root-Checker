@@ -56,34 +56,43 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
-import androidx.compose.material.icons.automirrored.rounded.LibraryBooks
-import androidx.compose.material.icons.automirrored.rounded.MenuBook
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.Animation
-import androidx.compose.material.icons.rounded.Brush
-import androidx.compose.material.icons.rounded.Cancel
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Code
-import androidx.compose.material.icons.rounded.Computer
-import androidx.compose.material.icons.rounded.DeleteForever
-import androidx.compose.material.icons.rounded.ExpandLess
-import androidx.compose.material.icons.rounded.ExpandMore
-import androidx.compose.material.icons.rounded.History
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.LockOpen
-import androidx.compose.material.icons.rounded.Memory
-import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material.icons.rounded.ReportProblem
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Verified
-import androidx.compose.material.icons.rounded.VisibilityOff
-import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.automirrored.filled.LibraryBooks
+import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
+import androidx.compose.material.icons.filled.Animation
+import androidx.compose.material.icons.filled.BatteryChargingFull
+import androidx.compose.material.icons.filled.Brush
+import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Cloud
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Computer
+import androidx.compose.material.icons.filled.DeleteForever
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Label
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.Memory
+import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.ReportProblem
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Tag
+import androidx.compose.material.icons.filled.Verified
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -256,7 +265,8 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                         }
                         Icon(
                             painter = iconPainter,
-                            contentDescription = item.label
+                            contentDescription = item.label,
+                            tint = if (dest == item) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     },
                     label = { Text(text = item.label) },
@@ -276,12 +286,12 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                     },
                     navigationIcon = { // Info button
                         IconButton(onClick = { showInfoSheet = true }) {
-                            Icon(Icons.Rounded.Info, contentDescription = "Info") // Useful / Useless Facts About your Hardware
+                            Icon(Icons.Filled.Info, contentDescription = "Info", tint = MaterialTheme.colorScheme.onSurfaceVariant) // Useful / Useless Facts About your Hardware
                         }
                     },
                     actions = { // History button
                         IconButton(onClick = { showHistorySheet = true }) {
-                            Icon(Icons.Rounded.History, contentDescription = "History") // Not the Boring History from School
+                            Icon(Icons.Filled.History, contentDescription = "History", tint = MaterialTheme.colorScheme.onSurfaceVariant) // Not the Boring History from School
                         }
                     }
                 )
@@ -380,7 +390,7 @@ fun SystemInfo() {
             colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
             Row(modifier = Modifier.padding(24.dp), verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Rounded.Info, null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(28.dp))
+                Icon(Icons.Filled.Info, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.onPrimary)
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = if(isSafe) "Device is Normal" else "Device is Modified",
@@ -429,7 +439,7 @@ fun RowLayout(ok: Boolean, content: @Composable ColumnScope.() -> Unit) {
     ) {
         Row(modifier = Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                imageVector = if (ok) Icons.Rounded.CheckCircle else Icons.Rounded.Cancel,
+                imageVector = if (ok) Icons.Filled.CheckCircle else Icons.Filled.Cancel,
                 contentDescription = null,
                 tint = if (ok) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
                 modifier = Modifier.size(22.dp)
@@ -463,7 +473,11 @@ fun StatRow(label: String, value: String, ok: Boolean) {
 }
 @Composable
 fun SectionLabel(text: String) {
-    Text(text, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Black, modifier = Modifier.padding(horizontal = 24.dp, vertical = 14.dp), color = MaterialTheme.colorScheme.primary)
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+        Icon(Icons.Filled.Label, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+        Spacer(Modifier.width(8.dp))
+        Text(text, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary)
+    }
 }
 @Composable
 fun CategoryGroup(title: String, data: List<Pair<String, Boolean>>) {
@@ -497,8 +511,9 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
         label = "innerCorner"
     )
     Column(
-        Modifier.fillMaxSize().padding(24.dp).verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
+        Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 12.dp).verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Surface(
             shape = MaterialTheme.shapes.large,
@@ -509,11 +524,30 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Icon(Icons.Rounded.Info, null, Modifier.size(20.dp), MaterialTheme.colorScheme.primary)
+                Icon(Icons.Filled.Info, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(12.dp))
                 Column(horizontalAlignment = Alignment.CenterHorizontally) { // Info Pill (Good Hardware Props)
                     Text("${Build.MANUFACTURER} ${Build.MODEL} | Android ${Build.VERSION.RELEASE}", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
-                    Text("Bootloader: $bootloader | dm-verity: $verity", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text("Bootloader : $bootloader", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Icon(
+                                if (bootloader == "Locked") Icons.Filled.Lock else Icons.Filled.LockOpen,
+                                null,
+                                Modifier.size(14.dp),
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text("dm-verity : $verity", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Icon(
+                                if (verity.contains("enforcing", ignoreCase = true)) Icons.Filled.Verified else Icons.Filled.Close,
+                                null,
+                                Modifier.size(14.dp),
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -538,9 +572,9 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                 ) { s ->
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         if (s == 2 || s == 4) {
-                            Icon(if (isRooted) Icons.Rounded.Check else Icons.Rounded.Close, null, Modifier.size(90.dp), Color.White)
+                            Icon(if (isRooted) Icons.Filled.Check else Icons.Filled.Close, null, modifier = Modifier.size(90.dp), tint = Color.White)
                         } else {
-                            Icon(painterResource(id = R.drawable.root_hash), null, Modifier.size(90.dp), MaterialTheme.colorScheme.onPrimaryContainer)
+                            Icon(painterResource(id = R.drawable.root_hash), null, modifier = Modifier.size(90.dp), tint = MaterialTheme.colorScheme.onPrimaryContainer)
                         }
                     }
                 }
@@ -563,8 +597,8 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
         )
         Spacer(Modifier.weight(1.2f))
         Row(
-            modifier = Modifier.widthIn(max = 700.dp).height(64.dp),
-            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth().widthIn(max = 700.dp).height(64.dp).padding(horizontal = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             SpringButton(
@@ -633,10 +667,6 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                         withContext(Dispatchers.Main) {
                             isRooted = found
                             checkState = 2
-                            if (found) {
-                                if (bootloader == "Locked") Toast.makeText(ctx, "Root Traces Found. Nice Spoofing! :)", Toast.LENGTH_LONG).show() // What do you call a fake noodle? AN IMPASTA!
-                                else Toast.makeText(ctx, "Root Traces Found", Toast.LENGTH_SHORT).show()
-                            } else Toast.makeText(ctx, "Root Traces not Found", Toast.LENGTH_SHORT).show()
                             saveLog(ctx, found, "SCAN")
                             onCheckComplete()
                         }
@@ -647,9 +677,11 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                 enabled = !isAnyProcessing,
                 reducedAnimations = reducedAnimations
             ) {
-                Text("Search Root", textAlign = TextAlign.Center)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Icon(Icons.Filled.Search, null, modifier = Modifier.size(24.dp))
+                    Text("Search Root", textAlign = TextAlign.Center)
+                }
             }
-            Spacer(Modifier.width(4.dp))
             SpringButton(
                 onClick = {
                     checkState = 3
@@ -660,10 +692,6 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                         withContext(Dispatchers.Main) {
                             isRooted = suWorks
                             checkState = 4
-                            if (suWorks) {
-                                if (bootloader == "Locked") Toast.makeText(ctx, "Root Access Verified. Nice Spoofing! :)", Toast.LENGTH_LONG).show() // Congratulations! Ms. Mobile is Rooted! (WAIT WHAT?)
-                                else Toast.makeText(ctx, "Root Access Verified", Toast.LENGTH_SHORT).show() // Congratulations! Ms. Mobile is Rooted!
-                            } else Toast.makeText(ctx, "Root Access not Available", Toast.LENGTH_SHORT).show() // Try Better next Time.
                             saveLog(ctx, suWorks, "SU")
                             onCheckComplete()
                         }
@@ -674,7 +702,10 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                 enabled = !isAnyProcessing,
                 reducedAnimations = reducedAnimations
             ) {
-                Text("Verify Root", textAlign = TextAlign.Center)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Icon(Icons.Filled.Security, null, modifier = Modifier.size(24.dp))
+                    Text("Verify Root", textAlign = TextAlign.Center)
+                }
             }
         }
     }
@@ -700,7 +731,13 @@ fun SpringButton( // Split Button with Split Brain. Wait Callosotomy!
         modifier = modifier.graphicsLayer(scaleX = scale, scaleY = scale),
         enabled = enabled,
         shape = shape,
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+            disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.75f)
+        )
     ) {
         content()
     }
@@ -714,7 +751,7 @@ fun WarningCard(bodyText: String) { // For newbies
         shape = MaterialTheme.shapes.large
     ) {
         Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Rounded.Warning, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(32.dp))
+            Icon(Icons.Filled.Warning, null, modifier = Modifier.size(32.dp), tint = MaterialTheme.colorScheme.error)
             Spacer(Modifier.width(16.dp))
             Column {
                 Text("WARNING!", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onErrorContainer)
@@ -728,41 +765,63 @@ fun WarningCard(bodyText: String) { // For newbies
 fun Busybox() { // Let's hope She ain't Busy!
     var checkState by rememberSaveable { mutableIntStateOf(0) }
     var foundPath by rememberSaveable { mutableStateOf("") }
+    var suPath by rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val ctx = LocalContext.current
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         Spacer(Modifier.height(16.dp))
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+            shape = MaterialTheme.shapes.large
+        ) {
+            Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.Info, null, modifier = Modifier.size(32.dp), tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(16.dp))
+                Column {
+                    Text("BUSYBOX INFO", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                    Text(
+                        "Most modern root solutions hide BusyBox to avoid detection. Install 'BusyBox for Android NDK' if needed.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f)
+                    )
+                }
+            }
+        }
+        Spacer(Modifier.height(12.dp))
         Box(Modifier.fillMaxWidth().weight(1f).clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(16.dp).verticalScroll(rememberScrollState())) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                TerminalLine("NOTE : Most Modern Root Solutions hide their BusyBox Installation to Avoid Detection!") // Bhari good!
-                TerminalLine("Install 'BusyBox for NDK Module' if needed...") // For turning Android into LINUX ig
-                HorizontalDivider(Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant)
-                TerminalLine("Ready to Verify?") // No
-                if (checkState == 2) {
-                    TerminalLine("Searching for BusyBox Paths...  ♪(´▽｀)") // La la la la la! La la la la la!
-                    if (foundPath.isNotEmpty()) {
-                        TerminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
-                        TerminalLine(foundPath, MaterialTheme.colorScheme.primary)
-                        Toast.makeText(ctx, "BusyBox found via Path", Toast.LENGTH_SHORT).show() // Ay did u forgot to hide?
+                Text("Ready to Verify?", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = FontFamily.Monospace, fontSize = 13.sp)
+                if (checkState >= 1) {
+                    Text("Searching for paths...  ♪(´▽｀)", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = FontFamily.Monospace, fontSize = 13.sp)
+                }
+                if (foundPath.isNotEmpty()) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        TerminalLine("BusyBox path verified.", MaterialTheme.colorScheme.primary)
+                        Icon(Icons.Filled.Verified, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
                     }
-                    else {
-                        TerminalLine("Busybox not Found in Path!", MaterialTheme.colorScheme.error)
-                        Toast.makeText(ctx, "BusyBox not Found. Is it Installed?", Toast.LENGTH_SHORT).show()
-                        TerminalLine("Fine, but su Never Lies! ^_~") // SU
-                        TerminalLine("Launching Shell....")
-                        TerminalLine("usr@android $ su")
-                        val suPath = findBusyBoxPathBySU()
+                    TerminalLine(foundPath, MaterialTheme.colorScheme.primary)
+                }
+                else if (checkState >= 2) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        TerminalLine("BusyBox not found in PATH.", MaterialTheme.colorScheme.error)
+                        Icon(Icons.Filled.Close, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.error)
+                    }
+                    TerminalLine("Fine, but su never lies. ^_~")
+                    if (checkState >= 3) {
+                        TerminalLine("Running su -c which busybox")
                         if (suPath.isNotEmpty()) {
-                            TerminalLine("root@android $ which busybox")
-                            TerminalLine("BusyBox Path Verified!", MaterialTheme.colorScheme.primary)
-                            Toast.makeText(ctx, "BusyBox found via Path as Root Nice Spoofing! :)", Toast.LENGTH_SHORT).show() // Ayooo something is wrong with Ms. Mobile!
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                TerminalLine("BusyBox path verified.", MaterialTheme.colorScheme.primary)
+                                Icon(Icons.Filled.Verified, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+                            }
                             TerminalLine(suPath, MaterialTheme.colorScheme.primary)
-                            TerminalLine("root@android $ exit")
                         } else {
-                            TerminalLine("Busybox not Found in Path as Root!", MaterialTheme.colorScheme.error)
-                            Toast.makeText(ctx, "BusyBox not Installed.", Toast.LENGTH_SHORT).show()
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                TerminalLine("BusyBox not found as root.", MaterialTheme.colorScheme.error)
+                                Icon(Icons.Filled.Warning, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.error)
+                            }
                         }
-                        TerminalLine("usr@android $ _") // I always come back
                     }
                 }
             }
@@ -774,20 +833,49 @@ fun Busybox() { // Let's hope She ain't Busy!
             Button(
                 onClick = {
                     scope.launch(Dispatchers.IO) {
-                        checkState = 1; delay(800)
+                        withContext(Dispatchers.Main) {
+                            checkState = 1
+                            foundPath = ""
+                            suPath = ""
+                        }
+                        delay(800)
                         val p = findBusyBoxPath()
-                        withContext(Dispatchers.Main) { foundPath = p; checkState = 2 }
+                        withContext(Dispatchers.Main) {
+                            foundPath = p
+                            checkState = if (p.isNotEmpty()) 2 else 2
+                        }
+                        if (p.isEmpty()) {
+                            delay(350)
+                            val rootedBusyBox = findBusyBoxPathBySU()
+                            withContext(Dispatchers.Main) {
+                                suPath = rootedBusyBox
+                                checkState = 3
+                            }
+                        }
                     }
                 },
                 modifier = Modifier
                     .widthIn(max = 500.dp)
                     .fillMaxWidth()
                     .height(70.dp)
-                    .padding(top = 16.dp),
+                    .padding(top = 12.dp),
                 enabled = checkState != 1,
-                shape = MaterialTheme.shapes.large
+                shape = MaterialTheme.shapes.large,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                    disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.75f)
+                )
             ) {
-                Text(if (checkState == 1) "Searching..." else "Verify BusyBox Installation")
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    if (checkState == 1) {
+                        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
+                    } else {
+                        Icon(Icons.Filled.Shield, null, modifier = Modifier.size(24.dp))
+                    }
+                    Text(if (checkState == 1) "Searching..." else "Verify BusyBox Installation")
+                }
             }
         }
     }
@@ -807,107 +895,677 @@ fun RootGuide() {
                     (fadeOut(animationSpec = tween(400, easing = FastOutSlowInEasing)) + scaleOut(targetScale = 0.95f))
         }, label = "SubMenuTransition"
     ) { targetPath ->
-        Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Column(Modifier.fillMaxSize().padding(8.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             when (targetPath) {
                 // CHILL-ASTRO PRESENTS : A GOATED ROOTING GUIDE 🐐🐐🐐🐐🐐🐐🐐🐐🐐
                 "MAIN" -> {
-                    WarningCard("Never trust 'One-Click Root' Apps and Please BE CAREFUL while following this guide. I am not responsible for any damages to your device.")
-                    NavCard("1. Rooting: An Introduction", Icons.AutoMirrored.Rounded.LibraryBooks) { menuPath = "INTRO" }
-                    NavCard("2. Unlocking Bootloader", Icons.Rounded.LockOpen) { menuPath = "UNLOCK" }
-                    NavCard("3. Rooting Methods", Icons.Rounded.Tag) { menuPath = "METHODS" }
-                    NavCard("4. Root Hiding", Icons.Rounded.VisibilityOff) { menuPath = "HIDING" }
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                        shape = MaterialTheme.shapes.large
+                    ) {
+                        Row(Modifier.padding(24.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Warning, null, modifier = Modifier.size(36.dp), tint = MaterialTheme.colorScheme.error)
+                            Spacer(Modifier.width(20.dp))
+                            Column {
+                                Text("SAFETY FIRST!", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onErrorContainer)
+                                Text("Never trust 'One-Click Root' Apps", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
+                            }
+                        }
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    SectionLabel("Quick Start Guide")
+                    Spacer(Modifier.height(8.dp))
+                    NavCard("1. Rooting: An Introduction", Icons.AutoMirrored.Filled.LibraryBooks) { menuPath = "INTRO" }
+                    Spacer(Modifier.height(6.dp))
+                    NavCard("2. Unlocking Bootloader", Icons.Filled.LockOpen) { menuPath = "UNLOCK" }
+                    Spacer(Modifier.height(6.dp))
+                    NavCard("3. Rooting Methods", Icons.Filled.Tag) { menuPath = "METHODS" }
+                    Spacer(Modifier.height(6.dp))
+                    NavCard("4. Root Hiding", Icons.Filled.VisibilityOff) { menuPath = "HIDING" }
                 }
                 "INTRO" -> {
                     GuideHeader("Rooting : An Introduction", onBack = { menuPath = "MAIN" })
-                    WarningCard("Please BE CAREFUL what apps you are giving Root Permissions to. I am not responsible for Data or Money Theft by Malware on your Device.")
-                    InfoBlock("Introduction : What is Rooting?", "\nRooting an Android device means gaining full administrative (superuser) control, similar to an administrator on a computer, by unlocking deep system access restricted by manufacturers.")
-                    InfoBlock("Pros of Rooting :", "\n✓ Bloatware Removal\n✓ System-wide Adblocking\n✓ Advanced Theming and Modification ( using LSPosed Framework )\n✓ Full Data Backups\n✓ Unlimited Google Photos Backups\n✓ Unlocking Higher FPS in Games\n✓ Sound Enhancement\n✓ Running FULL BLOWN Linux on Android using chroot\n✓ Battery Longevity (ACC)\n\nAnd Many Others.......")
-                    InfoBlock("Cons of Rooting :", "\n✗ Usually Voids Warranty\n✗ Increased Security Risks\n✗ Loss of Hardware Encoding\n✗ No Official Updates (OTA)\n✗ Data loss\n✗ Risk of Bricking Device\n\nNow with that out of the way, let me inform you about some ADDITIONAL STUFF that you WILL FACE during your Modding Journey.")
-                    InfoBlock("What is Bootloader?", "\nBootloader is the first piece of software that runs every time you turn on your Android device. It acts as a security guard and a guide, directing the hardware on how to start up and which operating system to \"hand off\" control to. This is locked by default to ensure stability and prevent malware from infecting the device.")
-                    InfoBlock("What is Bricking?\n", "Bricking refers to a device becoming completely non-functional, usually due to a corrupted software update or a failed firmware modification.")
-                    InfoBlock("Types of Bricking and How to fix them :\n","1. Soft Brick : A soft brick is a \"recoverable\" state. The device might be stuck in a boot loop (constantly restarting at the logo) or booting straight into recovery mode.\n\n- The Cause : Usually a minor software error, incompatible app, or a bad module.\n- The Fix: Can often be fixed by a factory reset, clearing the cache, or reflashing the original firmware using a computer.\n\n2. Hard Brick : A hard brick is much more serious. The device shows no signs of life. No lights, no vibration, and the screen remains black.\n\n- The Cause: This happens when the bootloader (the \"first-stage\" software we discussed earlier) or the kernel is corrupted or deleted.\n- The Fix: This often requires specialized hardware tools to bypass the main software, or in many cases, a physical replacement of the motherboard. Tools suck as SP Flash Tool and MTKClient can do this Work. However FASTBOOT is not Accessible during this time.")
-                    InfoBlock("What is Device Mapper Verity (dm-verity)?\n", "Device Mapper Verity is a transparent integrity checking feature of the Linux kernel. Its sole job is to ensure that the data on critical partitions (like /system, /vendor, or /product) has not been modified even by a single bit. This is why it is Sometimes Disabled while Modding.")
-                    InfoBlock("How does dm-verity work?\n", "The system creates a \"Hash Tree\" (Merkle Tree).\n\n• It hashes every 4KB block on the partition.\n• It then hashes those hashes.\n• It keeps doing this until only one hash remains at the very top.\n\nThis final single hash is called the Root Hash. This hash is digitally signed by the manufacturer and stored in a read-only area (the VBMeta partition).\n\nWhen the Android wants to read a file:\n\n• The kernel reads the 4KB block from the disk.\n• It calculates the hash of that block.\n• It compares it against the \"parent\" hash in the tree, all the way up to the Root Hash.\n• If the math doesn't match perfectly, it knows the block was tampered with. This is when you get the \"dm-verity corruption\" and \"System is Destroyed\" Warnings.")
-                    InfoBlock("Suggestion from My Experience :", "\nAs from my little experience from Rooting, use Magisk if you are not sure. It works on almost every device and it can be flashed with PC and Custom Recovery ( like TWRP or OrangeFox ) and does the job very well. Unless your device is old, DO NOT USE EXPLOITS! I had soft-bricked my own device like this so BE CAREFUL!")
+                    Spacer(Modifier.height(16.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                        shape = MaterialTheme.shapes.large
+                    ) {
+                        Row(Modifier.padding(24.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Warning, null, modifier = Modifier.size(36.dp), tint = MaterialTheme.colorScheme.error)
+                            Spacer(Modifier.width(20.dp))
+                            Column {
+                                Text("PERMISSION WARNING!", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onErrorContainer)
+                                Text("Please BE CAREFUL what apps you are giving Root Permissions to", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
+                            }
+                        }
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    SectionLabel("What is Rooting?")
+                    Spacer(Modifier.height(8.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.LockOpen, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(16.dp))
+                            Text("Rooting an Android device means gaining full administrative (superuser) control, similar to an administrator on a computer, by unlocking deep system access restricted by manufacturers.", style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    SectionLabel("Benefits of Rooting")
+                    Spacer(Modifier.height(8.dp))
+                    listOf(
+                        "Bloatware Removal" to Icons.Filled.DeleteForever,
+                        "System-wide Adblocking" to Icons.Filled.Cancel,
+                        "Advanced Theming (LSPosed)" to Icons.Filled.Palette,
+                        "Full Data Backups" to Icons.Filled.Memory,
+                        "Unlimited Google Photos Backups" to Icons.Filled.Cloud,
+                        "Higher FPS in Games" to Icons.Filled.Animation,
+                        "Sound Enhancement" to Icons.Filled.VolumeUp,
+                        "Linux on Android (chroot)" to Icons.Filled.Computer,
+                        "Battery Longevity (ACC)" to Icons.Filled.BatteryChargingFull
+                    ).forEach { (text, icon) ->
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(icon, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(16.dp))
+                                Text(text, style = MaterialTheme.typography.bodyMedium)
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    SectionLabel("Risks of Rooting")
+                    Spacer(Modifier.height(8.dp))
+                    listOf(
+                        "Usually Voids Warranty" to Icons.Filled.Warning,
+                        "Increased Security Risks" to Icons.Filled.Security,
+                        "Loss of Hardware Encoding" to Icons.Filled.Info,
+                        "No Official Updates (OTA)" to Icons.Filled.Refresh,
+                        "Data Loss Risk" to Icons.Filled.Warning,
+                        "Device Bricking Risk" to Icons.Filled.ReportProblem
+                    ).forEach { (text, icon) ->
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(icon, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.error)
+                                Spacer(Modifier.width(16.dp))
+                                Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onErrorContainer)
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    SectionLabel("Key Concepts")
+                    Spacer(Modifier.height(8.dp))
+                    InfoBlock("Bootloader", "The first piece of software that runs when you turn on your device. It acts as a security guard, directing hardware startup and ensuring stability by preventing malware infection.")
+                    Spacer(Modifier.height(12.dp))
+                    InfoBlock("Bricking", "When a device becomes completely non-functional due to corrupted software or failed firmware modification.")
+                    Spacer(Modifier.height(12.dp))
+                    InfoBlock("Soft Brick", "Recoverable state - device stuck in boot loop or recovery mode. Fix with factory reset, cache clear, or firmware reflash.")
+                    Spacer(Modifier.height(12.dp))
+                    InfoBlock("Hard Brick", "Serious failure - device shows no signs of life. May require specialized hardware tools or motherboard replacement.")
+                    Spacer(Modifier.height(12.dp))
+                    InfoBlock("dm-verity", "Linux kernel feature that ensures data integrity on critical partitions by comparing hash trees against a signed root hash.")
+                    Spacer(Modifier.height(12.dp))
+                    SectionLabel("Expert Tip")
+                    Spacer(Modifier.height(8.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Star, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(16.dp))
+                            Column {
+                                Text("Recommended Approach", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                                Text("Use Magisk if unsure - it works on almost every device and can be flashed via PC or custom recovery. Avoid exploits on old devices to prevent bricking!", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f))
+                            }
+                        }
+                    }
                 }
                 "UNLOCK" -> {
                     GuideHeader("Unlocking Bootloader", onBack = { menuPath = "MAIN" })
-                    WarningCard("This process will wipe all user data. Ensure you have a backup before proceeding. Also Xiaomi, Oppo and Realme have Additional Steps. Vivo, iQOO and certain Manufacturers don't support Bootloader Unlocking.")
-                    ExpandableMethod("Fastboot Method (Recommended)", Icons.Rounded.Computer) {
+                    Spacer(Modifier.height(16.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                        shape = MaterialTheme.shapes.large
+                    ) {
+                        Row(Modifier.padding(24.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Warning, null, modifier = Modifier.size(36.dp), tint = MaterialTheme.colorScheme.error)
+                            Spacer(Modifier.width(20.dp))
+                            Column {
+                                Text("DATA WIPE WARNING!", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onErrorContainer)
+                                Text("This process will wipe all user data. Backup before proceeding!", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
+                            }
+                        }
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    SectionLabel("Device Compatibility")
+                    Spacer(Modifier.height(8.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.CheckCircle, null, modifier = Modifier.size(28.dp), tint = Color(0xFF4CAF50))
+                                Spacer(Modifier.width(12.dp))
+                                Text("Most Android devices", style = MaterialTheme.typography.bodyMedium)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Info, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.secondary)
+                                Spacer(Modifier.width(12.dp))
+                                Text("Xiaomi, Oppo, Realme require additional steps", style = MaterialTheme.typography.bodyMedium)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Close, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.error)
+                                Spacer(Modifier.width(12.dp))
+                                Text("Vivo, iQOO may not support unlocking", style = MaterialTheme.typography.bodyMedium)
+                            }
+                        }
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    SectionLabel("Unlock Methods")
+                    Spacer(Modifier.height(8.dp))
+                    ExpandableMethod("Fastboot Method (Recommended)", Icons.Filled.Computer) {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Check, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(12.dp))
+                                Text("Safe and doesn't brick immediately", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        Spacer(Modifier.height(12.dp))
                         Text("Step 1 : Reboot Phone to Bootloader :")
                         CodeBox("$ adb reboot bootloader")
+                        Spacer(Modifier.height(8.dp))
                         Text("Step 2 : Unlock Bootloader using Fastboot :")
                         Text(" • For most devices :")
                         CodeBox("$ fastboot flashing unlock")
                         Text(" • For some older devices :")
                         CodeBox("$ fastboot oem unlock")
-                        Text("Pros :\n✓ Unlocking doesn't brick device immediately.\n✓ Safe and Easy to Use.\n\nCons :\n✗ Not available on all devices.\n✗ Xiaomi Devices need permission from Xiaomi Community and then Mi Unlock Tool is used.\n✗ Oppo and Realme Devices use 'Deep Testing' or 'In-Depth Test' for Fastboot Permissions.")
+                        Spacer(Modifier.height(16.dp))
+                        SectionLabel("Pros & Cons")
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Text("✓ Safe and easy to use", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Official method for most devices", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Text("✗ Not available on all devices", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Xiaomi requires community permission", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Oppo/Realme need Deep Testing", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                     }
-                    ExpandableMethod("MTKClient (For MTK Devices)", Icons.Rounded.Memory) {
-                        WarningCard("Please BE CAREFUL as it doesn't work on very new device and can cause 'System is Destroyed' and 'dm-verity corruption' Ensure that your device has no Replay Protected Memory Block (RPMB) before proceeding.")
+                    Spacer(Modifier.height(12.dp))
+                    ExpandableMethod("MTKClient (For MTK Devices)", Icons.Filled.Memory) {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Warning, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.error)
+                                Spacer(Modifier.width(12.dp))
+                                Text("Advanced method - use with caution!", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                            }
+                        }
+                        Spacer(Modifier.height(12.dp))
                         Text("Hardware-level bypass for locked MediaTek chipsets.\n\nFirst install USBdk if using Windows (Recommended).\n\nNOTE: For Each Step, Run the Command, Press both Volume Buttons and Connect Phone to PC.\n")
-                        Text("Step 1 : Dump vbmeta : ")
-                        CodeBox("$ python mtk.py r vbmeta_a,vbmeta_b vbmeta_a.img,vbmeta_b.img")
-                        CodeBox("$ python mtk.py r vbmeta vbmeta.img # For Old Devices")
-                        Text("Step 2 : Unlock Bootloader : ")
-                        CodeBox("$ python mtk.py da seccfg unlock")
-                        Text("Step 3 : Disable dm-verity (Easy Way) :  ")
-                        CodeBox("$ python mtk.py da vbmeta 3")
-                        Text("Step 4 : Erase Userdata : ")
-                        CodeBox("$ python mtk.py e metadata,userdata")
-                        Text("Step 5 : Reboot Device : ")
-                        CodeBox("$ python mtk.py reset")
-                        Text("Pros :\n✓ Easy to Recover with Backups.\n✓ Can fix Hard-Bricks.\n✓ Fast and Easy to Use.\n\nCons :\n✗ Does not Support QualComm and UniSOC Devices.\n✗ High Chances of Bricking.\n✗ Doesn't work on very new devices.\n✗ Fastboot may not be usable as on Realme Devices.\n")
+                        Spacer(Modifier.height(16.dp))
+                        SectionLabel("Step-by-Step Guide")
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text("1.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                                    Spacer(Modifier.width(12.dp))
+                                    Text("Dump vbmeta", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                                }
+                                CodeBox("$ python mtk.py r vbmeta_a,vbmeta_b vbmeta_a.img,vbmeta_b.img")
+                                CodeBox("$ python mtk.py r vbmeta vbmeta.img # For Old Devices")
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text("2.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                                    Spacer(Modifier.width(12.dp))
+                                    Text("Unlock Bootloader", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                                }
+                                CodeBox("$ python mtk.py da seccfg unlock")
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text("3.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                                    Spacer(Modifier.width(12.dp))
+                                    Text("Disable dm-verity", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                                }
+                                CodeBox("$ python mtk.py da vbmeta 3")
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text("4.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                                    Spacer(Modifier.width(12.dp))
+                                    Text("Erase Userdata", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                                }
+                                CodeBox("$ python mtk.py e metadata,userdata")
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text("5.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                                    Spacer(Modifier.width(12.dp))
+                                    Text("Reboot Device", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                                }
+                                CodeBox("$ python mtk.py reset")
+                            }
+                        }
+                        Spacer(Modifier.height(16.dp))
+                        SectionLabel("Pros & Cons")
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Text("✓ Can fix hard-bricks", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Fast and easy to use", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Easy to recover with backups", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Text("✗ Only for MediaTek devices", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ High risk of bricking", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Doesn't work on very new devices", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Fastboot may not be usable", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        Spacer(Modifier.height(12.dp))
                         LinkCard("mtkclient by @bkerler", "https://github.com/bkerler/mtkclient")
                     }
                 }
                 "METHODS" -> {
                     GuideHeader("Rooting Methods", onBack = { menuPath = "MAIN" })
-                    WarningCard(
-                        "1. Use Official Sources Only\n" +
-                                "2. Don't use 'One-Click Root' Apps\n" +
-                                "3. UNLOCK Bootloader first\n" +
-                                "4. FASTBOOT devices ONLY ( Excludes Samsung & Odin )")
+                    Spacer(Modifier.height(8.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                        shape = MaterialTheme.shapes.large
+                    ) {
+                        Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.CheckCircle, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(12.dp))
+                                Text("Use Official Sources Only", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Cancel, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(12.dp))
+                                Text("Don't use 'One-Click Root' Apps", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.LockOpen, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(12.dp))
+                                Text("UNLOCK Bootloader first", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Computer, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(12.dp))
+                                Text("FASTBOOT devices ONLY (No Samsung/Odin)", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                            }
+                        }
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    SectionLabel("Root Methods")
                     ExpandableMethodLocal("Magisk (Recommended)", R.drawable.ic_magisk) {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Star, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Most widely supported option", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                         Text("First obtain your stock boot.img or init_boot.img and patch it using Magisk App and then Flash it.\n")
                         FlashLogic(isAB, slot, true)
-                        Text("Pros :\n✓ Truly Systemless\n✓ Widest Module Support\n✓ Works on pretty much anything.\n✓ Best possible documentation and compatibility.\n\nCons :\n✗ Easily Detectable as it leaves Traces.\n")
+                        SectionLabel("Pros")
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("✓ Truly Systemless", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Widest Module Support", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Works on almost any device", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Best documentation & compatibility", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        SectionLabel("Cons")
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("✗ Easily detectable", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Leaves detectable traces", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                         LinkCard("Magisk by @topjohnwu", "https://github.com/topjohnwu/Magisk")
                     }
                     ExpandableMethodLocal("KernelSU", R.drawable.ic_ksu) {
-                        if(kernelVersion < "5.10") WarningCard("This Device doesn't Support KernelSU OFFICIALLY. You have to compile your Device's Kernel and integrate KernelSU into it YOURSELF!")
+                        if(kernelVersion < "5.10") {
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(Icons.Filled.Warning, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp))
+                                    Spacer(Modifier.width(8.dp))
+                                    Text("Kernel 5.10+ required for official support", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                                }
+                            }
+                        }
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Security, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Best for banking app compatibility", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                         Text("First obtain your stock boot.img or init_boot.img and patch it using KernelSU App and then Flash it.\n")
                         FlashLogic(isAB, slot, true)
-                        Text("Pros :\n✓ Fully Systemless.\n✓ Very hard to detect by Banking Apps.\n✓ Leaves no Traces.\n\nCons :\n✗ Only Supports devices with Generic Kernel Image.\n")
+                        SectionLabel("Pros")
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("✓ Fully Systemless", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Very hard to detect by banking apps", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Leaves no traces", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        SectionLabel("Cons")
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("✗ Only supports GKI devices", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Requires kernel 5.10+", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                         LinkCard("KernelSU by @tiann", "https://github.com/tiann/KernelSU")
-                        TerminalLine("Alternative Forks :", MaterialTheme.colorScheme.primary)
+                        SectionLabel("Alternative Forks")
                         LinkCard("KernelSU Next by @KernelSU-Next", "https://github.com/KernelSU-Next/KernelSU-Next")
                         LinkCard("SkiSU Ultra by @SkiSU-Ultra", "https://github.com/SkiSU-Ultra/SkiSU-Ultra")
                     }
                     ExpandableMethodLocal("APatch", R.drawable.ic_apatch) {
-                        if(kernelVersion < "5.10") WarningCard("This device may or may not Support APatch! Please ensure that your Kernel has 'kallsysms'! DO YOUR OWN RESEARCH!")
+                        if(kernelVersion < "5.10") {
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(Icons.Filled.Warning, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp))
+                                    Spacer(Modifier.width(8.dp))
+                                    Text("May not work on all devices - research required", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                                }
+                            }
+                        }
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Verified, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Good for non-GKI devices", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                         Text("First obtain your stock boot.img and patch it using Apatch App and then Flash it.\n")
                         FlashLogic(isAB, slot, false)
-                        Text("Pros :\n✓ Fully Systemless.\n✓ Very hard to detect by Banking Apps.\n✓ Leaves no Traces.\n✓ Doesn't need a GKI Device.\n\nCons :\n✗ Doesn't work on every device.\n")
+                        SectionLabel("Pros")
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("✓ Fully Systemless", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Hard to detect by banking apps", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Leaves no traces", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Doesn't need GKI device", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        SectionLabel("Cons")
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("✗ Doesn't work on every device", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Newer solution, less tested", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                         LinkCard("APatch by @bmax121", "https://github.com/bmax121/APatch")
                     }
                 }
                 "HIDING" -> {
-                    GuideHeader("Rooting Hiding : A Step-by-Step Guide", onBack = { menuPath = "MAIN" })
-                    WarningCard("NOTE : This allows you to Bypass Root Checks used by Banking apps for YOUR FINANCIAL SAFETY! Please be cautious while hiding Root.")
-                    InfoBlock("Introduction : What is Rooting Hiding?", "\nNow that your Device is Unlocked and Rooted, it's time to Hide this Unlocked Status! Basically, certain Apps like Banking Apps and Game with Anti-Cheat check the presence of Zygisk, Magisk, the 'su' Binary and many more ( for user safety ). But with the power of Systemless Rooting and 'Modules', the device can give a Software-Level Lie to ALL APPS!")
-                    InfoBlock("Enabling Zygisk : ","\nIf using Magisk, enable 'Zygisk' in 'Settings'.\n\nFlash the following modules if using KernelSU or APatch or even Magisk ( with built-in Zygisk TURNED OFF ).")
+                    GuideHeader("Root Hiding : A Step-by-Step Guide", onBack = { menuPath = "MAIN" })
+                    Spacer(Modifier.height(8.dp))
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                        shape = MaterialTheme.shapes.large
+                    ) {
+                        Row(Modifier.padding(22.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Security, null, modifier = Modifier.size(32.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(16.dp))
+                            Column {
+                                Text("BANKING APP COMPATIBILITY", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                                Text("Bypass root checks for financial safety", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f))
+                            }
+                        }
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    SectionLabel("What is Root Hiding?")
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.VisibilityOff, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(12.dp))
+                            Text("Certain apps like banking apps and games with anti-cheat check for root traces. With systemless rooting and modules, your device can hide its unlocked status from all apps!", style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    SectionLabel("Step 1: Enable Zygisk")
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Settings, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(8.dp))
+                            Text("If using Magisk, enable 'Zygisk' in Settings", style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
+                    Text("Flash these modules if using KernelSU, APatch, or Magisk with built-in Zygisk turned off:")
                     LinkCard("ReZygisk by @PerformanC","https://github.com/PerformanC/ReZygisk")
                     LinkCard("Zygisk Next by @Dr-TSNG", "https://github.com/Dr-TSNG/ZygiskNext")
-                    InfoBlock("Root Hiding Modules :", "\n1. Tricky Store ( Closed Source but Recommended ) :\n\nThis Module spoofs Hardware Backed Attestation by Software / Hardware Trusted Execution Environment (TEE) by injecting a Valid 'KeyBox.xml'.\n\nThis combined with Tricky Addon and a WebUI Interface can make this Process EASY!\n\nFirst obtain the .ZIP Files from these two links and Flash them. After Reboot Tap the 'Action' Button under Tricky Store and in WebUI, Select All Apps and Tap 'Set Valid Keybox'.")
+                    Spacer(Modifier.height(8.dp))
+                    SectionLabel("Step 2: Root Hiding Modules")
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Star, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(8.dp))
+                            Text("Tricky Store (Recommended)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text("Spoofs hardware-backed attestation by injecting valid KeyBox.xml", style = MaterialTheme.typography.bodySmall)
+                            Text("Combined with Tricky Addon and WebUI for easy configuration", style = MaterialTheme.typography.bodySmall)
+                            Text("After reboot: Tap 'Action' button → Select all apps → 'Set Valid Keybox'", style = MaterialTheme.typography.bodySmall)
+                        }
+                    }
                     LinkCard("Tricky Store by @5ec1cff", "https://github.com/5ec1cff/TrickyStore")
                     LinkCard("Tricky Addon by @KOWX712", "https://github.com/KOWX712/Tricky-Addon-Update-Target-List")
-                    Text("\n2. Shamiko (Closed Source) :\n\nUsed to hide Root Status and ALL TRACES OF ZYGISK AND ROOT PATHS and it Fakes the UNLOCKED Status of Bootloader!\n\nGet the Module from the Latest Release and Flash it.")
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Shield, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(8.dp))
+                            Text("Shamiko", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text("Hides root status and all traces of Zygisk and root paths", style = MaterialTheme.typography.bodySmall)
+                            Text("Fakes unlocked bootloader status", style = MaterialTheme.typography.bodySmall)
+                            Text("Get from latest LSPosed releases", style = MaterialTheme.typography.bodySmall)
+                        }
+                    }
                     LinkCard("Shamiko by @LSPosed","https://github.com/LSPosed/LSPosed.github.io/releases/")
-                    Text("\n3. Play Integrity Fix (For Custom ROM Users) :\n\nThis Assigns a Valid Fingerprint of a Locked Device Systemlessly.\n\nFlash any ONE of these Modules and Tap the 'Action' Button after Reboot.")
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Verified, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.width(8.dp))
+                            Text("Play Integrity Fix (Custom ROM Users)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text("Assigns valid fingerprint of locked device systemlessly", style = MaterialTheme.typography.bodySmall)
+                            Text("Flash ONE module and tap 'Action' button after reboot", style = MaterialTheme.typography.bodySmall)
+                        }
+                    }
                     LinkCard("Play Integrity Fork by @osm0sis","https://github.com/osm0sis/PlayIntegrityFork")
                     LinkCard("Play Integrity Fix by @KOWX712","https://github.com/KOWX712/PlayIntegrityFix")
-                    InfoBlock("Open Source Alternatives :", "\nHaha what an IRONY 💀 !!! A FOSS App is Recommending Closed Source Modules! Peak Logic! Okay, here's some alternatives!")
+                    Spacer(Modifier.height(8.dp))
+                    SectionLabel("Open Source Alternatives")
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Info, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
+                            Spacer(Modifier.width(8.dp))
+                            Text("FOSS alternatives for transparency-conscious users", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSecondaryContainer)
+                        }
+                    }
                     LinkCard("TEESimulator by @JingMatrix","https://github.com/JingMatrix/TEESimulator")
                     LinkCard("NoHello by @MhmRdd", "https://github.com/MhmRdd/NoHello")
                     LinkCard("Tricky Store OSS by @beakthoven", "https://github.com/beakthoven/TrickyStoreOSS")
@@ -955,11 +1613,11 @@ fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) { // Just the Comm
 @Composable
 fun NavCard(title: String, icon: ImageVector, onClick: () -> Unit) {
     Card(Modifier.fillMaxWidth().clickable { onClick() }, shape = MaterialTheme.shapes.medium) {
-        Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
+        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(icon, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.width(16.dp))
             Text(title, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-            Icon(Icons.AutoMirrored.Rounded.ArrowForwardIos, null, Modifier.size(14.dp))
+            Icon(Icons.AutoMirrored.Filled.ArrowForwardIos, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
         }
     }
 }
@@ -972,7 +1630,7 @@ fun ExpandableMethod(title: String, icon: ImageVector, content: @Composable Colu
                 Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(12.dp))
                 Text(title, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-                Icon(if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore, null)
+                Icon(if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, null)
             }
             AnimatedVisibility(expanded) {
                 Column(Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { content() }
@@ -986,10 +1644,10 @@ fun ExpandableMethodLocal(title: String, resId: Int, content: @Composable Column
     Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }.animateContentSize(), shape = MaterialTheme.shapes.medium) {
         Column(Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(painterResource(id = resId), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
+                Icon(painterResource(id = resId), null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(12.dp))
                 Text(title, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-                Icon(if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore, null)
+                Icon(if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, null)
             }
             AnimatedVisibility(expanded) {
                 Column(Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { content() }
@@ -999,16 +1657,20 @@ fun ExpandableMethodLocal(title: String, resId: Int, content: @Composable Column
 }
 @Composable
 fun GuideHeader(title: String, onBack: () -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { onBack() }.padding(bottom = 8.dp)) {
-        Icon(Icons.AutoMirrored.Rounded.ArrowBack, null, tint = MaterialTheme.colorScheme.primary)
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { onBack() }.padding(horizontal = 8.dp, vertical = 8.dp)) {
+        Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.width(8.dp))
         Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.ExtraBold)
     }
 }
 @Composable
 fun InfoBlock(t: String, d: String) {
-    Column {
-        Text(t, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.secondary)
+    Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.Info, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+            Spacer(Modifier.width(8.dp))
+            Text(t, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+        }
         Text(d, style = MaterialTheme.typography.bodyMedium)
         Spacer(Modifier.height(8.dp))
     }
@@ -1029,7 +1691,7 @@ fun LinkCard(t: String, url: String) {
     OutlinedCard(onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, url.toUri())) }, modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(t, Modifier.weight(1f), fontWeight = FontWeight.Bold, fontSize = 12.sp)
-            Icon(Icons.AutoMirrored.Rounded.OpenInNew, null, Modifier.size(14.dp))
+            Icon(Icons.AutoMirrored.Filled.OpenInNew, null, modifier = Modifier.size(14.dp))
         }
     }
 }
@@ -1057,6 +1719,8 @@ fun Settings(
 
     var isChecking by rememberSaveable { mutableStateOf(false) }
     var expanded by rememberSaveable { mutableStateOf(false) }
+    var updateMessage by rememberSaveable { mutableStateOf("") }
+    var showUpdateDialog by rememberSaveable { mutableStateOf(false) }
 
     val appVersion = remember {
         try {
@@ -1091,16 +1755,18 @@ fun Settings(
                 withContext(Dispatchers.Main) {
                     val current = appVersion ?: "36.23.2.0"
                     if (isNewer(current, remoteVersion)) {
-                        Toast.makeText(ctx, "$remoteVersion OUT NOW! 🎉", Toast.LENGTH_LONG).show()
+                        updateMessage = "$remoteVersion OUT NOW! 🎉"
                     } else if (isNewer(remoteVersion, current)) {
-                        Toast.makeText(ctx, "You are using a DEV. BUILD! ⚠️", Toast.LENGTH_SHORT).show()
+                        updateMessage = "You are using a DEV. BUILD! ⚠️"
                     } else {
-                        Toast.makeText(ctx, "Your Version is UP TO DATE! 🎉", Toast.LENGTH_SHORT).show()
+                        updateMessage = "Your Version is UP TO DATE! 🎉"
                     }
+                    showUpdateDialog = true
                 }
             } catch (_: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(ctx, "Please Verify Internet Connection! ❌", Toast.LENGTH_SHORT).show()
+                    updateMessage = "Please Verify Internet Connection! ❌"
+                    showUpdateDialog = true
                 }
             } finally {
                 isChecking = false
@@ -1148,6 +1814,55 @@ fun Settings(
                         shape = MaterialTheme.shapes.medium
                     ) {
                         Text("Close")
+                    }
+                }
+            }
+        }
+    }
+    if (showUpdateDialog) {
+        BasicAlertDialog(onDismissRequest = { showUpdateDialog = false }) {
+            Surface(
+                shape = MaterialTheme.shapes.extraLarge,
+                color = MaterialTheme.colorScheme.surface,
+                tonalElevation = 6.dp,
+                modifier = Modifier.widthIn(max = 400.dp).padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(52.dp)
+                            .background(
+                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            if (updateMessage.contains("UP TO DATE")) Icons.Filled.CheckCircle
+                            else if (updateMessage.contains("OUT NOW")) Icons.Filled.Refresh
+                            else Icons.Filled.Warning,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                    Spacer(Modifier.height(16.dp))
+                    Text(
+                        text = updateMessage,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(Modifier.height(24.dp))
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { showUpdateDialog = false },
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Text("OK")
                     }
                 }
             }
@@ -1235,9 +1950,15 @@ fun Settings(
             Button(
                 onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/Chill-Astro/FOSS-Root-Checker".toUri())) },
                 modifier = Modifier.height(48.dp),
-                shape = RoundedCornerShape(topStart = 28.dp, bottomStart = 28.dp, topEnd = 4.dp, bottomEnd = 4.dp)
+                shape = RoundedCornerShape(topStart = 28.dp, bottomStart = 28.dp, topEnd = 4.dp, bottomEnd = 4.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                    disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.75f)
+                )
             ) {
-                Icon(Icons.Rounded.Code, null, Modifier.size(18.dp))
+                Icon(Icons.Filled.Code, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onPrimary)
                 Spacer(Modifier.width(8.dp))
                 Text("Repository", fontSize = 13.sp)
             }
@@ -1245,9 +1966,15 @@ fun Settings(
             Button(
                 onClick = { showLicense = true },
                 modifier = Modifier.height(48.dp),
-                shape = RoundedCornerShape(topEnd = 28.dp, bottomEnd = 28.dp, topStart = 4.dp, bottomStart = 4.dp)
+                shape = RoundedCornerShape(topEnd = 28.dp, bottomEnd = 28.dp, topStart = 4.dp, bottomStart = 4.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                    disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.75f)
+                )
             ) {
-                Icon(Icons.Rounded.Info, null, Modifier.size(18.dp))
+                Icon(Icons.Filled.Info, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onPrimary)
                 Spacer(Modifier.width(8.dp))
                 Text("License", fontSize = 13.sp)
             }
@@ -1262,28 +1989,28 @@ fun Settings(
             ) {
                 ListItem(
                     headlineContent = { Text("Theme") },
-                    leadingContent = { Icon(Icons.Rounded.Palette, null) },
+                    leadingContent = { Icon(Icons.Filled.Palette, null) },
                     trailingContent = {
                         ExposedDropdownMenuBox(
                             expanded = expanded,
                             onExpandedChange = { expanded = !expanded },
                             modifier = Modifier.width(130.dp).padding(end = 4.dp)
                         ) {
-                            TextField(
-                                value = when (themeMode) { 1 -> "Light"; 2 -> "Dark"; else -> "System" },
-                                onValueChange = {},
-                                readOnly = true,
-                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                                colors = ExposedDropdownMenuDefaults.textFieldColors(unfocusedContainerColor = Color.Transparent, focusedContainerColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent, focusedIndicatorColor = Color.Transparent),
-                                modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable, true),
-                                textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp)
-                            )
-                            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                                DropdownMenuItem(text = { Text("System") }, onClick = { onThemeChange(0); expanded = false })
-                                DropdownMenuItem(text = { Text("Light") }, onClick = { onThemeChange(1); expanded = false })
-                                DropdownMenuItem(text = { Text("Dark") }, onClick = { onThemeChange(2); expanded = false })
+                                TextField(
+                                    value = when (themeMode) { 1 -> "Light"; 2 -> "Dark"; else -> "System" },
+                                    onValueChange = {},
+                                    readOnly = true,
+                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                                    colors = ExposedDropdownMenuDefaults.textFieldColors(unfocusedContainerColor = Color.Transparent, focusedContainerColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent, focusedIndicatorColor = Color.Transparent),
+                                    modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable, true),
+                                    textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp)
+                                )
+                                ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                                    DropdownMenuItem(text = { Text("System") }, onClick = { onThemeChange(0); expanded = false })
+                                    DropdownMenuItem(text = { Text("Light") }, onClick = { onThemeChange(1); expanded = false })
+                                    DropdownMenuItem(text = { Text("Dark") }, onClick = { onThemeChange(2); expanded = false })
+                                }
                             }
-                        }
                     },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
@@ -1292,7 +2019,7 @@ fun Settings(
                 Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                     ListItem(
                         headlineContent = { Text("Use System Colours") },
-                        leadingContent = { Icon(Icons.Rounded.Brush, null) },
+                        leadingContent = { Icon(Icons.Filled.Brush, null) },
                         trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn) },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
@@ -1302,7 +2029,7 @@ fun Settings(
                 ListItem(
                     headlineContent = { Text("Reduced Animations") },
                     supportingContent = { if (isLowRam) Text("Forced on Low RAM Devices (<4GB)", color = MaterialTheme.colorScheme.primary) },
-                    leadingContent = { Icon(Icons.Rounded.Animation, null) },
+                    leadingContent = { Icon(Icons.Filled.Animation, null) },
                     trailingContent = { Switch(checked = reducedAnimations, onCheckedChange = onReducedAnimationsChange, enabled = !isLowRam) },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
@@ -1318,7 +2045,7 @@ fun Settings(
                     if (isChecking) {
                         CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
                     } else {
-                        Icon(Icons.Rounded.Refresh, null, Modifier.size(18.dp))
+                        Icon(Icons.Filled.Refresh, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
                         Spacer(Modifier.width(8.dp))
                         Text("Check for Updates")
                     }
@@ -1334,7 +2061,7 @@ fun HistoryContent(logs: List<String>, onClear: () -> Unit) { // This History do
     Column(Modifier.fillMaxWidth().padding(24.dp)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Text("History", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.ExtraBold)
-            if (logs.isNotEmpty()) IconButton(onClick = onClear) { Icon(Icons.Rounded.DeleteForever, null, tint = MaterialTheme.colorScheme.error) }
+            if (logs.isNotEmpty()) IconButton(onClick = onClear) { Icon(Icons.Filled.DeleteForever, null, tint = MaterialTheme.colorScheme.error) }
         }
         Spacer(Modifier.height(16.dp))
         if (logs.isEmpty()) Box(Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) { Text("Aww no History? Let's make some!", modifier = Modifier.alpha(0.4f)) }
@@ -1352,7 +2079,7 @@ fun HistoryContent(logs: List<String>, onClear: () -> Unit) { // This History do
                     Card(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
                         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                             Surface(Modifier.size(40.dp), shape = CircleShape, color = if (isOk) Color(0xFF4CAF50) else Color(0xFFB00020)) {
-                                Icon(if (isOk) Icons.Rounded.Check else Icons.Rounded.Close, null, Modifier.padding(8.dp), Color.White)
+                                Icon(if (isOk) Icons.Filled.Check else Icons.Filled.Close, null, modifier = Modifier.padding(8.dp), tint = Color.White)
                             }
                             Spacer(Modifier.width(16.dp))
                             Column {
@@ -1367,10 +2094,10 @@ fun HistoryContent(logs: List<String>, onClear: () -> Unit) { // This History do
     }
 }
 enum class AppDestinations(val label: String, val icon: Any) {
-    HOME("Root", Icons.Rounded.Tag),
+    HOME("Root", Icons.Filled.Tag),
     BUSYBOX("BusyBox", R.drawable.ic_box),
-    GUIDE("Guide", Icons.AutoMirrored.Rounded.MenuBook),
-    SETTINGS("Settings", Icons.Rounded.Settings)
+    GUIDE("Guide", Icons.AutoMirrored.Filled.MenuBook),
+    SETTINGS("Settings", Icons.Filled.Settings)
 }
 fun isSUWorking(): Boolean { // No
     return try {

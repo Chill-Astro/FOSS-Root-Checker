@@ -28,16 +28,12 @@ android {
         buildConfig = true
     }
 
-    compileSdk {
-        version = release(36)
-    }
-
     defaultConfig {
         applicationId = "foss.chillastro.root.checker"
         minSdk = 23
-        targetSdk = 36
-        versionCode = 2
-        versionName = "v36.23.2.0"
+        targetSdk = 37
+        versionCode = 3
+        versionName = "v37.23.3.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -63,6 +59,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    compileSdk {
+        version = release(37)
     }
 }
 
