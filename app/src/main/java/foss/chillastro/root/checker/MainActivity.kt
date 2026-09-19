@@ -93,6 +93,7 @@ import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.rounded.FormatColorReset
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -197,6 +198,12 @@ class MainActivity : ComponentActivity() {
             // 0: System, 1: Light, 2: Dark
             var themeMode by remember { mutableIntStateOf(prefs.getInt("theme_mode", 0)) }
             var useDynamic by remember { mutableStateOf(prefs.getBoolean("use_dynamic", true)) }
+            var monochrome by remember {
+                mutableStateOf(
+                    if (prefs.contains("monochrome")) prefs.getBoolean("monochrome", false)
+                    else Build.VERSION.SDK_INT < Build.VERSION_CODES.S
+                )
+            }
 
             val totalRam = remember { HardwareProbe.getTotalRAM(context) }
             val isLowRam = totalRam < 4L * 1000 * 1000 * 1000 // 4000MB of DEDOTATAED RAM!
@@ -212,7 +219,7 @@ class MainActivity : ComponentActivity() {
                 else -> isSystemDark
             }
 
-            FOSSRootCheckerTheme(darkTheme = darkTheme, dynamicColor = useDynamic) {
+            FOSSRootCheckerTheme(darkTheme = darkTheme, dynamicColor = useDynamic, monochrome = monochrome) {
                 CARootChecker(
                     themeMode = themeMode,
                     onThemeChange = {
@@ -223,6 +230,11 @@ class MainActivity : ComponentActivity() {
                     onDyn = {
                         useDynamic = it
                         prefs.edit { putBoolean("use_dynamic", it) }
+                    },
+                    monochrome = monochrome,
+                    onMonochromeChange = {
+                        monochrome = it
+                        prefs.edit { putBoolean("monochrome", it) }
                     },
                     reducedAnimations = reducedAnimations,
                     onReducedAnimationsChange = {
@@ -241,6 +253,8 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
     onThemeChange: (Int) -> Unit,
     dyn: Boolean,
     onDyn: (Boolean) -> Unit,
+    monochrome: Boolean,
+    onMonochromeChange: (Boolean) -> Unit,
     reducedAnimations: Boolean,
     onReducedAnimationsChange: (Boolean) -> Unit,
     isLowRam: Boolean
@@ -317,11 +331,11 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                 }, label = "PageTransition"
             ) { target ->
                 when (target) {
-                    AppDestinations.HOME -> RootChecker(reducedAnimations, onCheckComplete = refreshLogs)
+                    AppDestinations.HOME -> RootChecker(reducedAnimations, monochrome, onCheckComplete = refreshLogs)
                     AppDestinations.BUSYBOX -> Busybox()
                     AppDestinations.GUIDE -> RootGuide()
                     AppDestinations.SETTINGS -> Settings(
-                        themeMode, onThemeChange, dyn, onDyn,
+                        themeMode, onThemeChange, dyn, onDyn, monochrome, onMonochromeChange,
                         reducedAnimations, onReducedAnimationsChange, isLowRam
                     )
                 }
@@ -486,7 +500,7 @@ fun CategoryGroup(title: String, data: List<Pair<String, Boolean>>) {
 }
 // User INTERFACE (I hope it works like butter on Dumpster Fire Devices!)
 @Composable
-fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
+fun RootChecker(reducedAnimations: Boolean, monochrome: Boolean, onCheckComplete: () -> Unit) {
     var checkState by rememberSaveable { mutableIntStateOf(0) }
     var isRooted by rememberSaveable { mutableStateOf(false) }
     val ctx = LocalContext.current
@@ -560,7 +574,7 @@ fun RootChecker(reducedAnimations: Boolean, onCheckComplete: () -> Unit) {
                 modifier = Modifier.size(220.dp).graphicsLayer(scaleX = circleScale, scaleY = circleScale),
                 shape = CircleShape,
                 color = when(checkState) {
-                    2, 4 -> if (isRooted) Color(0xFF4CAF50) else Color(0xFFB00020)
+                    2, 4 -> if (monochrome) Color.Black else if (isRooted) Color(0xFF4CAF50) else Color(0xFFB00020)
                     else -> MaterialTheme.colorScheme.primaryContainer
                 },
                 tonalElevation = 8.dp
@@ -1063,7 +1077,7 @@ fun RootGuide() {
                     ) {
                         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.Filled.CheckCircle, null, modifier = Modifier.size(28.dp), tint = Color(0xFF4CAF50))
+                                Icon(Icons.Filled.CheckCircle, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
                                 Spacer(Modifier.width(12.dp))
                                 Text("Most Android devices", style = MaterialTheme.typography.bodyMedium)
                             }
@@ -1701,6 +1715,8 @@ fun Settings(
     onThemeChange: (Int) -> Unit,
     dyn: Boolean,
     onDyn: (Boolean) -> Unit,
+    monochrome: Boolean,
+    onMonochromeChange: (Boolean) -> Unit,
     reducedAnimations: Boolean,
     onReducedAnimationsChange: (Boolean) -> Unit,
     isLowRam: Boolean
@@ -1978,18 +1994,19 @@ fun Settings(
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
             ) {
                 ListItem(
-                    headlineContent = { Text("Theme") },
-                    leadingContent = { Icon(Icons.Filled.Palette, null) },
+                    headlineContent = { Text("Theme", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
+                    leadingContent = { Icon(Icons.Filled.Palette, null, tint = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
                     trailingContent = {
                         ExposedDropdownMenuBox(
                             expanded = expanded,
-                            onExpandedChange = { expanded = !expanded },
+                            onExpandedChange = { if (!monochrome) expanded = !expanded },
                             modifier = Modifier.width(130.dp).padding(end = 4.dp)
                         ) {
                                 TextField(
                                     value = when (themeMode) { 1 -> "Light"; 2 -> "Dark"; else -> "System" },
                                     onValueChange = {},
                                     readOnly = true,
+                                    enabled = !monochrome,
                                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                                     colors = ExposedDropdownMenuDefaults.textFieldColors(unfocusedContainerColor = Color.Transparent, focusedContainerColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent, focusedIndicatorColor = Color.Transparent),
                                     modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable, true),
@@ -2005,12 +2022,26 @@ fun Settings(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
             }
+            Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
+                ListItem(
+                    headlineContent = { Text("Monochrome Mode") },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Rounded.FormatColorReset,
+                            contentDescription = "Color Reset",
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    trailingContent = { Switch(checked = monochrome, onCheckedChange = onMonochromeChange) },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
+            }
             if (Build.VERSION.SDK_INT >= 31) { // System Colors (Android 12+)
                 Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                     ListItem(
-                        headlineContent = { Text("Use System Colours") },
-                        leadingContent = { Icon(Icons.Filled.Brush, null) },
-                        trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn) },
+                        headlineContent = { Text("Use System Colours", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
+                        leadingContent = { Icon(Icons.Filled.Brush, null, tint = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
+                        trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn, enabled = !monochrome) },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
@@ -2072,7 +2103,7 @@ fun HistoryContent(logs: List<String>, onClear: () -> Unit) { // This History do
                     }
                     Card(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
                         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Surface(Modifier.size(40.dp), shape = CircleShape, color = if (isOk) Color(0xFF4CAF50) else Color(0xFFB00020)) {
+                            Surface(Modifier.size(40.dp), shape = CircleShape, color = if (isOk) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error) {
                                 Icon(if (isOk) Icons.Filled.Check else Icons.Filled.Close, null, modifier = Modifier.padding(8.dp), tint = Color.White)
                             }
                             Spacer(Modifier.width(16.dp))

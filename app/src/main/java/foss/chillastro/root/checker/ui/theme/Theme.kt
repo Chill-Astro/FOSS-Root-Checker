@@ -26,6 +26,45 @@ private val LightColorScheme = lightColorScheme(
     tertiary = Color(0xFF7D5260)
 )
 
+private val MonochromeColorScheme = darkColorScheme(
+    primary = Color.White,
+    onPrimary = Color.Black,
+    primaryContainer = Color(0xFF151515),
+    onPrimaryContainer = Color.White,
+    secondary = Color.White,
+    onSecondary = Color.Black,
+    secondaryContainer = Color(0xFF151515),
+    onSecondaryContainer = Color.White,
+    tertiary = Color.White,
+    onTertiary = Color.Black,
+    tertiaryContainer = Color(0xFF151515),
+    onTertiaryContainer = Color.White,
+    background = Color.Black,
+    onBackground = Color.White,
+    surface = Color.Black,
+    onSurface = Color.White,
+    surfaceVariant = Color(0xFF161616),
+    onSurfaceVariant = Color.White,
+    surfaceDim = Color.Black,
+    surfaceBright = Color(0xFF202020),
+    surfaceContainerLowest = Color.Black,
+    surfaceContainerLow = Color(0xFF0B0B0B),
+    surfaceContainer = Color(0xFF111111),
+    surfaceContainerHigh = Color(0xFF181818),
+    surfaceContainerHighest = Color(0xFF202020),
+    surfaceTint = Color.White,
+    inverseSurface = Color.White,
+    inverseOnSurface = Color.Black,
+    inversePrimary = Color.Black,
+    error = Color.White,
+    onError = Color.Black,
+    errorContainer = Color(0xFF151515),
+    onErrorContainer = Color.White,
+    outline = Color.White,
+    outlineVariant = Color.White,
+    scrim = Color.Black
+)
+
 // Material 3 Expressive Shapes
 val ExpressiveShapes = Shapes(
     extraSmall = RoundedCornerShape(8.dp),
@@ -39,9 +78,11 @@ val ExpressiveShapes = Shapes(
 fun FOSSRootCheckerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
+    monochrome: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
+        monochrome -> MonochromeColorScheme
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
