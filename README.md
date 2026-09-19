@@ -51,7 +51,7 @@ _- TRUSTED SOURCES -_
 
 <kbd>
 <img width="1920" height="1200" alt="Screenshot_2026-09-20-00-08-14-24_541dab10fd96987a258b9d40c9817fe9" src="https://github.com/user-attachments/assets/5fae5f30-b769-4e80-a833-0ed92f7607b2" />
-  This Update is Currently in Development and Undergoing Testing Phase!
+  <div align="center">This Update is Currently in Development and Undergoing Testing Phase!</div>
 </kbd>
 
 <br><br>
