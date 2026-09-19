@@ -781,7 +781,7 @@ fun Busybox() { // Let's hope She ain't Busy!
                 Column {
                     Text("BUSYBOX INFO", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onPrimaryContainer)
                     Text(
-                        "Most modern root solutions hide BusyBox to avoid detection. Install 'BusyBox for Android NDK' if needed.",
+                        "This detects 'Legacy BusyBox Installations' and 'BusyBox for Android NDK' Module.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f)
                     )
@@ -1730,7 +1730,7 @@ fun Settings(
                 @Suppress("DEPRECATION")
                 ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
             }
-        } catch (_: Exception) { "36.23.2.0" }
+        } catch (_: Exception) { "37.23.3.0" }
     }
 
     // Version Comparison Logic
@@ -1753,13 +1753,13 @@ fun Settings(
                 val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/FRC-SU_V.txt"
                 val remoteVersion = URL(url).readText().trim()
                 withContext(Dispatchers.Main) {
-                    val current = appVersion ?: "36.23.2.0"
+                    val current = appVersion ?: "37.23.3.0"
                     if (isNewer(current, remoteVersion)) {
-                        updateMessage = "$remoteVersion OUT NOW! 🎉"
+                        updateMessage = "$remoteVersion OUT NOW!"
                     } else if (isNewer(remoteVersion, current)) {
-                        updateMessage = "You are using a DEV. BUILD! ⚠️"
+                        updateMessage = "You are using a DEV. BUILD!"
                     } else {
-                        updateMessage = "Your Version is UP TO DATE! 🎉"
+                        updateMessage = "Your Version is UP TO DATE!"
                     }
                     showUpdateDialog = true
                 }
@@ -1831,24 +1831,14 @@ fun Settings(
                     modifier = Modifier.padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(52.dp)
-                            .background(
-                                color = MaterialTheme.colorScheme.surfaceVariant,
-                                shape = RoundedCornerShape(16.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            if (updateMessage.contains("UP TO DATE")) Icons.Filled.CheckCircle
-                            else if (updateMessage.contains("OUT NOW")) Icons.Filled.Refresh
-                            else Icons.Filled.Warning,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.size(28.dp)
-                        )
-                    }
+                    Icon(
+                        if (updateMessage.contains("UP TO DATE")) Icons.Filled.CheckCircle
+                        else if (updateMessage.contains("OUT NOW")) Icons.Filled.Refresh
+                        else Icons.Filled.Warning,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(32.dp)
+                    )
                     Spacer(Modifier.height(16.dp))
                     Text(
                         text = updateMessage,
@@ -1889,7 +1879,7 @@ fun Settings(
             painter = painterResource(id = R.drawable.root_logo),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(160.dp).clickable(indication = null, interactionSource = noRipple) {
+            modifier = Modifier.size(200.dp).clickable(indication = null, interactionSource = noRipple) {
                 logoTaps++
                 when (logoTaps) { // The following lines are by Honourable Netaji Subhas Chandra Bose, the Man who sacrificed everything for his Motherland!
                     5 -> Toast.makeText(ctx, "It is our duty to pay for our liberty...", Toast.LENGTH_SHORT).show()
@@ -2039,11 +2029,15 @@ fun Settings(
                 Spacer(Modifier.height(16.dp))
                 FilledTonalButton(
                     onClick = { if (!isChecking) performUpdateCheck() },
-                    modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp),
+                    modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp).height(56.dp),
                     shape = CircleShape
                 ) {
                     if (isChecking) {
-                        CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(18.dp),
+                            strokeWidth = 2.dp,
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     } else {
                         Icon(Icons.Filled.Refresh, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
                         Spacer(Modifier.width(8.dp))
