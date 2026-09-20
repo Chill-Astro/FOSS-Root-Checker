@@ -186,7 +186,7 @@ This method is RECOMMENDED as this is how I build myself.
 
 ---
 
-## HALL OF SHAME 👎 :
+## HALL OF SHAME :
 
 // Includes Clones who are working against the MIT Licence and Distributing Malware. All Flaws are mentioned. 
 
