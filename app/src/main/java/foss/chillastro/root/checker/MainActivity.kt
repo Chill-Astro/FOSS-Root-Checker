@@ -350,7 +350,7 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                 onDismissRequest = { showHistorySheet = false },
                 shape = MaterialTheme.shapes.extraLarge
             ) {
-                HistoryContent(logs = logs, onClear = { clearLogs(context); refreshLogs() })
+                HistoryContent(logs = logs, monochrome = monochrome, onClear = { clearLogs(context); refreshLogs() })
             }
         }
         if (showInfoSheet) {
@@ -546,11 +546,11 @@ fun RootChecker(reducedAnimations: Boolean, monochrome: Boolean, onCheckComplete
                 Column(horizontalAlignment = Alignment.CenterHorizontally) { // Info Pill (Good Hardware Props)
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            Text("${Build.MANUFACTURER} ${Build.MODEL}", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+                            Text("${Build.MANUFACTURER} ${Build.MODEL}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.ExtraBold, textAlign = TextAlign.Center)
                             Icon(Icons.Rounded.PhoneAndroid, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            Text("Android ${Build.VERSION.RELEASE}", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+                            Text("Android ${Build.VERSION.RELEASE}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.ExtraBold, textAlign = TextAlign.Center)
                             Icon(Icons.Rounded.Android, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
@@ -586,8 +586,8 @@ fun RootChecker(reducedAnimations: Boolean, monochrome: Boolean, onCheckComplete
                 modifier = Modifier.size(220.dp).graphicsLayer(scaleX = circleScale, scaleY = circleScale),
                 shape = CircleShape,
                 color = when(checkState) {
-                    2, 4 -> if (monochrome) Color.Black else if (isRooted) Color(0xFF4CAF50) else Color(0xFFB00020)
-                    else -> MaterialTheme.colorScheme.primaryContainer
+                    2, 4 -> if (monochrome) Color.White else if (isRooted) Color(0xFF4CAF50) else Color(0xFFB00020)
+                    else -> if (monochrome) Color.White else MaterialTheme.colorScheme.primaryContainer
                 },
                 tonalElevation = 8.dp
             ) {
@@ -598,9 +598,19 @@ fun RootChecker(reducedAnimations: Boolean, monochrome: Boolean, onCheckComplete
                 ) { s ->
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         if (s == 2 || s == 4) {
-                            Icon(if (isRooted) Icons.Filled.Check else Icons.Filled.Close, null, modifier = Modifier.size(90.dp), tint = Color.White)
+                            Icon(
+                                if (isRooted) Icons.Filled.Check else Icons.Filled.Close,
+                                null,
+                                modifier = Modifier.size(90.dp),
+                                tint = if (monochrome) Color.Black else Color.White
+                            )
                         } else {
-                            Icon(painterResource(id = R.drawable.root_hash), null, modifier = Modifier.size(90.dp), tint = MaterialTheme.colorScheme.onPrimaryContainer)
+                            Icon(
+                                painterResource(id = R.drawable.root_hash),
+                                null,
+                                modifier = Modifier.size(90.dp),
+                                tint = if (monochrome) Color.Black else MaterialTheme.colorScheme.onPrimaryContainer
+                            )
                         }
                     }
                 }
@@ -623,7 +633,7 @@ fun RootChecker(reducedAnimations: Boolean, monochrome: Boolean, onCheckComplete
         )
         Spacer(Modifier.weight(1.2f))
         Row(
-            modifier = Modifier.fillMaxWidth().widthIn(max = 700.dp).height(64.dp).padding(horizontal = 4.dp),
+            modifier = Modifier.widthIn(max = 700.dp).fillMaxWidth().height(64.dp).padding(horizontal = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -817,7 +827,9 @@ fun Busybox() { // Let's hope She ain't Busy!
         Spacer(Modifier.height(12.dp))
         Box(Modifier.fillMaxWidth().weight(1f).clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(16.dp).verticalScroll(rememberScrollState())) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Ready to Verify?", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = FontFamily.Monospace, fontSize = 13.sp)
+                if (checkState == 0) {
+                    Text("Ready to Verify?", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = FontFamily.Monospace, fontSize = 13.sp)
+                }
                 if (checkState >= 1) {
                     Text("Searching for paths...  ♪(´▽｀)", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = FontFamily.Monospace, fontSize = 13.sp)
                 }
@@ -845,7 +857,7 @@ fun Busybox() { // Let's hope She ain't Busy!
                         } else {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 TerminalLine("BusyBox not found as root.", MaterialTheme.colorScheme.error)
-                                Icon(Icons.Filled.Warning, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.error)
+                                Icon(Icons.Filled.Close, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.error)
                             }
                         }
                     }
@@ -1793,7 +1805,7 @@ fun Settings(
                 }
             } catch (_: Exception) {
                 withContext(Dispatchers.Main) {
-                    updateMessage = "Please Verify Internet Connection! ❌"
+                    updateMessage = "Please Verify Internet Connection!"
                     showUpdateDialog = true
                 }
             } finally {
@@ -2073,28 +2085,34 @@ fun Settings(
                 FilledTonalButton(
                     onClick = { if (!isChecking) performUpdateCheck() },
                     modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp).height(56.dp),
-                    shape = CircleShape
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (monochrome) Color.White else MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = if (monochrome) Color.Black else MaterialTheme.colorScheme.onSecondaryContainer,
+                        disabledContainerColor = if (monochrome) Color.White.copy(alpha = 0.5f) else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f),
+                        disabledContentColor = if (monochrome) Color.Black.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.5f)
+                    )
                 ) {
                     if (isChecking) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(18.dp),
                             strokeWidth = 2.dp,
-                            color = MaterialTheme.colorScheme.primary
+                            color = if (monochrome) Color.Black else MaterialTheme.colorScheme.primary
                         )
                     } else {
-                        Icon(Icons.Filled.Refresh, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+                        Icon(Icons.Filled.Refresh, null, modifier = Modifier.size(20.dp), tint = if (monochrome) Color.Black else MaterialTheme.colorScheme.primary)
                         Spacer(Modifier.width(8.dp))
                         Text("Check for Updates")
                     }
                 }
             }
         }
-        HorizontalDivider(Modifier.padding(vertical = 24.dp).fillMaxWidth(0.3f), thickness = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
+        Spacer(Modifier.height(24.dp))
         Text(text = "Made with 💖 by Chill-Astro", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 @Composable
-fun HistoryContent(logs: List<String>, onClear: () -> Unit) { // This History doesn't include boring movements that didn't affect much.
+fun HistoryContent(logs: List<String>, monochrome: Boolean, onClear: () -> Unit) { // This History doesn't include boring movements that didn't affect much.
     Column(Modifier.fillMaxWidth().padding(24.dp)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Text("History", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.ExtraBold)
@@ -2115,8 +2133,17 @@ fun HistoryContent(logs: List<String>, onClear: () -> Unit) { // This History do
                     }
                     Card(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
                         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Surface(Modifier.size(40.dp), shape = CircleShape, color = if (isOk) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error) {
-                                Icon(if (isOk) Icons.Filled.Check else Icons.Filled.Close, null, modifier = Modifier.padding(8.dp), tint = Color.White)
+                            Surface(
+                                Modifier.size(40.dp),
+                                shape = CircleShape,
+                                color = if (monochrome) Color.White else if (isOk) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                            ) {
+                                Icon(
+                                    if (isOk) Icons.Filled.Check else Icons.Filled.Close,
+                                    null,
+                                    modifier = Modifier.padding(8.dp),
+                                    tint = if (monochrome) Color.Black else Color.White
+                                )
                             }
                             Spacer(Modifier.width(16.dp))
                             Column {
