@@ -10,7 +10,7 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-**App Version** : `v36.23.2.0`
+**App Version** : `v37.23.3.0 ( Coming Soon )`
 
 **Package ID** : `foss.chillastro.root.checker` 
 
@@ -47,9 +47,22 @@ _- TRUSTED SOURCES -_
 
 ---
 
-## HALT ON DEVELOPMENT :
+## SOME TWEAKS ARE COMING! ( v37.23.3.0 ) 
 
-- This Project is now a "Complete Product" in my Vision. So I have no other Ideas.
+<kbd>
+<img width="1920" height="1200" alt="Screenshot_2026-09-20-00-08-14-24_541dab10fd96987a258b9d40c9817fe9" src="https://github.com/user-attachments/assets/5fae5f30-b769-4e80-a833-0ed92f7607b2" />
+  <div align="center">This Update is Currently in Development and Undergoing Testing Phase!</div>
+</kbd>
+
+<br><br>
+
+- Better Iconography.
+- Better Readability in Guide Section.
+- Cleaned up & Revamped BusyBox Checker.
+- Removed "Nice Spoofing" Messages and Toasts on Root Checker and BusyBox checker.
+- Made the Update Checker open a popup not toast.
+- Monochrome Mode : Using the Signature Black & White Theme from [chill-astro.github.io](https://chill-astro.github.io/)!
+- Monochrome mode is used by default on Devices < Android 12 ( Not Enforced ).
   
 --- 
 
@@ -67,11 +80,12 @@ _- TRUSTED SOURCES -_
 ## Key Features :
 
 - Ultra Low Footprint of 1.55MB ONLY!
-- Privacy First Design with full transperancy. ✅
+- Privacy First Design with full transparency. ✅
 - Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB ). ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
 - Modern Material UI with Monet Theming. ✅
 - Support for Android 6+ Devices. ✅
+- Monochrome Mode for Minimalists. ✅
 - Works with Magisk, KernelSU, KSU Forks, APatch and older Methods ✅
 - Thorough Guidance provided on Rooting and Unlocking Bootloader. ✅
 
@@ -79,31 +93,25 @@ _- TRUSTED SOURCES -_
 
 ## Version Structure :
 
-Now if you are visiting this Repository from Reddit, or found this while Searching, you must be wondering, 
-
-*"Why does the App Start from v36????? It has only 2 Releases!"*
-
-Well let's break this down first :
-
 <div align="center">
 
 <H2>
 
-v`36`.`23`.`2`.`0`
+v`37`.`23`.`3`.`0`
 
 </H2>
 
 </div>
 
-- `36` -> Target SDK ( Her Target SDK is Android 16 whose API Level is '36' )
+- `37` -> Target SDK ( Her Target SDK is Android 17 whose API Level is '37' )
 - `23` -> Minimum SDK ( She installs on Android 6 and Higher whose API Level is '23' )
-- `2` -> Major Update ( Refers to the Info Panel Update ) 
-- `0` -> Minor Update ( Currently there hasn't been any Changes in v2 Series. )
+- `3` -> Major Update ( Refers to the QOL Update ) 
+- `0` -> Minor Update ( Currently there hasn't been any Changes in v3 Series. )
 
 ---
 
 
-## TRAILER on @chill-astro-sfs :
+## TRAILER on @delta-v-sfs :
 
 <div align="center">
   <kbd>
@@ -159,28 +167,30 @@ This method is RECOMMENDED as this is how I build myself.
 
 ---
 
-## HALL OF FAME 👍 : 
+## HALL OF FAME : 
 
-// Will add Forked Repos which are genuinely good. 🤩 I will list everything Good about them.
+// Will add Forked Repos which are genuinely good. I will list everything Good about them.
 
 ---
 
-## HALL OF NEUTRALITY 😐 :
+## HALL OF NEUTRALITY :
 
-// Will add Inactive Forks. Uh yeah that's it atleast it's Forking not Cloning! 😅
+// Will add Inactive Forks. Uh yeah that's it at least it's Forking not Cloning!
 
 - RamsesAupart/FOSS-Root-Checker
 - vloco2417-lab/FOSS-Root-Checker
 - puichay012889/FOSS-Root-Checker
 - mariasanchez77989-lgtm/FOSS-Root-Checker
+- mdfarooqmdfarooq885-ship-it/FOSS-Root-Checker
+- webbrain-one/FOSS-Root-Checker
 
 ---
 
-## HALL OF SHAME 👎 :
+## HALL OF SHAME :
 
-// Includes Clones who are working against the MIT Licence and Distributing Malware. All Flaws are mentioned. 😑
+// Includes Clones who are working against the MIT Licence and Distributing Malware. All Flaws are mentioned. 
 
-- ~~RuotianJoy/FOSS-Root-Checker ( Cloned + Distributing Malware 👎 )~~ ( Removed Successfully )
+- ~~RuotianJoy/FOSS-Root-Checker ( Cloned + Distributing Malware  )~~ ( Removed Successfully )
 
 ---
 
