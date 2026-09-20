@@ -45,10 +45,6 @@ They Bypass Github's Security Checks and may Compromise your System with Malware
 
 ---
 
-YouTube : [Chill-Astro SFS](https://m.youtube.com/channel/UCC_H5e6Fn89vv5ZQpZwxUxw)
-
-XDA : [@Dev. Chill-Astro](https://xdaforums.com/m/dev-chill-astro.13356052/)
-
-Discord : @chill_astro
+YouTube : [DELTA-V SFS](https://youtube.com/@delta-v-sfs)
 
 ---
