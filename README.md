@@ -1,6 +1,6 @@
 <p align="center">
   <kbd>
-  <img width="1920" height="1080" alt="Rooting Revolution" src="https://github.com/user-attachments/assets/fc8d67f6-df19-496b-9960-60786e22886d" />
+  <img width="1920" height="1080" alt="Root Checker Promo" src="https://github.com/user-attachments/assets/4ad497bc-2a8d-4b58-b9ff-e6b08b1b47c9" />
   </kbd>
 </p>
 
@@ -10,7 +10,7 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-**App Version** : `v37.23.3.0 ( Coming Soon )`
+**App Version** : `v37.23.3.0`
 
 **Package ID** : `foss.chillastro.root.checker` 
 
@@ -46,25 +46,6 @@ _- TRUSTED SOURCES -_
 > Do not trust sources listed in [this page](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) and NEVER TRUST .ZIP FILES PROVIDED IN ANY FORKED / STOLEN REPOSITORY'S READMEs! They Bypass Github's Security Checks and may Compromise your System with Malware and Steal your ENTIRE Data!
 
 ---
-
-## SOME TWEAKS ARE COMING! ( v37.23.3.0 ) 
-
-<kbd>
-<img width="1920" height="1200" alt="Screenshot_2026-09-20-00-08-14-24_541dab10fd96987a258b9d40c9817fe9" src="https://github.com/user-attachments/assets/5fae5f30-b769-4e80-a833-0ed92f7607b2" />
-  <div align="center">This Update is Currently in Development and Undergoing Testing Phase!</div>
-</kbd>
-
-<br><br>
-
-- Better Iconography.
-- Better Readability in Guide Section.
-- Cleaned up & Revamped BusyBox Checker.
-- Removed "Nice Spoofing" Messages and Toasts on Root Checker and BusyBox checker.
-- Made the Update Checker open a popup not toast.
-- Monochrome Mode : Using the Signature Black & White Theme from [chill-astro.github.io](https://chill-astro.github.io/)!
-- Monochrome mode is used by default on Devices < Android 12 ( Not Enforced ).
-  
---- 
 
 ## How it works? 
 
