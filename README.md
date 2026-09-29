@@ -14,7 +14,9 @@ Well that's why I made this App! It is just a simple Root Checker for Newbies bu
 
 **Package ID** : `foss.chillastro.root.checker` 
 
-**Offline Flavour** : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
+**Offline Flavour** : `foss.chillastro.root.checker.offline` 
+
+( Lacks Update Checker )
 
 **Codename** : `FRC-SU`
 
