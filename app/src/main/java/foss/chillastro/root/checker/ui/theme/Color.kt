@@ -9,3 +9,5 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
+// Fixed status red shared by the root result and history.
+val RootFailureRed = Color(0xFFB00020)

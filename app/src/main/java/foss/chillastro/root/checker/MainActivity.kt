@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 package foss.chillastro.root.checker
 
 import android.app.ActivityManager
@@ -103,7 +103,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -116,17 +115,20 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenu
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
+import androidx.compose.material3.ShortNavigationBar
+import androidx.compose.material3.ShortNavigationBarItem
+import androidx.compose.material3.ShortNavigationBarItemDefaults
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -158,11 +160,12 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import foss.chillastro.root.checker.ui.theme.FOSSRootCheckerTheme
+import foss.chillastro.root.checker.ui.theme.AppShapes
+import foss.chillastro.root.checker.ui.theme.RootFailureRed
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -222,7 +225,8 @@ class MainActivity : ComponentActivity() {
                 else -> isSystemDark
             }
 
-            FOSSRootCheckerTheme(darkTheme = darkTheme, dynamicColor = useDynamic, monochrome = monochrome) {
+            FOSSRootCheckerTheme(darkTheme = darkTheme, dynamicColor = useDynamic, monochrome = monochrome, reducedAnimations = reducedAnimations) {
+                UpdateHost()
                 CARootChecker(
                     themeMode = themeMode,
                     onThemeChange = {
@@ -269,31 +273,41 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
     var logs by remember { mutableStateOf(getLogs(context)) }
     val refreshLogs = { logs = getLogs(context) }
     BackHandler(dest != AppDestinations.HOME) { dest = AppDestinations.HOME }
-    NavigationSuiteScaffold(
-        layoutType = NavigationSuiteType.NavigationBar,
-        navigationSuiteItems = {
-            AppDestinations.entries.forEach { item ->
-                item(
-                    icon = {
-                        val iconPainter = when (val icon = item.icon) {
-                            is ImageVector -> rememberVectorPainter(icon)
-                            is Int -> painterResource(id = icon)
-                            else -> error("Invalid icon type")
-                        }
-                        Icon(
-                            painter = iconPainter,
-                            contentDescription = item.label,
-                            tint = if (dest == item) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    },
-                    label = { Text(text = item.label) },
-                    selected = dest == item,
-                    onClick = { dest = item }
-                )
+    val pageMotion = MaterialTheme.motionScheme.defaultSpatialSpec<IntOffset>()
+    Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        bottomBar = {
+            ShortNavigationBar {
+                AppDestinations.entries.forEach { item ->
+                    ShortNavigationBarItem(
+                        icon = {
+                            val iconPainter = when (val icon = item.icon) {
+                                is ImageVector -> rememberVectorPainter(icon)
+                                is Int -> painterResource(id = icon)
+                                else -> error("Invalid icon type")
+                            }
+                            Icon(
+                                painter = iconPainter,
+                                contentDescription = item.label,
+                                tint = if (monochrome && dest == item) Color.Black else if (dest == item) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        label = { Text(text = item.label) },
+                        selected = dest == item,
+                        colors = if (monochrome) ShortNavigationBarItemDefaults.colors(
+                            selectedIndicatorColor = Color.White,
+                            selectedIconColor = Color.Black,
+                            selectedTextColorTopIconPosition = Color.White,
+                            selectedTextColorStartIconPosition = Color.Black
+                        ) else ShortNavigationBarItemDefaults.colors(),
+                        onClick = { dest = item }
+                    )
+                }
             }
         }
-    ) {
+    ) { navigationPadding ->
         Scaffold(
+            modifier = Modifier.padding(navigationPadding).consumeWindowInsets(navigationPadding),
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
@@ -302,12 +316,12 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                         }, fontWeight = FontWeight.ExtraBold, fontFamily = FontFamily.Monospace)
                     },
                     navigationIcon = { // Info button
-                        IconButton(onClick = { showInfoSheet = true }) {
+                        androidx.compose.material3.FilledTonalIconButton(onClick = { showInfoSheet = true }) {
                             Icon(Icons.Filled.Info, contentDescription = "Info", tint = MaterialTheme.colorScheme.onSurfaceVariant) // Useful / Useless Facts About your Hardware
                         }
                     },
                     actions = { // History button
-                        IconButton(onClick = { showHistorySheet = true }) {
+                        androidx.compose.material3.FilledTonalIconButton(onClick = { showHistorySheet = true }) {
                             Icon(Icons.Filled.History, contentDescription = "History", tint = MaterialTheme.colorScheme.onSurfaceVariant) // Not the Boring History from School
                         }
                     }
@@ -319,10 +333,9 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                 modifier = Modifier.padding(padding).fillMaxSize(),
                 transitionSpec = {
                     if (reducedAnimations) {
-                        (fadeIn(animationSpec = tween(300)) + scaleIn(initialScale = 0.95f)) togetherWith
-                                (fadeOut(animationSpec = tween(300)) + scaleOut(targetScale = 0.95f))
+                        fadeIn(animationSpec = tween(150)) togetherWith fadeOut(animationSpec = tween(150))
                     } else {
-                        val spec = spring<IntOffset>(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow)
+                        val spec = pageMotion
                         if (targetState.ordinal > initialState.ordinal) {
                             (slideInHorizontally(spec) { it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith
                                     (slideOutHorizontally(spec) { -it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
@@ -348,7 +361,7 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
         if (showHistorySheet) {
             ModalBottomSheet(
                 onDismissRequest = { showHistorySheet = false },
-                shape = MaterialTheme.shapes.extraLarge
+                shape = MaterialTheme.shapes.extraExtraLarge
             ) {
                 HistoryContent(logs = logs, monochrome = monochrome, onClear = { clearLogs(context); refreshLogs() })
             }
@@ -356,7 +369,7 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
         if (showInfoSheet) {
             ModalBottomSheet(
                 onDismissRequest = { showInfoSheet = false },
-                shape = MaterialTheme.shapes.extraLarge,
+                shape = MaterialTheme.shapes.extraExtraLarge,
                 containerColor = MaterialTheme.colorScheme.background
             ) {
                 SystemInfo()
@@ -403,7 +416,7 @@ fun SystemInfo() {
     ) {
         ElevatedCard(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
-            shape = RoundedCornerShape(24.dp),
+            shape = MaterialTheme.shapes.extraLarge,
             colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
             Row(modifier = Modifier.padding(24.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -450,7 +463,7 @@ fun safeExists(path: String): Boolean = try {
 fun RowLayout(ok: Boolean, content: @Composable ColumnScope.() -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.25f),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
     ) {
@@ -512,7 +525,7 @@ fun RootChecker(reducedAnimations: Boolean, monochrome: Boolean, onCheckComplete
     val verity = remember { HardwareProbe.getVerity() }
 
     val circleScale by animateFloatAsState(
-        targetValue = if (checkState == 1 || checkState == 3) 1.15f else 1f,
+        targetValue = if (!reducedAnimations && (checkState == 1 || checkState == 3)) 1.15f else 1f,
         animationSpec = if (reducedAnimations) tween(300) else spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessLow),
         label = "pulse"
     )
@@ -579,17 +592,14 @@ fun RootChecker(reducedAnimations: Boolean, monochrome: Boolean, onCheckComplete
         }
         Spacer(Modifier.weight(1f))
         Box(contentAlignment = Alignment.Center) {
-            if (checkState == 1 || checkState == 3) {
-                CircularProgressIndicator(Modifier.size(290.dp), strokeWidth = 6.dp)
-            }
-            Surface(
-                modifier = Modifier.size(220.dp).graphicsLayer(scaleX = circleScale, scaleY = circleScale),
-                shape = CircleShape,
+            RootEmblem(
+                checking = isAnyProcessing,
+                reducedAnimations = reducedAnimations,
+                modifier = Modifier.size(250.dp).graphicsLayer(scaleX = circleScale, scaleY = circleScale),
                 color = when(checkState) {
-                    2, 4 -> if (monochrome) Color.White else if (isRooted) Color(0xFF4CAF50) else Color(0xFFB00020)
+                    2, 4 -> rootResultColor(isRooted, monochrome)
                     else -> if (monochrome) Color.White else MaterialTheme.colorScheme.primaryContainer
-                },
-                tonalElevation = 8.dp
+                }
             ) {
                 Crossfade(
                     targetState = checkState,
@@ -758,7 +768,7 @@ fun SpringButton( // Split Button with Split Brain. Wait Callosotomy!
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.90f else 1f,
+        targetValue = if (isPressed && !reducedAnimations) 0.96f else 1f,
         animationSpec = if (reducedAnimations) tween(100) else spring(0.6f, Spring.StiffnessLow),
         label = "button_scale"
     )
@@ -766,7 +776,7 @@ fun SpringButton( // Split Button with Split Brain. Wait Callosotomy!
         onClick = onClick,
         modifier = modifier.graphicsLayer(scaleX = scale, scaleY = scale),
         enabled = enabled,
-        shape = shape,
+        shapes = expressiveButtonShapes(shape),
         interactionSource = interactionSource,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
@@ -781,7 +791,7 @@ fun SpringButton( // Split Button with Split Brain. Wait Callosotomy!
 
 @Composable
 fun WarningCard(bodyText: String) { // For newbies
-    Card(
+    GuideCard(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
         shape = MaterialTheme.shapes.large
@@ -806,7 +816,7 @@ fun Busybox() { // Let's hope She ain't Busy!
     val ctx = LocalContext.current
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         Spacer(Modifier.height(16.dp))
-        Card(
+        GuideCard(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
             shape = MaterialTheme.shapes.large
@@ -898,7 +908,7 @@ fun Busybox() { // Let's hope She ain't Busy!
                     .height(70.dp)
                     .padding(top = 12.dp),
                 enabled = checkState != 1,
-                shape = MaterialTheme.shapes.large,
+                shapes = expressiveButtonShapes(MaterialTheme.shapes.large),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -908,7 +918,7 @@ fun Busybox() { // Let's hope She ain't Busy!
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (checkState == 1) {
-                        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
+                        AppLoadingIndicator(modifier = Modifier.size(28.dp), color = MaterialTheme.colorScheme.onPrimary)
                     } else {
                         Icon(Icons.Filled.Shield, null, modifier = Modifier.size(24.dp))
                     }
@@ -937,7 +947,7 @@ fun RootGuide() {
             when (targetPath) {
                 // CHILL-ASTRO PRESENTS : A GOATED ROOTING GUIDE 🐐🐐🐐🐐🐐🐐🐐🐐🐐
                 "MAIN" -> {
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                         shape = MaterialTheme.shapes.large
@@ -965,7 +975,7 @@ fun RootGuide() {
                 "INTRO" -> {
                     GuideHeader("Rooting : An Introduction", onBack = { menuPath = "MAIN" })
                     Spacer(Modifier.height(16.dp))
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                         shape = MaterialTheme.shapes.large
@@ -982,10 +992,10 @@ fun RootGuide() {
                     Spacer(Modifier.height(12.dp))
                     SectionLabel("What is Rooting?")
                     Spacer(Modifier.height(8.dp))
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-                        shape = MaterialTheme.shapes.medium
+                        shape = MaterialTheme.shapes.large
                     ) {
                         Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Filled.LockOpen, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
@@ -1007,7 +1017,7 @@ fun RootGuide() {
                         "Linux on Android (chroot)" to Icons.Filled.Computer,
                         "Battery Longevity (ACC)" to Icons.Filled.BatteryChargingFull
                     ).forEach { (text, icon) ->
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                             shape = MaterialTheme.shapes.small
@@ -1031,7 +1041,7 @@ fun RootGuide() {
                         "Data Loss Risk" to Icons.Filled.Warning,
                         "Device Bricking Risk" to Icons.Filled.ReportProblem
                     ).forEach { (text, icon) ->
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
                             shape = MaterialTheme.shapes.small
@@ -1059,10 +1069,10 @@ fun RootGuide() {
                     Spacer(Modifier.height(12.dp))
                     SectionLabel("Expert Tip")
                     Spacer(Modifier.height(8.dp))
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-                        shape = MaterialTheme.shapes.medium
+                        shape = MaterialTheme.shapes.large
                     ) {
                         Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Filled.Star, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
@@ -1077,7 +1087,7 @@ fun RootGuide() {
                 "UNLOCK" -> {
                     GuideHeader("Unlocking Bootloader", onBack = { menuPath = "MAIN" })
                     Spacer(Modifier.height(16.dp))
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                         shape = MaterialTheme.shapes.large
@@ -1094,10 +1104,10 @@ fun RootGuide() {
                     Spacer(Modifier.height(12.dp))
                     SectionLabel("Device Compatibility")
                     Spacer(Modifier.height(8.dp))
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-                        shape = MaterialTheme.shapes.medium
+                        shape = MaterialTheme.shapes.large
                     ) {
                         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -1121,7 +1131,7 @@ fun RootGuide() {
                     SectionLabel("Unlock Methods")
                     Spacer(Modifier.height(8.dp))
                     ExpandableMethod("Fastboot Method (Recommended)", Icons.Filled.Computer) {
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                             shape = MaterialTheme.shapes.small
@@ -1144,7 +1154,7 @@ fun RootGuide() {
                         Spacer(Modifier.height(16.dp))
                         SectionLabel("Pros & Cons")
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                             shape = MaterialTheme.shapes.small
@@ -1155,7 +1165,7 @@ fun RootGuide() {
                             }
                         }
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
                             shape = MaterialTheme.shapes.small
@@ -1169,7 +1179,7 @@ fun RootGuide() {
                     }
                     Spacer(Modifier.height(12.dp))
                     ExpandableMethod("MTKClient (For MTK Devices)", Icons.Filled.Memory) {
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                             shape = MaterialTheme.shapes.small
@@ -1185,7 +1195,7 @@ fun RootGuide() {
                         Spacer(Modifier.height(16.dp))
                         SectionLabel("Step-by-Step Guide")
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                             shape = MaterialTheme.shapes.small
@@ -1201,7 +1211,7 @@ fun RootGuide() {
                             }
                         }
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                             shape = MaterialTheme.shapes.small
@@ -1216,7 +1226,7 @@ fun RootGuide() {
                             }
                         }
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                             shape = MaterialTheme.shapes.small
@@ -1231,7 +1241,7 @@ fun RootGuide() {
                             }
                         }
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                             shape = MaterialTheme.shapes.small
@@ -1246,7 +1256,7 @@ fun RootGuide() {
                             }
                         }
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                             shape = MaterialTheme.shapes.small
@@ -1263,7 +1273,7 @@ fun RootGuide() {
                         Spacer(Modifier.height(16.dp))
                         SectionLabel("Pros & Cons")
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                             shape = MaterialTheme.shapes.small
@@ -1275,7 +1285,7 @@ fun RootGuide() {
                             }
                         }
                         Spacer(Modifier.height(8.dp))
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
                             shape = MaterialTheme.shapes.small
@@ -1294,7 +1304,7 @@ fun RootGuide() {
                 "METHODS" -> {
                     GuideHeader("Rooting Methods", onBack = { menuPath = "MAIN" })
                     Spacer(Modifier.height(8.dp))
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                         shape = MaterialTheme.shapes.large
@@ -1325,7 +1335,7 @@ fun RootGuide() {
                     Spacer(Modifier.height(8.dp))
                     SectionLabel("Root Methods")
                     ExpandableMethodLocal("Magisk (Recommended)", R.drawable.ic_magisk) {
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                             shape = MaterialTheme.shapes.small
@@ -1339,7 +1349,7 @@ fun RootGuide() {
                         Text("First obtain your stock boot.img or init_boot.img and patch it using Magisk App and then Flash it.\n")
                         FlashLogic(isAB, slot, true)
                         SectionLabel("Pros")
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                             shape = MaterialTheme.shapes.small
@@ -1352,7 +1362,7 @@ fun RootGuide() {
                             }
                         }
                         SectionLabel("Cons")
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
                             shape = MaterialTheme.shapes.small
@@ -1366,7 +1376,7 @@ fun RootGuide() {
                     }
                     ExpandableMethodLocal("KernelSU", R.drawable.ic_ksu) {
                         if(kernelVersion < "5.10") {
-                            Card(
+                            GuideCard(
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                                 shape = MaterialTheme.shapes.small
@@ -1378,7 +1388,7 @@ fun RootGuide() {
                                 }
                             }
                         }
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                             shape = MaterialTheme.shapes.small
@@ -1392,7 +1402,7 @@ fun RootGuide() {
                         Text("First obtain your stock boot.img or init_boot.img and patch it using KernelSU App and then Flash it.\n")
                         FlashLogic(isAB, slot, true)
                         SectionLabel("Pros")
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                             shape = MaterialTheme.shapes.small
@@ -1404,7 +1414,7 @@ fun RootGuide() {
                             }
                         }
                         SectionLabel("Cons")
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
                             shape = MaterialTheme.shapes.small
@@ -1421,7 +1431,7 @@ fun RootGuide() {
                     }
                     ExpandableMethodLocal("APatch", R.drawable.ic_apatch) {
                         if(kernelVersion < "5.10") {
-                            Card(
+                            GuideCard(
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                                 shape = MaterialTheme.shapes.small
@@ -1433,7 +1443,7 @@ fun RootGuide() {
                                 }
                             }
                         }
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                             shape = MaterialTheme.shapes.small
@@ -1447,7 +1457,7 @@ fun RootGuide() {
                         Text("First obtain your stock boot.img and patch it using Apatch App and then Flash it.\n")
                         FlashLogic(isAB, slot, false)
                         SectionLabel("Pros")
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                             shape = MaterialTheme.shapes.small
@@ -1460,7 +1470,7 @@ fun RootGuide() {
                             }
                         }
                         SectionLabel("Cons")
-                        Card(
+                        GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
                             shape = MaterialTheme.shapes.small
@@ -1476,7 +1486,7 @@ fun RootGuide() {
                 "HIDING" -> {
                     GuideHeader("Root Hiding : A Step-by-Step Guide", onBack = { menuPath = "MAIN" })
                     Spacer(Modifier.height(8.dp))
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                         shape = MaterialTheme.shapes.large
@@ -1492,10 +1502,10 @@ fun RootGuide() {
                     }
                     Spacer(Modifier.height(8.dp))
                     SectionLabel("What is Root Hiding?")
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-                        shape = MaterialTheme.shapes.medium
+                        shape = MaterialTheme.shapes.large
                     ) {
                         Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Filled.VisibilityOff, null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
@@ -1505,7 +1515,7 @@ fun RootGuide() {
                     }
                     Spacer(Modifier.height(8.dp))
                     SectionLabel("Step 1: Enable Zygisk")
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                         shape = MaterialTheme.shapes.small
@@ -1521,7 +1531,7 @@ fun RootGuide() {
                     LinkCard("Zygisk Next by @Dr-TSNG", "https://github.com/Dr-TSNG/ZygiskNext")
                     Spacer(Modifier.height(8.dp))
                     SectionLabel("Step 2: Root Hiding Modules")
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                         shape = MaterialTheme.shapes.small
@@ -1532,7 +1542,7 @@ fun RootGuide() {
                             Text("Tricky Store (Recommended)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
                         }
                     }
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                         shape = MaterialTheme.shapes.small
@@ -1545,7 +1555,7 @@ fun RootGuide() {
                     }
                     LinkCard("Tricky Store by @5ec1cff", "https://github.com/5ec1cff/TrickyStore")
                     LinkCard("Tricky Addon by @KOWX712", "https://github.com/KOWX712/Tricky-Addon-Update-Target-List")
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                         shape = MaterialTheme.shapes.small
@@ -1556,7 +1566,7 @@ fun RootGuide() {
                             Text("Shamiko", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
                         }
                     }
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                         shape = MaterialTheme.shapes.small
@@ -1568,7 +1578,7 @@ fun RootGuide() {
                         }
                     }
                     LinkCard("Shamiko by @LSPosed","https://github.com/LSPosed/LSPosed.github.io/releases/")
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                         shape = MaterialTheme.shapes.small
@@ -1579,7 +1589,7 @@ fun RootGuide() {
                             Text("Play Integrity Fix (Custom ROM Users)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
                         }
                     }
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                         shape = MaterialTheme.shapes.small
@@ -1593,7 +1603,7 @@ fun RootGuide() {
                     LinkCard("Play Integrity Fix by @KOWX712","https://github.com/KOWX712/PlayIntegrityFix")
                     Spacer(Modifier.height(8.dp))
                     SectionLabel("Open Source Alternatives")
-                    Card(
+                    GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
                         shape = MaterialTheme.shapes.small
@@ -1650,9 +1660,9 @@ fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) { // Just the Comm
 }
 @Composable
 fun NavCard(title: String, icon: ImageVector, onClick: () -> Unit) {
-    Card(Modifier.fillMaxWidth().clickable { onClick() }, shape = MaterialTheme.shapes.medium) {
+    GuideCard(onClick = onClick, modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(icon, null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
+            ExpressiveIconBadge(icon = icon, shape = AppShapes.bun)
             Spacer(Modifier.width(16.dp))
             Text(title, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
             Icon(Icons.AutoMirrored.Filled.ArrowForwardIos, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
@@ -1662,10 +1672,10 @@ fun NavCard(title: String, icon: ImageVector, onClick: () -> Unit) {
 @Composable
 fun ExpandableMethod(title: String, icon: ImageVector, content: @Composable ColumnScope.() -> Unit) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }.animateContentSize(), shape = MaterialTheme.shapes.medium) {
+    GuideCard(onClick = { expanded = !expanded }, modifier = Modifier.fillMaxWidth().animateContentSize(), shape = MaterialTheme.shapes.large) {
         Column(Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
+                ExpressiveIconBadge(icon = icon, shape = AppShapes.flower)
                 Spacer(Modifier.width(12.dp))
                 Text(title, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
                 Icon(if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, null)
@@ -1679,7 +1689,7 @@ fun ExpandableMethod(title: String, icon: ImageVector, content: @Composable Colu
 @Composable
 fun ExpandableMethodLocal(title: String, resId: Int, content: @Composable ColumnScope.() -> Unit) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }.animateContentSize(), shape = MaterialTheme.shapes.medium) {
+    GuideCard(onClick = { expanded = !expanded }, modifier = Modifier.fillMaxWidth().animateContentSize(), shape = MaterialTheme.shapes.large) {
         Column(Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(painterResource(id = resId), null, modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary)
@@ -1726,7 +1736,7 @@ fun TerminalLine(text: String, color: Color = MaterialTheme.colorScheme.onSurfac
 @Composable
 fun LinkCard(t: String, url: String) {
     val ctx = LocalContext.current
-    OutlinedCard(onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, url.toUri())) }, modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
+    OutlinedCard(onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, url.toUri())) }, modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(t, Modifier.weight(1f), fontWeight = FontWeight.Bold, fontSize = 12.sp)
             Icon(Icons.AutoMirrored.Filled.OpenInNew, null, modifier = Modifier.size(14.dp))
@@ -1746,9 +1756,7 @@ fun Settings(
     isLowRam: Boolean
 ) {
     val ctx = LocalContext.current
-    val scope = rememberCoroutineScope()
     val noRipple = remember { MutableInteractionSource() }
-    val isOfflineVersion = remember { ctx.packageName.endsWith(".offline") }
 
     // States for Easter Eggs & Dialogs
     var showLicense by rememberSaveable { mutableStateOf(false) }
@@ -1757,10 +1765,7 @@ fun Settings(
     var vTaps by rememberSaveable { mutableIntStateOf(0) }
     var logoTaps by rememberSaveable { mutableIntStateOf(0) }
 
-    var isChecking by rememberSaveable { mutableStateOf(false) }
     var expanded by rememberSaveable { mutableStateOf(false) }
-    var updateMessage by rememberSaveable { mutableStateOf("") }
-    var showUpdateDialog by rememberSaveable { mutableStateOf(false) }
 
     val appVersion = remember {
         try {
@@ -1773,46 +1778,6 @@ fun Settings(
         } catch (_: Exception) { "37.23.3.0" }
     }
 
-    // Version Comparison Logic
-    fun isNewer(current: String, remote: String): Boolean {
-        val currParts = current.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
-        val remoteParts = remote.replace("v", "").split(".").mapNotNull { it.toIntOrNull() }
-        val maxLength = maxOf(currParts.size, remoteParts.size)
-        for (i in 0 until maxLength) {
-            val currPart = currParts.getOrElse(i) { 0 }
-            val remotePart = remoteParts.getOrElse(i) { 0 }
-            if (remotePart > currPart) return true
-            if (remotePart < currPart) return false
-        }
-        return false
-    }
-    fun performUpdateCheck() { // Update Check Logic
-        scope.launch(Dispatchers.IO) {
-            isChecking = true
-            try {
-                val url = "https://gist.githubusercontent.com/Chill-Astro/b8d2cb9ba2ea314babf65de1bed88662/raw/FRC-SU_V.txt"
-                val remoteVersion = URL(url).readText().trim()
-                withContext(Dispatchers.Main) {
-                    val current = appVersion ?: "37.23.3.0"
-                    if (isNewer(current, remoteVersion)) {
-                        updateMessage = "$remoteVersion OUT NOW!"
-                    } else if (isNewer(remoteVersion, current)) {
-                        updateMessage = "You are using a DEV. BUILD!"
-                    } else {
-                        updateMessage = "Your Version is UP TO DATE!"
-                    }
-                    showUpdateDialog = true
-                }
-            } catch (_: Exception) {
-                withContext(Dispatchers.Main) {
-                    updateMessage = "Please Verify Internet Connection!"
-                    showUpdateDialog = true
-                }
-            } finally {
-                isChecking = false
-            }
-        }
-    }
     if (showPoem) { // God comes with Dedication and so does FREEDOM. So tap 108 times ig for an Easter egg!
         BasicAlertDialog(onDismissRequest = { showPoem = false }) {
             Surface(
@@ -1851,48 +1816,9 @@ fun Settings(
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = { showPoem = false; logoTaps = 0 },
-                        shape = MaterialTheme.shapes.medium
+                        shapes = expressiveButtonShapes(MaterialTheme.shapes.medium)
                     ) {
                         Text("Close")
-                    }
-                }
-            }
-        }
-    }
-    if (showUpdateDialog) {
-        BasicAlertDialog(onDismissRequest = { showUpdateDialog = false }) {
-            Surface(
-                shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 6.dp,
-                modifier = Modifier.widthIn(max = 400.dp).padding(16.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(
-                        if (updateMessage.contains("UP TO DATE")) Icons.Filled.CheckCircle
-                        else if (updateMessage.contains("OUT NOW")) Icons.Filled.Refresh
-                        else Icons.Filled.Warning,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(32.dp)
-                    )
-                    Spacer(Modifier.height(16.dp))
-                    Text(
-                        text = updateMessage,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(Modifier.height(24.dp))
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = { showUpdateDialog = false },
-                        shape = MaterialTheme.shapes.medium
-                    ) {
-                        Text("OK")
                     }
                 }
             }
@@ -1908,7 +1834,15 @@ fun Settings(
                         Text(text = "MIT License\n\nCopyright (c) 2026 Dev. Chill-Astro\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Spacer(Modifier.height(24.dp))
-                    TextButton(modifier = Modifier.align(Alignment.End), onClick = { showLicense = false }) { Text("Close") }
+                    Button(
+                        onClick = { showLicense = false },
+                        modifier = Modifier.fillMaxWidth(),
+                        shapes = expressiveButtonShapes()
+                    ) {
+                        Icon(Icons.Filled.Close, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text("Close")
+                    }
                 }
             }
         }
@@ -1980,7 +1914,7 @@ fun Settings(
             Button(
                 onClick = { ctx.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/Chill-Astro/FOSS-Root-Checker".toUri())) },
                 modifier = Modifier.height(48.dp),
-                shape = RoundedCornerShape(topStart = 28.dp, bottomStart = 28.dp, topEnd = 4.dp, bottomEnd = 4.dp),
+                shapes = expressiveButtonShapes(RoundedCornerShape(topStart = 28.dp, bottomStart = 28.dp, topEnd = 4.dp, bottomEnd = 4.dp)),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -1996,7 +1930,7 @@ fun Settings(
             Button(
                 onClick = { showLicense = true },
                 modifier = Modifier.height(48.dp),
-                shape = RoundedCornerShape(topEnd = 28.dp, bottomEnd = 28.dp, topStart = 4.dp, bottomStart = 4.dp),
+                shapes = expressiveButtonShapes(RoundedCornerShape(topEnd = 28.dp, bottomEnd = 28.dp, topStart = 4.dp, bottomStart = 4.dp)),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -2012,7 +1946,7 @@ fun Settings(
         HorizontalDivider(Modifier.padding(vertical = 24.dp)) // No Divide and Rule Please!
         Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Card(
-                shape = MaterialTheme.shapes.medium,
+                shape = MaterialTheme.shapes.large,
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 modifier = Modifier.fillMaxWidth(),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
@@ -2033,7 +1967,7 @@ fun Settings(
                                     enabled = !monochrome,
                                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                                     colors = ExposedDropdownMenuDefaults.textFieldColors(unfocusedContainerColor = Color.Transparent, focusedContainerColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent, focusedIndicatorColor = Color.Transparent),
-                                    modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable, true),
+                                    modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = !monochrome),
                                     textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp)
                                 )
                                 ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
@@ -2046,7 +1980,7 @@ fun Settings(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
             }
-            Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
+            Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                 ListItem(
                     headlineContent = { Text("Monochrome Mode") },
                     leadingContent = {
@@ -2056,56 +1990,30 @@ fun Settings(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     },
-                    trailingContent = { Switch(checked = monochrome, onCheckedChange = onMonochromeChange) },
+                    trailingContent = { ExpressiveSwitch(checked = monochrome, onCheckedChange = onMonochromeChange) },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
             }
             if (Build.VERSION.SDK_INT >= 31) { // System Colors (Android 12+)
-                Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
+                Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                     ListItem(
                         headlineContent = { Text("Use System Colours", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
                         leadingContent = { Icon(Icons.Filled.Brush, null, tint = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
-                        trailingContent = { Switch(checked = dyn, onCheckedChange = onDyn, enabled = !monochrome) },
+                        trailingContent = { ExpressiveSwitch(checked = dyn, onCheckedChange = onDyn, enabled = !monochrome) },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
             }
-            Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
+            Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                 ListItem(
                     headlineContent = { Text("Reduced Animations") },
                     supportingContent = { if (isLowRam) Text("Forced on Low RAM Devices (<4GB)", color = MaterialTheme.colorScheme.primary) },
                     leadingContent = { Icon(Icons.Filled.Animation, null) },
-                    trailingContent = { Switch(checked = reducedAnimations, onCheckedChange = onReducedAnimationsChange, enabled = !isLowRam) },
+                    trailingContent = { ExpressiveSwitch(checked = reducedAnimations, onCheckedChange = onReducedAnimationsChange, enabled = !isLowRam) },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
             }
-            if (!isOfflineVersion) {
-                // Show the "Check for Updates" button only for the Official version
-                Spacer(Modifier.height(16.dp))
-                FilledTonalButton(
-                    onClick = { if (!isChecking) performUpdateCheck() },
-                    modifier = Modifier.align(Alignment.CenterHorizontally).width(220.dp).height(56.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (monochrome) Color.White else MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = if (monochrome) Color.Black else MaterialTheme.colorScheme.onSecondaryContainer,
-                        disabledContainerColor = if (monochrome) Color.White.copy(alpha = 0.5f) else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f),
-                        disabledContentColor = if (monochrome) Color.Black.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.5f)
-                    )
-                ) {
-                    if (isChecking) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(18.dp),
-                            strokeWidth = 2.dp,
-                            color = if (monochrome) Color.Black else MaterialTheme.colorScheme.primary
-                        )
-                    } else {
-                        Icon(Icons.Filled.Refresh, null, modifier = Modifier.size(20.dp), tint = if (monochrome) Color.Black else MaterialTheme.colorScheme.primary)
-                        Spacer(Modifier.width(8.dp))
-                        Text("Check for Updates")
-                    }
-                }
-            }
+            UpdateSettings(monochrome)
         }
         Spacer(Modifier.height(24.dp))
         Text(text = "Made with 💖 by Chill-Astro", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -2119,7 +2027,16 @@ fun HistoryContent(logs: List<String>, monochrome: Boolean, onClear: () -> Unit)
             if (logs.isNotEmpty()) IconButton(onClick = onClear) { Icon(Icons.Filled.DeleteForever, null, tint = MaterialTheme.colorScheme.error) }
         }
         Spacer(Modifier.height(16.dp))
-        if (logs.isEmpty()) Box(Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) { Text("Aww no History? Let's make some!", modifier = Modifier.alpha(0.4f)) }
+        if (logs.isEmpty()) {
+            Column(
+                Modifier.fillMaxWidth().padding(vertical = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                ExpressiveIconBadge(Icons.Filled.History, shape = AppShapes.puffy)
+                Text("Aww no History? Let's make some!", color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+            }
+        }
         else LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(logs) { log ->
                 val p = log.split("|")
@@ -2131,24 +2048,29 @@ fun HistoryContent(logs: List<String>, monochrome: Boolean, onClear: () -> Unit)
                     } else {
                         if (isOk) "Root Access Verified" else "Root Access not Available"
                     }
-                    Card(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = MaterialTheme.shapes.large,
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+                    ) {
                         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Surface(
-                                Modifier.size(40.dp),
-                                shape = CircleShape,
-                                color = if (monochrome) Color.White else if (isOk) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                            RootEmblem(
+                                checking = false,
+                                reducedAnimations = true,
+                                modifier = Modifier.size(48.dp),
+                                color = rootResultColor(isOk, monochrome)
                             ) {
                                 Icon(
                                     if (isOk) Icons.Filled.Check else Icons.Filled.Close,
                                     null,
-                                    modifier = Modifier.padding(8.dp),
+                                    modifier = Modifier.size(24.dp),
                                     tint = if (monochrome) Color.Black else Color.White
                                 )
                             }
                             Spacer(Modifier.width(16.dp))
                             Column {
                                 Text(displayText, fontWeight = FontWeight.Bold)
-                                Text("${p[1]} • Android ${p[3]}", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                                Text("${p[1]} • Android ${p[3]}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                     }

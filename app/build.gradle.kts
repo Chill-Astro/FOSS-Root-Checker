@@ -30,10 +30,10 @@ android {
 
     defaultConfig {
         applicationId = "foss.chillastro.root.checker"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 37
-        versionCode = 3
-        versionName = "v37.23.3.0"
+        versionCode = 4
+        versionName = "v37.24.4.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
