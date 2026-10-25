@@ -1,6 +1,6 @@
 <p align="center">
   <kbd>
-  <img width="1920" height="1080" alt="Rooting Revolution" src="https://github.com/user-attachments/assets/fc8d67f6-df19-496b-9960-60786e22886d" />
+  <img width="1920" height="1080" alt="Root Checker Promo" src="https://github.com/user-attachments/assets/4ad497bc-2a8d-4b58-b9ff-e6b08b1b47c9" />
   </kbd>
 </p>
 
@@ -10,11 +10,13 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-**App Version** : `v37.23.3.0 ( Coming Soon )`
+**App Version** : `v37.23.3.0`
 
 **Package ID** : `foss.chillastro.root.checker` 
 
-**Offline Flavour** : `foss.chillastro.root.checker.offline` ( Lacks Update Checker )
+**Offline Flavour** : `foss.chillastro.root.checker.offline` 
+
+( Lacks Update Checker )
 
 **Codename** : `FRC-SU`
 
@@ -24,17 +26,13 @@ An Online Version of the App's Guide is given [here](https://github.com/Chill-As
 
 _- TRUSTED SOURCES -_
 
-<a href="https://github.com/Chill-Astro/FOSS-Root-Checker/releases/latest" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=GitHub&color=FFFFFF&labelColor=000000&style=for-the-badge&logo=github&logoColor=FFFFFF" height="80" alt="GitHub"></a> 
-<a href="https://sourceforge.net/projects/foss-root-checker/" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=SourceForge&color=EE7034&labelColor=000000&style=for-the-badge&logo=sourceforge&logoColor=EE7034" height="80" alt="SourceForge"></a> 
-<a href="https://appteka.store/apps/760r278239" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Appteka&color=2ECC71&labelColor=000000&style=for-the-badge&logo=android&logoColor=2ECC71" height="80" alt="Appteka"></a> 
-<a href="https://www.androidfreeware.net/download-root-checker-apk.html" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=ANDROIDFREEWARE.NET&color=3498DB&labelColor=000000&style=for-the-badge&logo=android&logoColor=3498DB" height="80" alt="AndroidFreeware.net"></a>
-
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/foss.chillastro.root.checker.offline)
-
-<a href='https://foss-chillastro-root-checker.en.uptodown.com/android' title='Download Root Checker' ><img src='https://stc.utdstc.com/img/mediakit/download-gio-big.png' alt='Download Root Checker'></a>
-
-<a href="https://www.openapk.net/root-checker/foss.chillastro.root.checker.offline/"><img src="https://www.openapk.net/images/openapk-badge.png" height="82" alt="OpenAPK.net"></a>
-
+| Download Channels | Get the App |
+| :--- | :--- |
+| **GitHub** (Both) | <a href="https://github.com/Chill-Astro/FOSS-Root-Checker/releases/latest" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=GitHub&color=FFFFFF&labelColor=000000&style=for-the-badge&logo=github&logoColor=FFFFFF" height="40" alt="GitHub"></a> |
+| **Appteka** (Official) | <a href="https://appteka.store/app/f16r322627" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Appteka&color=2ECC71&labelColor=000000&style=for-the-badge&logo=android&logoColor=2ECC71" height="40" alt="Appteka"></a> |
+| **IzzyOnDroid** (Offline) | [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="40" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/foss.chillastro.root.checker.offline) |
+| **Uptodown** (Official) | <a href='https://foss-chillastro-root-checker.en.uptodown.com/android' title='Download Root Checker' ><img src='https://stc.utdstc.com/img/mediakit/download-gio-big.png' height="40" alt='Download Root Checker'></a> |
+| **OpenAPK** (Both)| <a href="https://www.openapk.net/root-checker/foss.chillastro.root.checker.offline/"><img src="https://www.openapk.net/images/openapk-badge.png" height="40" alt="OpenAPK.net"></a> |
 ---
 
 </div>
@@ -46,25 +44,6 @@ _- TRUSTED SOURCES -_
 > Do not trust sources listed in [this page](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) and NEVER TRUST .ZIP FILES PROVIDED IN ANY FORKED / STOLEN REPOSITORY'S READMEs! They Bypass Github's Security Checks and may Compromise your System with Malware and Steal your ENTIRE Data!
 
 ---
-
-## SOME TWEAKS ARE COMING! ( v37.23.3.0 ) 
-
-<kbd>
-<img width="1920" height="1200" alt="Screenshot_2026-09-20-00-08-14-24_541dab10fd96987a258b9d40c9817fe9" src="https://github.com/user-attachments/assets/5fae5f30-b769-4e80-a833-0ed92f7607b2" />
-  <div align="center">This Update is Currently in Development and Undergoing Testing Phase!</div>
-</kbd>
-
-<br><br>
-
-- Better Iconography.
-- Better Readability in Guide Section.
-- Cleaned up & Revamped BusyBox Checker.
-- Removed "Nice Spoofing" Messages and Toasts on Root Checker and BusyBox checker.
-- Made the Update Checker open a popup not toast.
-- Monochrome Mode : Using the Signature Black & White Theme from [chill-astro.github.io](https://chill-astro.github.io/)!
-- Monochrome mode is used by default on Devices < Android 12 ( Not Enforced ).
-  
---- 
 
 ## How it works? 
 
