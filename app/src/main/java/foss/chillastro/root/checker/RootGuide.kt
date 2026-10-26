@@ -56,9 +56,8 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material.icons.rounded.VisibilityOff
-import androidx.compose.material.icons.rounded.VolumeUp
+import androidx.compose.material.icons.automirrored.rounded.VolumeUp
 import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -74,7 +73,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -90,7 +88,6 @@ import foss.chillastro.root.checker.ui.theme.AppShapes
 fun RootGuide() {
     var menuPath by rememberSaveable { mutableStateOf("MAIN") }
     val slot = remember { HardwareProbe.getProp("ro.boot.slot_suffix").replace("_", "") }
-    val kernelVersion = remember { HardwareProbe.getProp("ro.kernel.version") }
     val isAB = slot.isNotEmpty()
     BackHandler(menuPath != "MAIN") { menuPath = "MAIN" }
     AnimatedContent(
@@ -115,7 +112,7 @@ fun RootGuide() {
                             Spacer(Modifier.width(20.dp))
                             Column {
                                 Text("SAFETY FIRST!", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onErrorContainer)
-                                Text("Never trust 'One-Click Root' Apps", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
+                                Text("Start with the official instructions for your exact device. Keep a backup and a way to restore its stock firmware.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
                             }
                         }
                     }
@@ -143,7 +140,7 @@ fun RootGuide() {
                             Spacer(Modifier.width(20.dp))
                             Column {
                                 Text("PERMISSION WARNING!", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onErrorContainer)
-                                Text("Please BE CAREFUL what apps you are giving Root Permissions to", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
+                                Text("Grant root only to apps you trust. Review requests in your root manager and revoke access when it is no longer needed.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
                             }
                         }
                     }
@@ -168,12 +165,12 @@ fun RootGuide() {
                         "Bloatware Removal" to Icons.Rounded.DeleteForever,
                         "System-wide Adblocking" to Icons.Rounded.Cancel,
                         "Advanced Theming (LSPosed)" to Icons.Rounded.Palette,
-                        "Full Data Backups" to Icons.Rounded.Memory,
-                        "Unlimited Google Photos Backups" to Icons.Rounded.Cloud,
-                        "Higher FPS in Games" to Icons.Rounded.Animation,
-                        "Sound Enhancement" to Icons.Rounded.VolumeUp,
+                        "More backup options (app and device dependent)" to Icons.Rounded.Memory,
+                        "Automation and system tools through compatible modules" to Icons.Rounded.Cloud,
+                        "Performance tuning on supported devices" to Icons.Rounded.Animation,
+                        "Sound Enhancement" to Icons.AutoMirrored.Rounded.VolumeUp,
                         "Linux on Android (chroot)" to Icons.Rounded.Computer,
-                        "Battery Longevity (ACC)" to Icons.Rounded.BatteryChargingFull
+                        "Charge control on supported devices (for example, ACC)" to Icons.Rounded.BatteryChargingFull
                     ).forEach { (text, icon) ->
                         GuideCard(
                             modifier = Modifier.fillMaxWidth(),
@@ -192,10 +189,10 @@ fun RootGuide() {
                     SectionLabel("Risks of Rooting")
                     Spacer(Modifier.height(8.dp))
                     listOf(
-                        "Usually Voids Warranty" to Icons.Rounded.Warning,
+                        "Warranty and support may be affected" to Icons.Rounded.Warning,
                         "Increased Security Risks" to Icons.Rounded.Security,
-                        "Loss of Hardware Encoding" to Icons.Rounded.Info,
-                        "No Official Updates (OTA)" to Icons.Rounded.Refresh,
+                        "Some DRM, streaming or device features may stop working" to Icons.Rounded.Info,
+                        "OTA updates may require restoring stock images" to Icons.Rounded.Refresh,
                         "Data Loss Risk" to Icons.Rounded.Warning,
                         "Device Bricking Risk" to Icons.Rounded.ReportProblem
                     ).forEach { (text, icon) ->
@@ -213,17 +210,18 @@ fun RootGuide() {
                         Spacer(Modifier.height(8.dp))
                     }
                     Spacer(Modifier.height(8.dp))
+                    GuideNote("What this app checks", "A scan looks for accessible root traces; the SU check asks whether superuser access can be granted. A clean scan does not prove a device is unmodified, and finding a trace does not prove an app currently has root.")
                     SectionLabel("Key Concepts")
                     Spacer(Modifier.height(8.dp))
                     InfoBlock("Bootloader", "The first piece of software that runs when you turn on your device. It acts as a security guard, directing hardware startup and ensuring stability by preventing malware infection.")
                     Spacer(Modifier.height(12.dp))
                     InfoBlock("Bricking", "When a device becomes completely non-functional due to corrupted software or failed firmware modification.")
                     Spacer(Modifier.height(12.dp))
-                    InfoBlock("Soft Brick", "Recoverable state - device stuck in boot loop or recovery mode. Fix with factory reset, cache clear, or firmware reflash.")
+                    InfoBlock("Soft Brick", "A boot loop or unexpected recovery screen may be recoverable. If it followed a module install, try your root manager's recovery steps first. Restoring a matching stock boot image may help; a factory reset erases data and is not always necessary.")
                     Spacer(Modifier.height(12.dp))
-                    InfoBlock("Hard Brick", "Serious failure - device shows no signs of life. May require specialized hardware tools or motherboard replacement.")
+                    InfoBlock("Hard Brick", "A device that cannot reach Android, recovery or fastboot may need a device-specific recovery mode or repair service. A black screen alone does not prove the device is permanently damaged.")
                     Spacer(Modifier.height(12.dp))
-                    InfoBlock("dm-verity", "Linux kernel feature that ensures data integrity on critical partitions by comparing hash trees against a signed root hash.")
+                    InfoBlock("dm-verity", "Checks blocks on verified partitions against a hash tree. Android Verified Boot links those checks to trusted metadata. Changing a protected partition can cause verification errors; disabling verification is not a universal rooting step.")
                     Spacer(Modifier.height(12.dp))
                     SectionLabel("Expert Tip")
                     Spacer(Modifier.height(8.dp))
@@ -237,7 +235,7 @@ fun RootGuide() {
                             Spacer(Modifier.width(16.dp))
                             Column {
                                 Text("Recommended Approach", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
-                                Text("Use Magisk if unsure - it works on almost every device and can be flashed via PC or custom recovery. Avoid exploits on old devices to prevent bricking!", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f))
+                                Text("Magisk is a common starting point with detailed documentation. Check its installation guide for your device before choosing an image or installation method. Do not use a patched image made for another device or firmware build.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f))
                             }
                         }
                     }
@@ -255,7 +253,7 @@ fun RootGuide() {
                             Spacer(Modifier.width(20.dp))
                             Column {
                                 Text("DATA WIPE WARNING!", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onErrorContainer)
-                                Text("This process will wipe all user data. Backup before proceeding!", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
+                                Text("Bootloader unlocking normally erases user data. Back up files, app data and account recovery codes before confirming the unlock on your phone.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
                             }
                         }
                     }
@@ -271,21 +269,22 @@ fun RootGuide() {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 GuidePointIcon(icon = Icons.Rounded.CheckCircle, tone = MaterialTheme.colorScheme.primary, iconSize = 28.dp)
                                 Spacer(Modifier.width(12.dp))
-                                Text("Most Android devices", style = MaterialTheme.typography.bodyMedium)
+                                Text("Unlock support depends on the exact model, carrier and region", style = MaterialTheme.typography.bodyMedium)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 GuidePointIcon(icon = Icons.Rounded.Info, tone = MaterialTheme.colorScheme.secondary, iconSize = 28.dp)
                                 Spacer(Modifier.width(12.dp))
-                                Text("Xiaomi, Oppo, Realme require additional steps", style = MaterialTheme.typography.bodyMedium)
+                                Text("Some manufacturers require an approval process or dedicated tool", style = MaterialTheme.typography.bodyMedium)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 GuidePointIcon(icon = Icons.Rounded.Close, tone = MaterialTheme.colorScheme.error, iconSize = 24.dp)
                                 Spacer(Modifier.width(12.dp))
-                                Text("Vivo, iQOO may not support unlocking", style = MaterialTheme.typography.bodyMedium)
+                                Text("Some models do not offer an official unlock method", style = MaterialTheme.typography.bodyMedium)
                             }
                         }
                     }
                     Spacer(Modifier.height(12.dp))
+                    GuideNote("Before unlocking", "Keep a copy of your exact stock firmware, backups and account recovery codes off the phone. Check the manufacturer's unlock policy for your model and confirm that you can reach its recovery or bootloader mode.")
                     SectionLabel("Unlock Methods")
                     Spacer(Modifier.height(8.dp))
                     ExpandableMethod("Fastboot Method (Recommended)", Icons.Rounded.Computer) {
@@ -297,7 +296,7 @@ fun RootGuide() {
                             Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                                 GuidePointIcon(icon = Icons.Rounded.Check, tone = MaterialTheme.colorScheme.primary, iconSize = 20.dp)
                                 Spacer(Modifier.width(12.dp))
-                                Text("Safe and doesn't brick immediately", style = MaterialTheme.typography.bodySmall)
+                                Text("Use this method only when your manufacturer supports fastboot unlocking.", style = MaterialTheme.typography.bodySmall)
                             }
                         }
                         Spacer(Modifier.height(12.dp))
@@ -305,9 +304,9 @@ fun RootGuide() {
                         CodeBox("$ adb reboot bootloader")
                         Spacer(Modifier.height(8.dp))
                         Text("Step 2 : Unlock Bootloader using Fastboot :")
-                        Text(" • For most devices :")
+                        Text(" • On supported devices, when specified by the manufacturer:")
                         CodeBox("$ fastboot flashing unlock")
-                        Text(" • For some older devices :")
+                        Text(" • Alternative used by some devices; use only the documented command:")
                         CodeBox("$ fastboot oem unlock")
                         Spacer(Modifier.height(16.dp))
                         SectionLabel("Pros & Cons")
@@ -318,8 +317,8 @@ fun RootGuide() {
                             shape = MaterialTheme.shapes.small
                         ) {
                             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                Text("✓ Safe and easy to use", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Official method for most devices", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Uses the bootloader's documented unlock interface", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Available on devices whose manufacturers support it", style = MaterialTheme.typography.bodySmall)
                             }
                         }
                         Spacer(Modifier.height(8.dp))
@@ -330,8 +329,8 @@ fun RootGuide() {
                         ) {
                             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Text("✗ Not available on all devices", style = MaterialTheme.typography.bodySmall)
-                                Text("✗ Xiaomi requires community permission", style = MaterialTheme.typography.bodySmall)
-                                Text("✗ Oppo/Realme need Deep Testing", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Some models require manufacturer approval or a dedicated tool", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Carrier, region or firmware restrictions may prevent unlocking", style = MaterialTheme.typography.bodySmall)
                             }
                         }
                     }
@@ -345,13 +344,13 @@ fun RootGuide() {
                             Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                                 GuidePointIcon(icon = Icons.Rounded.Warning, tone = MaterialTheme.colorScheme.error, iconSize = 20.dp)
                                 Spacer(Modifier.width(12.dp))
-                                Text("Advanced method - use with caution!", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                                Text("Advanced MediaTek method: support depends on the chipset and device security configuration.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
                             }
                         }
                         Spacer(Modifier.height(12.dp))
-                        Text("Hardware-level bypass for locked MediaTek chipsets.\n\nFirst install USBdk if using Windows (Recommended).\n\nNOTE: For Each Step, Run the Command, Press both Volume Buttons and Connect Phone to PC.\n")
+                        Text("mtkclient supports selected MediaTek devices; it is not a universal unlock tool. Follow its current setup and connection instructions for your model. The examples below are not a sequence to run on every phone. Read back your original partitions and keep backups before writing or erasing anything.\n")
                         Spacer(Modifier.height(16.dp))
-                        SectionLabel("Step-by-Step Guide")
+                        SectionLabel("Example Commands (device-specific)")
                         Spacer(Modifier.height(8.dp))
                         GuideCard(
                             modifier = Modifier.fillMaxWidth(),
@@ -393,8 +392,9 @@ fun RootGuide() {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Text("3.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                                     Spacer(Modifier.width(12.dp))
-                                    Text("Disable dm-verity", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                                    Text("Change vbmeta flags (only if required)", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
                                 }
+                                Text("Only change verification flags when the instructions for your exact device require it. This changes verified-boot behaviour.", style = MaterialTheme.typography.bodySmall)
                                 CodeBox("$ python mtk.py da vbmeta 3")
                             }
                         }
@@ -410,6 +410,7 @@ fun RootGuide() {
                                     Spacer(Modifier.width(12.dp))
                                     Text("Erase Userdata", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
                                 }
+                                Text("This command erases data. Run it only after backing up and confirming the partition names for your device.", style = MaterialTheme.typography.bodySmall)
                                 CodeBox("$ python mtk.py e metadata,userdata")
                             }
                         }
@@ -437,9 +438,9 @@ fun RootGuide() {
                             shape = MaterialTheme.shapes.small
                         ) {
                             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                Text("✓ Can fix hard-bricks", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Fast and easy to use", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Easy to recover with backups", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ May help recover supported MediaTek devices", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Offers partition read, write and diagnostic tools", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Partition backups can help with recovery", style = MaterialTheme.typography.bodySmall)
                             }
                         }
                         Spacer(Modifier.height(8.dp))
@@ -451,7 +452,7 @@ fun RootGuide() {
                             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Text("✗ Only for MediaTek devices", style = MaterialTheme.typography.bodySmall)
                                 Text("✗ High risk of bricking", style = MaterialTheme.typography.bodySmall)
-                                Text("✗ Doesn't work on very new devices", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Support varies by chipset and security configuration", style = MaterialTheme.typography.bodySmall)
                                 Text("✗ Fastboot may not be usable", style = MaterialTheme.typography.bodySmall)
                             }
                         }
@@ -491,6 +492,7 @@ fun RootGuide() {
                         }
                     }
                     Spacer(Modifier.height(8.dp))
+                    GuideNote("Use matching firmware", "Your image must match the device model and installed firmware build. Keep the unpatched original somewhere you can access if Android stops booting. The examples below illustrate partition names; follow the root project's device-specific instructions.")
                     SectionLabel("Root Methods")
                     ExpandableMethodLocal("Magisk (Recommended)", R.drawable.ic_magisk) {
                         GuideCard(
@@ -504,7 +506,7 @@ fun RootGuide() {
                                 Text("Most widely supported option", style = MaterialTheme.typography.bodySmall)
                             }
                         }
-                        Text("First obtain your stock boot.img or init_boot.img and patch it using Magisk App and then Flash it.\n")
+                        Text("Use firmware matching your exact installed build. Follow Magisk's guide to identify the correct image to patch: boot, init_boot, vendor_boot or recovery, depending on the device. Keep the original image on another device before flashing.\n")
                         FlashLogic(isAB, slot, true)
                         SectionLabel("Pros")
                         GuideCard(
@@ -515,8 +517,8 @@ fun RootGuide() {
                             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                                 Text("✓ Truly Systemless", style = MaterialTheme.typography.bodySmall)
                                 Text("✓ Widest Module Support", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Works on almost any device", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Best documentation & compatibility", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Supports many devices when the documented requirements are met", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Detailed installation and recovery documentation", style = MaterialTheme.typography.bodySmall)
                             }
                         }
                         SectionLabel("Cons")
@@ -526,26 +528,26 @@ fun RootGuide() {
                             shape = MaterialTheme.shapes.small
                         ) {
                             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                Text("✗ Easily detectable", style = MaterialTheme.typography.bodySmall)
-                                Text("✗ Leaves detectable traces", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Apps may still detect root or an unlocked bootloader", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Compatibility depends on device and module configuration", style = MaterialTheme.typography.bodySmall)
                             }
                         }
+                        LinkCard("Magisk installation guide", "https://topjohnwu.github.io/Magisk/install.html")
                         LinkCard("Magisk by @topjohnwu", "https://github.com/topjohnwu/Magisk")
                     }
                     ExpandableMethodLocal("KernelSU", R.drawable.ic_ksu) {
-                        if(kernelVersion < "5.10") {
-                            GuideCard(
-                                modifier = Modifier.fillMaxWidth(),
-                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
-                                shape = MaterialTheme.shapes.small
-                            ) {
-                                Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                                    GuidePointIcon(icon = Icons.Rounded.Warning, tone = MaterialTheme.colorScheme.error, iconSize = 18.dp)
-                                    Spacer(Modifier.width(8.dp))
-                                    Text("Kernel 5.10+ required for official support", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
-                                }
+                        GuideCard(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                GuidePointIcon(icon = Icons.Rounded.Warning, tone = MaterialTheme.colorScheme.error, iconSize = 18.dp)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Check support in the official KernelSU manager. Kernel version alone does not establish compatibility; GKI/KMI and device configuration matter.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
                             }
                         }
+
                         GuideCard(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
@@ -554,65 +556,10 @@ fun RootGuide() {
                             Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                                 GuidePointIcon(icon = Icons.Rounded.Security, tone = MaterialTheme.colorScheme.primary, iconSize = 18.dp)
                                 Spacer(Modifier.width(8.dp))
-                                Text("Best for banking app compatibility", style = MaterialTheme.typography.bodySmall)
+                                Text("Kernel-based root; check support in the manager before installing.", style = MaterialTheme.typography.bodySmall)
                             }
                         }
-                        Text("First obtain your stock boot.img or init_boot.img and patch it using KernelSU App and then Flash it.\n")
-                        FlashLogic(isAB, slot, true)
-                        SectionLabel("Pros")
-                        GuideCard(
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                Text("✓ Fully Systemless", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Very hard to detect by banking apps", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Leaves no traces", style = MaterialTheme.typography.bodySmall)
-                            }
-                        }
-                        SectionLabel("Cons")
-                        GuideCard(
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                Text("✗ Only supports GKI devices", style = MaterialTheme.typography.bodySmall)
-                                Text("✗ Requires kernel 5.10+", style = MaterialTheme.typography.bodySmall)
-                            }
-                        }
-                        LinkCard("KernelSU by @tiann", "https://github.com/tiann/KernelSU")
-                        SectionLabel("Alternative Forks")
-                        LinkCard("KernelSU Next by @KernelSU-Next", "https://github.com/KernelSU-Next/KernelSU-Next")
-                        LinkCard("SkiSU Ultra by @SkiSU-Ultra", "https://github.com/SkiSU-Ultra/SkiSU-Ultra")
-                    }
-                    ExpandableMethodLocal("APatch", R.drawable.ic_apatch) {
-                        if(kernelVersion < "5.10") {
-                            GuideCard(
-                                modifier = Modifier.fillMaxWidth(),
-                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
-                                shape = MaterialTheme.shapes.small
-                            ) {
-                                Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                                    GuidePointIcon(icon = Icons.Rounded.Warning, tone = MaterialTheme.colorScheme.error, iconSize = 18.dp)
-                                    Spacer(Modifier.width(8.dp))
-                                    Text("May not work on all devices - research required", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
-                                }
-                            }
-                        }
-                        GuideCard(
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                                GuidePointIcon(icon = Icons.Rounded.Verified, tone = MaterialTheme.colorScheme.primary, iconSize = 18.dp)
-                                Spacer(Modifier.width(8.dp))
-                                Text("Good for non-GKI devices", style = MaterialTheme.typography.bodySmall)
-                            }
-                        }
-                        Text("First obtain your stock boot.img and patch it using Apatch App and then Flash it.\n")
+                        Text("Follow KernelSU's installation guide for the method supported by your device. Keep its original boot.img and verify the required kernel interface (KMI) before choosing a kernel or image.\n")
                         FlashLogic(isAB, slot, false)
                         SectionLabel("Pros")
                         GuideCard(
@@ -622,9 +569,64 @@ fun RootGuide() {
                         ) {
                             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                                 Text("✓ Fully Systemless", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Hard to detect by banking apps", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Leaves no traces", style = MaterialTheme.typography.bodySmall)
-                                Text("✓ Doesn't need GKI device", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Kernel-based root with per-app access control", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Can support modules without directly modifying system partitions", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        SectionLabel("Cons")
+                        GuideCard(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("✗ Official prebuilt support depends on the device's GKI/KMI", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Other devices may need a compatible custom kernel", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        LinkCard("KernelSU installation guide", "https://kernelsu.org/guide/installation.html")
+                        LinkCard("KernelSU by @tiann", "https://github.com/tiann/KernelSU")
+                        SectionLabel("Alternative Forks")
+                        LinkCard("KernelSU Next by @KernelSU-Next", "https://github.com/KernelSU-Next/KernelSU-Next")
+                        LinkCard("SkiSU Ultra by @SkiSU-Ultra", "https://github.com/SkiSU-Ultra/SkiSU-Ultra")
+                    }
+                    ExpandableMethodLocal("APatch", R.drawable.ic_apatch) {
+                        GuideCard(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                GuidePointIcon(icon = Icons.Rounded.Warning, tone = MaterialTheme.colorScheme.error, iconSize = 18.dp)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Check APatch's kernel and architecture requirements, including kallsyms support. A kernel version number by itself is not enough.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                            }
+                        }
+
+                        GuideCard(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                GuidePointIcon(icon = Icons.Rounded.Verified, tone = MaterialTheme.colorScheme.primary, iconSize = 18.dp)
+                                Spacer(Modifier.width(8.dp))
+                                Text("Supports some non-GKI devices when the kernel requirements are met.", style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        Text("Patch the stock boot.img from your exact firmware using APatch. Do not patch or flash init_boot for APatch. Keep the original boot.img and follow the project's compatibility checks first.\n")
+                        FlashLogic(isAB, slot, false)
+                        SectionLabel("Pros")
+                        GuideCard(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("✓ Fully Systemless", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Kernel-based root with per-app access control", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Can support modules without directly modifying system partitions", style = MaterialTheme.typography.bodySmall)
+                                Text("✓ Does not require GKI on supported kernels", style = MaterialTheme.typography.bodySmall)
                             }
                         }
                         SectionLabel("Cons")
@@ -635,14 +637,15 @@ fun RootGuide() {
                         ) {
                             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                                 Text("✗ Doesn't work on every device", style = MaterialTheme.typography.bodySmall)
-                                Text("✗ Newer solution, less tested", style = MaterialTheme.typography.bodySmall)
+                                Text("✗ Requires a supported architecture and kernel configuration", style = MaterialTheme.typography.bodySmall)
                             }
                         }
+                        LinkCard("APatch installation guide", "https://apatch.dev/install.html")
                         LinkCard("APatch by @bmax121", "https://github.com/bmax121/APatch")
                     }
                 }
                 "HIDING" -> {
-                    GuideHeader("Root Hiding : A Step-by-Step Guide", onBack = { menuPath = "MAIN" })
+                    GuideHeader("Root Hiding and App Compatibility", onBack = { menuPath = "MAIN" })
                     Spacer(Modifier.height(8.dp))
                     GuideCard(
                         modifier = Modifier.fillMaxWidth(),
@@ -653,8 +656,8 @@ fun RootGuide() {
                             GuidePointIcon(icon = Icons.Rounded.Security, tone = MaterialTheme.colorScheme.primary, iconSize = 32.dp)
                             Spacer(Modifier.width(16.dp))
                             Column {
-                                Text("BANKING APP COMPATIBILITY", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onPrimaryContainer)
-                                Text("Bypass root checks for financial safety", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f))
+                                Text("WHAT ROOT HIDING CAN DO", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                                Text("Root hiding may help an app run, but it does not make a rooted device safer or restore a locked bootloader.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f))
                             }
                         }
                     }
@@ -668,11 +671,12 @@ fun RootGuide() {
                         Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
                             GuidePointIcon(icon = Icons.Rounded.VisibilityOff, tone = MaterialTheme.colorScheme.primary, iconSize = 24.dp)
                             Spacer(Modifier.width(12.dp))
-                            Text("Certain apps like banking apps and games with anti-cheat check for root traces. With systemless rooting and modules, your device can hide its unlocked status from all apps!", style = MaterialTheme.typography.bodyMedium)
+                            Text("Some apps check root traces, injected code or device-integrity verdicts. Hiding can reduce particular signals, but results vary by app and can change after updates. Passing a local root check does not guarantee Play Integrity or banking-app compatibility.", style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                     Spacer(Modifier.height(8.dp))
-                    SectionLabel("Step 1: Enable Zygisk")
+                    GuideNote("If an app still refuses to run", "Check the app's message and the relevant module's troubleshooting guide before changing more settings. Denying root access to an app is different from hiding root. This checker cannot predict another app's decision; use a supported stock setup if that app requires one.")
+                    SectionLabel("Zygisk (when a module requires it)")
                     GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
@@ -681,14 +685,14 @@ fun RootGuide() {
                         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                             GuidePointIcon(icon = Icons.Rounded.Settings, tone = MaterialTheme.colorScheme.primary, iconSize = 20.dp)
                             Spacer(Modifier.width(8.dp))
-                            Text("If using Magisk, enable 'Zygisk' in Settings", style = MaterialTheme.typography.bodyMedium)
+                            Text("For a module that requires Zygisk, enable it in Magisk's settings and reboot. Check that module's requirements first.", style = MaterialTheme.typography.bodyMedium)
                         }
                     }
-                    Text("Flash these modules if using KernelSU, APatch, or Magisk with built-in Zygisk turned off:")
+                    Text("For KernelSU, APatch or an alternative Magisk setup, a compatible standalone Zygisk implementation may be needed. Use only one implementation at a time and follow its supported configuration:")
                     LinkCard("ReZygisk by @PerformanC","https://github.com/PerformanC/ReZygisk")
                     LinkCard("Zygisk Next by @Dr-TSNG", "https://github.com/Dr-TSNG/ZygiskNext")
                     Spacer(Modifier.height(8.dp))
-                    SectionLabel("Step 2: Root Hiding Modules")
+                    SectionLabel("Modules and Their Roles")
                     GuideCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
@@ -697,7 +701,7 @@ fun RootGuide() {
                         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                             GuidePointIcon(icon = Icons.Rounded.Star, tone = MaterialTheme.colorScheme.primary, iconSize = 18.dp)
                             Spacer(Modifier.width(8.dp))
-                            Text("Tricky Store (Recommended)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+                            Text("Tricky Store (attestation-related module)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
                         }
                     }
                     GuideCard(
@@ -706,9 +710,9 @@ fun RootGuide() {
                         shape = MaterialTheme.shapes.small
                     ) {
                         Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            Text("Spoofs hardware-backed attestation by injecting valid KeyBox.xml", style = MaterialTheme.typography.bodySmall)
-                            Text("Combined with Tricky Addon and WebUI for easy configuration", style = MaterialTheme.typography.bodySmall)
-                            Text("After reboot: Tap 'Action' button → Select all apps → 'Set Valid Keybox'", style = MaterialTheme.typography.bodySmall)
+                            Text("Changes aspects of Android key attestation for configured apps; requirements depend on the module version and device.", style = MaterialTheme.typography.bodySmall)
+                            Text("Tricky Addon provides a separate configuration interface. Read both projects' instructions before combining them.", style = MaterialTheme.typography.bodySmall)
+                            Text("Configure only the apps you need. A passing result is not guaranteed, and keys or workarounds may stop working.", style = MaterialTheme.typography.bodySmall)
                         }
                     }
                     LinkCard("Tricky Store by @5ec1cff", "https://github.com/5ec1cff/TrickyStore")
@@ -730,9 +734,9 @@ fun RootGuide() {
                         shape = MaterialTheme.shapes.small
                     ) {
                         Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            Text("Hides root status and all traces of Zygisk and root paths", style = MaterialTheme.typography.bodySmall)
-                            Text("Fakes unlocked bootloader status", style = MaterialTheme.typography.bodySmall)
-                            Text("Get from latest LSPosed releases", style = MaterialTheme.typography.bodySmall)
+                            Text("Attempts to hide certain root and Zygisk traces from selected app processes.", style = MaterialTheme.typography.bodySmall)
+                            Text("It does not relock the bootloader or guarantee that every root check will pass.", style = MaterialTheme.typography.bodySmall)
+                            Text("Use the official release notes to check supported Magisk/Zygisk versions and configuration.", style = MaterialTheme.typography.bodySmall)
                         }
                     }
                     LinkCard("Shamiko by @LSPosed","https://github.com/LSPosed/LSPosed.github.io/releases/")
@@ -744,7 +748,7 @@ fun RootGuide() {
                         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                             GuidePointIcon(icon = Icons.Rounded.Verified, tone = MaterialTheme.colorScheme.primary, iconSize = 18.dp)
                             Spacer(Modifier.width(8.dp))
-                            Text("Play Integrity Fix (Custom ROM Users)", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+                            Text("Play Integrity Modules", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
                         }
                     }
                     GuideCard(
@@ -753,8 +757,8 @@ fun RootGuide() {
                         shape = MaterialTheme.shapes.small
                     ) {
                         Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            Text("Assigns valid fingerprint of locked device systemlessly", style = MaterialTheme.typography.bodySmall)
-                            Text("Flash ONE module and tap 'Action' button after reboot", style = MaterialTheme.typography.bodySmall)
+                            Text("Attempts to address some Play Integrity checks through software workarounds; verdicts depend on the device and current checks.", style = MaterialTheme.typography.bodySmall)
+                            Text("Choose a compatible implementation and follow its current instructions. Do not stack overlapping fixes without checking compatibility.", style = MaterialTheme.typography.bodySmall)
                         }
                     }
                     LinkCard("Play Integrity Fork by @osm0sis","https://github.com/osm0sis/PlayIntegrityFork")
@@ -769,7 +773,7 @@ fun RootGuide() {
                         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                             GuidePointIcon(icon = Icons.Rounded.Info, tone = MaterialTheme.colorScheme.onSecondaryContainer, iconSize = 18.dp)
                             Spacer(Modifier.width(8.dp))
-                            Text("FOSS alternatives for transparency-conscious users", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSecondaryContainer)
+                            Text("These projects address different parts of root detection or attestation. Open source allows inspection, but is not a guarantee of compatibility or security.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSecondaryContainer)
                         }
                     }
                     LinkCard("TEESimulator by @JingMatrix","https://github.com/JingMatrix/TEESimulator")
@@ -782,40 +786,41 @@ fun RootGuide() {
     }
 }
 @Composable
-fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) { // Just the Command boxes you see.
+fun FlashLogic(isAB: Boolean, slot: String, hasInit: Boolean) {
+    val suffix = if (isAB && slot in listOf("a", "b")) "_$slot" else ""
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text("Flashing examples — choose the partition your installation guide specifies.")
         if (isAB) {
-            if (slot == "a") {
-                Text("Flash to Active Slot : ")
-                CodeBox("$ fastboot flash boot_a patched.img")
-                if (hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
-                Text("Flash to Inactive Slot if Needed : ")
-                CodeBox("$ fastboot flash boot_b patched.img")
-                if(hasInit) CodeBox("$ fastboot flash init_boot_b patched.img")
-                Text("For Older Devices : ")
-                CodeBox("$ fastboot flash boot patched.img")
+            Text("Android reports slot $slot. Confirm the target in the bootloader before flashing; do not flash the other slot just because it exists.", style = MaterialTheme.typography.bodySmall)
+            CodeBox("$ fastboot getvar current-slot")
+        }
+        Text("For a patched boot.img:")
+        CodeBox("$ fastboot flash boot$suffix patched.img")
+        if (hasInit) {
+            Text("Alternative: only for a patched init_boot.img when your installation guide requires it. Do not run both examples.")
+            CodeBox("$ fastboot flash init_boot$suffix patched.img")
+        }
+        Text("patched.img is an example filename. Replace it with your own patched file and use the partition name required by your device.", style = MaterialTheme.typography.bodySmall)
+    }
+}
+
+@Composable
+private fun GuideNote(title: String, message: String) {
+    GuideCard(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+    ) {
+        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            GuidePointIcon(Icons.Rounded.Info)
+            Spacer(Modifier.width(12.dp))
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(title, style = MaterialTheme.typography.titleSmall)
+                Text(message, style = MaterialTheme.typography.bodySmall)
             }
-            if (slot == "b") {
-                Text("Flash to Active Slot : ")
-                CodeBox("$ fastboot flash boot_b patched.img")
-                if (hasInit) CodeBox("$ fastboot flash init_boot_b patched.img")
-                Text("Flash to Inactive Slot if Needed : ")
-                CodeBox("$ fastboot flash boot_a patched.img")
-                if(hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
-                Text("For Older Devices : ")
-                CodeBox("$ fastboot flash boot patched.img")
-            }
-        } else {
-            Text("For Older Devices : ")
-            CodeBox("$ fastboot flash boot patched.img")
-            Text("Commands not for this Device : ")
-            CodeBox("$ fastboot flash boot_a patched.img")
-            if(hasInit) CodeBox("$ fastboot flash init_boot_a patched.img")
-            CodeBox("$ fastboot flash boot_b patched.img")
-            if(hasInit) CodeBox("$ fastboot flash inti_boot_b patched.img")
         }
     }
 }
+
 @Composable
 fun NavCard(title: String, icon: ImageVector, onClick: () -> Unit) {
     GuideCard(onClick = onClick, modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large) {
