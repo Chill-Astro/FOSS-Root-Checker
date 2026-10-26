@@ -108,7 +108,7 @@ v`37`.`24`.`4`.`0`
 
 <div align="center">
 <kbd>
- <img width="1920" height="1080" alt="Root Checker Preview" src="https://github.com/user-attachments/assets/b736eec2-f626-4b69-87b9-1698eee5bffc" />
+ <img width="1920" height="1080" alt="Root Checker Preview" src="https://chill-astro.github.io/assets/images/root-checker-preview.webp" />
 </kbd>
 </div>
 
@@ -118,7 +118,7 @@ v`37`.`24`.`4`.`0`
 
 <div align="center">
 
-https://github.com/user-attachments/assets/f5d7bd5e-6e76-47ff-a945-2cdacab0fba7
+https://github.com/user-attachments/assets/0e689ce8-6e08-46a0-beb4-00703fd31ff8
 
 </div>
 
