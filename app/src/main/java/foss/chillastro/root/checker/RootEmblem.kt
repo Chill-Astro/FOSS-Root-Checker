@@ -29,7 +29,6 @@ import kotlinx.coroutines.launch
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.graphics.shapes.Morph
 import kotlin.math.floor
-import foss.chillastro.root.checker.ui.theme.RootFailureRed
 
 @Composable
 internal fun RootEmblem(
@@ -78,7 +77,7 @@ internal fun RootEmblem(
                     withFrameNanos { now ->
                         val seconds = ((now - previous) / 1_000_000_000f).coerceIn(0f, 0.05f)
                         previous = now
-                        angle = (angle + 240f * seconds) % 360f
+                        angle = (angle + speed * seconds) % 360f
                     }
                 }
             }
@@ -121,5 +120,5 @@ internal fun RootEmblem(
 internal fun rootResultColor(positive: Boolean, monochrome: Boolean): Color = when {
     monochrome -> Color.White
     positive -> Color(0xFF4CAF50)
-    else -> RootFailureRed
+    else -> Color(0xFFB00020)
 }

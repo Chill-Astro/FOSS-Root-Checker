@@ -27,13 +27,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.SystemUpdate
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Download
+import androidx.compose.material.icons.rounded.SystemUpdate
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -170,8 +170,8 @@ class OfficialUpdater(application: Application) : AndroidViewModel(application) 
                         if (manual) {
                             withContext(Dispatchers.Main) {
                                 message = if (newerRelease(currentVersion, tag)) {
-                                    "Searching for Latest Release....\n\nThis is a DEV. BUILD! ⚠️\n\nApp Version = $currentVersion\nLatest Version = $tag"
-                                } else "Searching for Latest Release....\n\nRoot Checker is UP TO DATE!"
+                                    "This is a DEV. BUILD! ⚠️\n\nApp Version = $currentVersion\nLatest Version = $tag"
+                                } else "Root Checker is UP TO DATE!"
                                 messageTitle = "Update Check"
                             }
                         }
@@ -341,7 +341,7 @@ private fun UpdateDialog(
     confirmButton: @Composable () -> Unit,
     dismissButton: (@Composable () -> Unit)? = null
 ) {
-    Dialog(onDismissRequest = onDismissRequest) {
+    Dialog(onDismissRequest = onDismissRequest, properties = androidx.compose.ui.window.DialogProperties(dismissOnClickOutside = false)) {
         Surface(
             modifier = Modifier.widthIn(max = 400.dp).fillMaxWidth(),
             shape = MaterialTheme.shapes.extraLargeIncreased,
@@ -394,16 +394,16 @@ fun UpdateHost() {
     model.message?.let { text ->
         UpdateDialog(
             onDismissRequest = { model.message = null },
-            icon = { Icon(if (text.contains("UP TO DATE")) Icons.Filled.CheckCircle else Icons.Filled.Info, null) },
+            icon = { Icon(if (text.contains("UP TO DATE")) Icons.Rounded.CheckCircle else Icons.Rounded.Info, null) },
             title = { Text(model.messageTitle) },
             text = { Text(text) },
-            confirmButton = { UpdateAction("Close", Icons.Filled.Close) { model.message = null } }
+            confirmButton = { UpdateAction("Close", Icons.Rounded.Close) { model.message = null } }
         )
     }
     if (model.status != null) {
         UpdateDialog(
             onDismissRequest = {},
-            icon = { Icon(Icons.Filled.Download, null) },
+            icon = { Icon(Icons.Rounded.Download, null) },
             title = { Text("Downloading Update") },
             text = {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -417,48 +417,48 @@ fun UpdateHost() {
                     else LinearWavyProgressIndicator(modifier = Modifier.fillMaxWidth())
                 }
             },
-            confirmButton = { UpdateAction("Cancel", Icons.Filled.Close, onClick = model::cancelDownload) }
+            confirmButton = { UpdateAction("Cancel", Icons.Rounded.Close, onClick = model::cancelDownload) }
         )
     } else if (model.ready && model.showReady) {
         UpdateDialog(
             onDismissRequest = { model.showReady = false },
-            icon = { Icon(Icons.Filled.CheckCircle, null) },
+            icon = { Icon(Icons.Rounded.CheckCircle, null) },
             title = { Text("Update Downloaded!") },
             text = { Text("Root Checker is Ready to Update!\n\nThe APK is saved in Downloads. ✅\n\n" +
                 (if (VERIFY_UPDATE_CHECKSUM) " SHA-256 Checksum Verified! ✅" else "") +
                 "\n\nHit Install to Continue!") },
             confirmButton = {
-                UpdateAction("Install", Icons.Filled.SystemUpdate) {
+                UpdateAction("Install", Icons.Rounded.SystemUpdate) {
                     if (Build.VERSION.SDK_INT >= 26 && !context.packageManager.canRequestPackageInstalls()) allowInstallPrompt = true
                     else model.install(context)
                 }
             },
-            dismissButton = { UpdateAction("Close", Icons.Filled.Close, primary = false) { model.showReady = false } }
+            dismissButton = { UpdateAction("Close", Icons.Rounded.Close, primary = false) { model.showReady = false } }
         )
     } else if (!model.ready) model.release?.let { next ->
         UpdateDialog(
             onDismissRequest = model::dismissRelease,
-            icon = { Icon(Icons.Filled.SystemUpdate, null) },
+            icon = { Icon(Icons.Rounded.SystemUpdate, null) },
             title = { Text("Update Available!") },
             text = { Text("${next.tag} is OUT NOW! 🎉\n\nThe APK will be saved in Downloads!") },
             confirmButton = {
-                UpdateAction("Update", Icons.Filled.Download, enabled = !model.busy) {
+                UpdateAction("Update", Icons.Rounded.Download, enabled = !model.busy) {
                     if (Build.VERSION.SDK_INT <= 28 && context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     else model.download()
                 }
             },
-            dismissButton = { UpdateAction("Close", Icons.Filled.Close, primary = false, onClick = model::dismissRelease) }
+            dismissButton = { UpdateAction("Close", Icons.Rounded.Close, primary = false, onClick = model::dismissRelease) }
         )
     }
     if (allowInstallPrompt) {
         UpdateDialog(
             onDismissRequest = { allowInstallPrompt = false },
-            icon = { Icon(Icons.Filled.Settings, null) },
+            icon = { Icon(Icons.Rounded.Settings, null) },
             title = { Text("Allow App Installation") },
             text = { Text("Enable “Allow from this Source” for Root Checker in Android settings.") },
             confirmButton = {
-                UpdateAction("Open Settings", Icons.Filled.Settings) {
+                UpdateAction("Open Settings", Icons.Rounded.Settings) {
                     allowInstallPrompt = false
                     try {
                         if (Build.VERSION.SDK_INT >= 26) {
@@ -469,7 +469,7 @@ fun UpdateHost() {
                     }
                 }
             },
-            dismissButton = { UpdateAction("Cancel", Icons.Filled.Close, primary = false) { allowInstallPrompt = false } }
+            dismissButton = { UpdateAction("Cancel", Icons.Rounded.Close, primary = false) { allowInstallPrompt = false } }
         )
     }
 }
@@ -484,7 +484,7 @@ fun UpdateSettings(monochrome: Boolean) {
     ) {
         ListItem(
             headlineContent = { Text("Check for Updates") },
-            leadingContent = { Icon(Icons.Filled.Refresh, null) },
+            leadingContent = { Icon(Icons.Rounded.Refresh, null) },
             trailingContent = { ExpressiveSwitch(checked = model.automatic, onCheckedChange = model::updateAutomaticChecks) },
             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
         )
@@ -509,7 +509,7 @@ fun UpdateSettings(monochrome: Boolean) {
                     color = if (monochrome) Color.Black else MaterialTheme.colorScheme.primary
                 )
             } else {
-                Icon(Icons.Filled.Refresh, null, modifier = Modifier.size(20.dp),
+                Icon(Icons.Rounded.Refresh, null, modifier = Modifier.size(20.dp),
                     tint = if (monochrome) Color.Black else MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(8.dp))
                 Text("Check for Updates")

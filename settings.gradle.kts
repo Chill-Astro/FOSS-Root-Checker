@@ -21,5 +21,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "FOSS Root Checker"
-include(":app
-")
+include(":app")

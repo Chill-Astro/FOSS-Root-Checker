@@ -10,8 +10,8 @@ import foss.chillastro.root.checker.ui.theme.AppShapes
 import foss.chillastro.root.checker.ui.theme.LocalMonochrome
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonShapes
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import foss.chillastro.root.checker.ui.theme.LocalReducedMotion
 
 @Composable
@@ -45,7 +46,7 @@ internal fun ExpressiveSwitch(
         enabled = enabled,
         thumbContent = {
             Icon(
-                if (checked) Icons.Filled.Check else Icons.Filled.Close,
+                if (checked) Icons.Rounded.Check else Icons.Rounded.Close,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp)
             )
@@ -78,5 +79,22 @@ internal fun ExpressiveIconBadge(
         contentColor = if (LocalMonochrome.current) Color.Black else MaterialTheme.colorScheme.onPrimaryContainer
     ) {
         Icon(icon, contentDescription = null, modifier = Modifier.padding(12.dp))
+    }
+}
+
+@Composable
+internal fun GuidePointIcon(
+    icon: ImageVector,
+    tone: Color = MaterialTheme.colorScheme.primary,
+    iconSize: Dp = 24.dp
+) {
+    val monochrome = LocalMonochrome.current
+    Surface(
+        modifier = Modifier.size(iconSize + 20.dp),
+        shape = AppShapes.flower,
+        color = if (monochrome) Color.Black else tone.copy(alpha = 0.14f),
+        contentColor = if (monochrome) Color.White else tone
+    ) {
+        Icon(icon, contentDescription = null, modifier = Modifier.padding(10.dp))
     }
 }
