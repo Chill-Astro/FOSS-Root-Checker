@@ -58,7 +58,7 @@ _- TRUSTED SOURCES -_
 
 ## Key Features :
 
-- Ultra Low Footprint of ~2MB!
+- Ultra Low Footprint of ~2MB! ✅
 - Privacy First Design with full transparency. ✅
 - Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB ). ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
