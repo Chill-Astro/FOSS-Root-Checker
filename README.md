@@ -56,6 +56,23 @@ _- TRUSTED SOURCES -_
 
 ---
 
+## v37.24.4.0 IS COMING SOON!
+
+- New Material 3 Expressive Design!
+
+<div align="center">
+
+https://github.com/user-attachments/assets/8ebd2c1f-5664-4d52-9f57-fe5032b0e313
+
+</div>
+
+- UI Improvements across the entire App.
+- Sun-setting Android 6. ( Yes ) 💀
+- A BETTER UPDATE CHECKER! Yes, a Self-Updater ( WITH CONSENT ) !
+- Faster update checking from [repo-data.json](https://chill-astro.github.io/assets/data/repo-data.json) instead of `Github Gists`.
+- Improvements to Monochrome Mode.
+- Bug fixes coming too!
+
 ## Key Features :
 
 - Ultra Low Footprint of 1.55MB ONLY!
