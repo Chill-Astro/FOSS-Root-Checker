@@ -73,6 +73,8 @@ https://github.com/user-attachments/assets/8ebd2c1f-5664-4d52-9f57-fe5032b0e313
 - Improvements to Monochrome Mode.
 - Bug fixes coming too!
 
+---
+
 ## Key Features :
 
 - Ultra Low Footprint of 1.55MB ONLY!
