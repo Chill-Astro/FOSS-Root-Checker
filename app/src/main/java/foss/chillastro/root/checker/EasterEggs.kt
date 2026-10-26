@@ -37,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -48,8 +47,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.system.exitProcess
-import foss.chillastro.root.checker.ui.theme.AppShapes
-import foss.chillastro.root.checker.ui.theme.LocalMonochrome
 
 // Settings branding and its hidden tap interactions live together to keep state local.
 @Composable
@@ -121,13 +118,11 @@ fun EasterEggsHeader() {
         }
     }
 
-    val accent = MaterialTheme.colorScheme.primary
-    val softAccent = MaterialTheme.colorScheme.primaryContainer
-    val logoBackground = if (accent.luminance() >= softAccent.luminance()) accent else softAccent
-    Surface(
-        shape = AppShapes.root,
-        color = if (LocalMonochrome.current) Color.White else logoBackground,
-        modifier = Modifier.size(220.dp).clickable(indication = null, interactionSource = noRipple) {
+    Icon(
+        painter = painterResource(id = R.drawable.root_logo),
+        contentDescription = null,
+        tint = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.size(250.dp).clickable(indication = null, interactionSource = noRipple) {
             logoTaps++
             when (logoTaps) { // The following lines are by Honourable Netaji Subhas Chandra Bose, the Man who sacrificed everything for his Motherland!
                 5 -> Toast.makeText(ctx, "It is our duty to pay for our liberty...", Toast.LENGTH_SHORT).show()
@@ -154,16 +149,7 @@ fun EasterEggsHeader() {
                 }
             }
         }
-    ) {
-        Box(contentAlignment = Alignment.Center) {
-            Icon(
-                painter = painterResource(id = R.drawable.root_logo),
-                contentDescription = null,
-                tint = Color.Black,
-                modifier = Modifier.size(160.dp)
-            )
-        }
-    }
+    )
     Text(
         text = buildAnnotatedString { append("Developer: "); withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) { append("Chill-Astro Software") } },
         fontWeight = FontWeight.ExtraBold,

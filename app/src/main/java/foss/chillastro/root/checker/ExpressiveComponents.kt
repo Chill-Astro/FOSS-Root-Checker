@@ -14,7 +14,6 @@ import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonShapes
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
@@ -59,11 +58,7 @@ internal fun AppLoadingIndicator(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.primary
 ) {
-    if (LocalReducedMotion.current) {
-        CircularProgressIndicator(modifier = modifier, color = color, strokeWidth = 2.dp)
-    } else {
-        LoadingIndicator(modifier = modifier, color = color)
-    }
+    LoadingIndicator(modifier = modifier, color = color)
 }
 
 @Composable

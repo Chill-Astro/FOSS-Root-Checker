@@ -22,10 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Matrix
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.graphicsLayer
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.graphics.shapes.Morph
 import kotlin.math.floor
@@ -63,27 +62,14 @@ internal fun RootEmblem(
     )
     val fill by animateColorAsState(color, tween(if (reducedAnimations) 0 else 350), label = "emblem_color")
 
+    LaunchedEffect(reducedAnimations, checking) {
+        reducedScale.animateTo(if (reducedAnimations && checking) 1.12f else 1f, tween(200))
+    }
     LaunchedEffect(reducedAnimations, if (reducedAnimations) checking else false) {
         if (reducedAnimations) {
             phase = 0f
-            if (!checking) {
-                reducedScale.animateTo(1f, tween(200))
-                return@LaunchedEffect
-            }
-            coroutineScope {
-                launch { reducedScale.animateTo(1.12f, tween(200)) }
-                var previous = withFrameNanos { it }
-                while (true) {
-                    withFrameNanos { now ->
-                        val seconds = ((now - previous) / 1_000_000_000f).coerceIn(0f, 0.05f)
-                        previous = now
-                        angle = (angle + speed * seconds) % 360f
-                    }
-                }
-            }
-            return@LaunchedEffect
+            if (!checking) return@LaunchedEffect
         }
-        reducedScale.snapTo(1f)
         var previous = withFrameNanos { it }
         while (true) {
             withFrameNanos { now ->
@@ -91,7 +77,7 @@ internal fun RootEmblem(
                 val seconds = ((now - previous) / 1_000_000_000f).coerceIn(0f, 0.05f)
                 previous = now
                 angle = (angle + speed * seconds) % 360f
-                phase = (phase + morphSpeed * seconds) % morphs.size
+                if (!reducedAnimations) phase = (phase + morphSpeed * seconds) % morphs.size
             }
         }
     }
@@ -109,7 +95,14 @@ internal fun RootEmblem(
             matrix.reset()
             matrix.scale(size.width, size.height)
             path.transform(matrix)
-            path.translate(center - path.getBounds().center)
+            // Anchor the morph's geometric centre, not its changing visual bounds.
+            val from = polygons[index]
+            val to = polygons[(index + 1) % polygons.size]
+            val anchor = Offset(
+                (from.centerX + (to.centerX - from.centerX) * eased) * size.width,
+                (from.centerY + (to.centerY - from.centerY) * eased) * size.height
+            )
+            path.translate(center - anchor)
             rotate(angle, pivot = center) { drawPath(path, fill) }
         }
         // Keep the status icon upright as the silhouette spins beneath it.

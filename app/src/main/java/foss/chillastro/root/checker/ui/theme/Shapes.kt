@@ -11,10 +11,6 @@ import androidx.compose.ui.graphics.Shape
 object AppShapes {
     val root: Shape
         @Composable get() = MaterialShapes.Cookie12Sided.toShape()
-    val success: Shape
-        @Composable get() = MaterialShapes.Cookie9Sided.toShape()
-    val failure: Shape
-        @Composable get() = MaterialShapes.Cookie6Sided.toShape()
     val info: Shape
         @Composable get() = MaterialShapes.Cookie12Sided.toShape()
     val flower: Shape
@@ -22,7 +18,5 @@ object AppShapes {
     val puffy: Shape
         @Composable get() = MaterialShapes.Cookie12Sided.toShape()
     val bun: Shape
-        @Composable get() = MaterialShapes.Cookie6Sided.toShape()
-    val action: Shape
         @Composable get() = MaterialShapes.Cookie6Sided.toShape()
 }

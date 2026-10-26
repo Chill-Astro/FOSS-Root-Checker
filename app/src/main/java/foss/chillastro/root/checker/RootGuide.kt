@@ -87,27 +87,9 @@ import androidx.core.net.toUri
 import foss.chillastro.root.checker.ui.theme.AppShapes
 
 @Composable
-fun WarningCard(bodyText: String) { // For newbies
-    GuideCard(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
-        shape = MaterialTheme.shapes.large
-    ) {
-        Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
-            GuidePointIcon(icon = Icons.Rounded.Warning, tone = MaterialTheme.colorScheme.error, iconSize = 32.dp)
-            Spacer(Modifier.width(16.dp))
-            Column {
-                Text("WARNING!", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onErrorContainer)
-                Text(bodyText, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f))
-            }
-        }
-    }
-}
-
-@Composable
 fun RootGuide() {
     var menuPath by rememberSaveable { mutableStateOf("MAIN") }
-    val slot = remember { HardwareProbe.getProp("ro.boot.slot_suffix").replace("_", "").ifEmpty { "" } }
+    val slot = remember { HardwareProbe.getProp("ro.boot.slot_suffix").replace("_", "") }
     val kernelVersion = remember { HardwareProbe.getProp("ro.kernel.version") }
     val isAB = slot.isNotEmpty()
     BackHandler(menuPath != "MAIN") { menuPath = "MAIN" }

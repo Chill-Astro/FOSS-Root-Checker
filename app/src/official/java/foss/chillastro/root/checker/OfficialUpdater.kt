@@ -62,7 +62,7 @@ internal data class UpdateRelease(val tag: String, val url: String, val sha256: 
 
 internal fun newerRelease(remote: String, current: String): Boolean {
     fun parts(value: String): List<Long> {
-        require(Regex("v?\\d+(\\.\\d+)*").matches(value)) { "The Server Returned an Invalid Version Number! ⚠️" }
+        require(Regex("v?\\d+(\\.\\d+)*").matches(value)) { "The Server Returned an Invalid Version Number!" }
         return value.removePrefix("v").split('.').map { it.toLong() }
     }
     val r = parts(remote)
@@ -76,14 +76,14 @@ internal fun newerRelease(remote: String, current: String): Boolean {
 
 class OfficialUpdater(application: Application) : AndroidViewModel(application) {
     private val app = application
-    val currentVersion: String = run {
+    private val currentVersion: String = run {
         val info = if (Build.VERSION.SDK_INT >= 33) {
             app.packageManager.getPackageInfo(app.packageName, PackageManager.PackageInfoFlags.of(0))
         } else {
             @Suppress("DEPRECATION")
             app.packageManager.getPackageInfo(app.packageName, 0)
         }
-        requireNotNull(info.versionName) { "Installed App Version is Unavailable. ️️️⚠️" }
+        requireNotNull(info.versionName) { "Installed App Version is Unavailable." }
     }
     private val prefs = app.getSharedPreferences("settings", Context.MODE_PRIVATE)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -152,7 +152,7 @@ class OfficialUpdater(application: Application) : AndroidViewModel(application) 
                     connection.connectTimeout = 15000
                     connection.readTimeout = 15000
                     val json = try {
-                        require(connection.responseCode == 200) { "Update Server Unavailable. ❌" }
+                        require(connection.responseCode == 200) { "Update Server Unavailable." }
                         connection.inputStream.bufferedReader().use { reader ->
                             val text = StringBuilder()
                             val buffer = CharArray(4096)
@@ -160,7 +160,7 @@ class OfficialUpdater(application: Application) : AndroidViewModel(application) 
                                 val count = reader.read(buffer)
                                 if (count < 0) break
                                 text.appendRange(buffer, 0, count)
-                                require(text.length <= 256 * 1024) { "Invalid Update Response. ❌" }
+                                require(text.length <= 256 * 1024) { "Invalid Update Response." }
                             }
                             JSONObject(text.toString()).getJSONObject("rootChecker")
                         }
@@ -170,7 +170,7 @@ class OfficialUpdater(application: Application) : AndroidViewModel(application) 
                         if (manual) {
                             withContext(Dispatchers.Main) {
                                 message = if (newerRelease(currentVersion, tag)) {
-                                    "This is a DEV. BUILD! ⚠️\n\nApp Version = $currentVersion\nLatest Version = $tag"
+                                    "This is a DEV. BUILD!\n\nApp Version = $currentVersion\nLatest Version = $tag"
                                 } else "Root Checker is UP TO DATE!"
                                 messageTitle = "Update Check"
                             }
@@ -182,7 +182,7 @@ class OfficialUpdater(application: Application) : AndroidViewModel(application) 
                         require(uri.scheme == "https" && uri.host == "github.com" &&
                             uri.path == "/Chill-Astro/FOSS-Root-Checker/releases/download/$tag/app-official-release.apk") { "Invalid APK Link." }
                         val hash = json.optJSONObject("sha256")?.optString("apk_official").orEmpty()
-                        require(!VERIFY_UPDATE_CHECKSUM || Regex("[a-fA-F0-9]{64}").matches(hash)) { "This Release has no valid SHA-256 Checksum! ❌" }
+                        require(!VERIFY_UPDATE_CHECKSUM || Regex("[a-fA-F0-9]{64}").matches(hash)) { "This Release has no valid SHA-256 Checksum!" }
                         UpdateRelease(tag, url, hash)
                     }
                 }
@@ -190,8 +190,8 @@ class OfficialUpdater(application: Application) : AndroidViewModel(application) 
             } catch (e: CancellationException) { throw e
             } catch (e: Exception) {
                 if (manual) message = when (e) {
-                    is java.net.UnknownHostException, is java.net.ConnectException, is java.net.SocketTimeoutException -> "No Internet Connection! ❌"
-                    else -> e.message ?: "Could Not Check for Updates! ❌"
+                    is java.net.UnknownHostException, is java.net.ConnectException, is java.net.SocketTimeoutException -> "No Internet Connection!"
+                    else -> e.message ?: "Could Not Check for Updates!"
                 }
             } finally { busy = false }
         }
@@ -264,7 +264,7 @@ class OfficialUpdater(application: Application) : AndroidViewModel(application) 
                         }
                     }
                     val actual = digest.digest().joinToString("") { "%02x".format(it.toInt() and 255) }
-                    check(!VERIFY_UPDATE_CHECKSUM || actual.equals(next.sha256, ignoreCase = true)) { "Checksum Verification Failed. The APK was Deleted. ❌" }
+                    check(!VERIFY_UPDATE_CHECKSUM || actual.equals(next.sha256, ignoreCase = true)) { "Checksum Verification Failed. The APK was Deleted." }
                 }
                 ready = true
                 showReady = true
@@ -410,10 +410,7 @@ fun UpdateHost() {
                     Text(model.status.orEmpty(), modifier = Modifier.fillMaxWidth())
                     Spacer(Modifier.height(12.dp))
                     val progress = model.downloadProgress
-                    if (foss.chillastro.root.checker.ui.theme.LocalReducedMotion.current) {
-                        if (progress != null) LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
-                        else LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                    } else if (progress != null) LinearWavyProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
+                    if (progress != null) LinearWavyProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
                     else LinearWavyProgressIndicator(modifier = Modifier.fillMaxWidth())
                 }
             },
@@ -440,7 +437,7 @@ fun UpdateHost() {
             onDismissRequest = model::dismissRelease,
             icon = { Icon(Icons.Rounded.SystemUpdate, null) },
             title = { Text("Update Available!") },
-            text = { Text("${next.tag} is OUT NOW! 🎉\n\nThe APK will be saved in Downloads!") },
+            text = { Text("${next.tag} is OUT NOW!\n\nThe APK will be saved in Downloads!") },
             confirmButton = {
                 UpdateAction("Update", Icons.Rounded.Download, enabled = !model.busy) {
                     if (Build.VERSION.SDK_INT <= 28 && context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
@@ -483,7 +480,7 @@ fun UpdateSettings(monochrome: Boolean) {
         modifier = Modifier.fillMaxWidth()
     ) {
         ListItem(
-            headlineContent = { Text("Check for Updates") },
+            content = { Text("Check for Updates") },
             leadingContent = { Icon(Icons.Rounded.Refresh, null) },
             trailingContent = { ExpressiveSwitch(checked = model.automatic, onCheckedChange = model::updateAutomaticChecks) },
             colors = ListItemDefaults.colors(containerColor = Color.Transparent)

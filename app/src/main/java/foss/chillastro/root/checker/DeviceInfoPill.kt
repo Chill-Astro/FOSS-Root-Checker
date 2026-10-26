@@ -13,6 +13,8 @@ import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -66,17 +68,11 @@ internal fun DeviceInfoPill(
         shape = RectangleShape,
         color = MaterialTheme.colorScheme.surfaceContainerLow
     ) {
-        Row(
-            Modifier.windowInsetsPadding(WindowInsets.statusBars).padding(horizontal = 8.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        BoxWithConstraints(
+            Modifier.windowInsetsPadding(WindowInsets.statusBars).padding(horizontal = 8.dp, vertical = 8.dp)
         ) {
-            PillAction(Icons.Rounded.Info, "Device information", onOpenInfo)
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
+            val expandedDetails = maxWidth < 320.dp || LocalDensity.current.fontScale >= 1.5f
+            val heading: @Composable () -> Unit = {
                 Text(
                     buildAnnotatedString {
                         append("$deviceName ")
@@ -88,20 +84,40 @@ internal fun DeviceInfoPill(
                     style = MaterialTheme.typography.labelLarge,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                 )
+            }
+            val details: @Composable () -> Unit = {
                 Text(
                     buildAnnotatedString {
                         append("Bootloader: $bootloader ")
                         appendInlineContent("bootloader", "\uFFFC")
-                        append(" • dm-verity: $verity ")
+                        append(if (expandedDetails) "\ndm-verity: $verity " else " • dm-verity: $verity ")
                         appendInlineContent("verity", "\uFFFC")
                     },
+                    modifier = Modifier.fillMaxWidth(),
                     inlineContent = detailIcons,
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                 )
             }
-            PillAction(Icons.Rounded.History, "History", onOpenHistory)
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    PillAction(Icons.Rounded.Info, "Device information", onOpenInfo)
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        heading()
+                        if (!expandedDetails) details()
+                    }
+                    PillAction(Icons.Rounded.History, "History", onOpenHistory)
+                }
+                if (expandedDetails) details()
+            }
         }
     }
 }

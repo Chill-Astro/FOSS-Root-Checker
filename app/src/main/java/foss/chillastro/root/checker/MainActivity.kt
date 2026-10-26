@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class, androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 package foss.chillastro.root.checker
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
@@ -53,7 +54,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.MenuBook
-import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material.icons.rounded.Animation
 import androidx.compose.material.icons.rounded.Brush
 import androidx.compose.material.icons.rounded.Cancel
@@ -65,11 +65,8 @@ import androidx.compose.material.icons.rounded.DeleteForever
 import androidx.compose.material.icons.rounded.FormatColorReset
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Label
-import androidx.compose.material.icons.rounded.Lock
-import androidx.compose.material.icons.rounded.LockOpen
+import androidx.compose.material.icons.automirrored.rounded.Label
 import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Security
 import androidx.compose.material.icons.rounded.Settings
@@ -112,7 +109,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -120,7 +116,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -133,6 +128,7 @@ import androidx.core.net.toUri
 import foss.chillastro.root.checker.ui.theme.AppShapes
 import foss.chillastro.root.checker.ui.theme.FOSSRootCheckerTheme
 import kotlinx.coroutines.Dispatchers
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -143,7 +139,7 @@ import java.util.Locale
 // Getting Hardware Props (for Decoration I mean for Informing!)
 object HardwareProbe {
     fun getProp(prop: String): String = try {
-        Runtime.getRuntime().exec(arrayOf("getprop", prop)).inputStream.bufferedReader().readLine() ?: ""
+        Runtime.getRuntime().exec(arrayOf("getprop", prop)).inputStream.bufferedReader().use { it.readLine().orEmpty() }
     } catch (_: Exception) { "" }
     fun getBootloader(): String = if (getProp("ro.boot.flash.locked") == "0") "Unlocked" else "Locked"
     fun getVerity(): String = getProp("ro.boot.veritymode").ifEmpty { "disabled" }
@@ -295,13 +291,12 @@ fun CARootChecker( // CA stands for Chill-Astro who neither is an Astronaut nor 
                     if (reducedAnimations) {
                         fadeIn(animationSpec = tween(150)) togetherWith fadeOut(animationSpec = tween(150))
                     } else {
-                        val spec = pageMotion
                         if (targetState.ordinal > initialState.ordinal) {
-                            (slideInHorizontally(spec) { it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith
-                                    (slideOutHorizontally(spec) { -it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
+                            (slideInHorizontally(pageMotion) { it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith
+                                    (slideOutHorizontally(pageMotion) { -it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
                         } else {
-                            (slideInHorizontally(spec) { -it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith
-                                    (slideOutHorizontally(spec) { it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
+                            (slideInHorizontally(pageMotion) { -it / 2 } + fadeIn() + scaleIn(initialScale = 0.92f)) togetherWith
+                                    (slideOutHorizontally(pageMotion) { it / 2 } + fadeOut() + scaleOut(targetScale = 0.92f))
                         }
                     }
                 }, label = "PageTransition"
@@ -404,20 +399,9 @@ fun SystemInfo() {
         PathRow(path = "Zygisk Traces (Mounts)", found = zygiskFound)
     }
 }
-fun getProp(key: String, default: String): String {
-    return try {
-        val c = Class.forName("android.os.SystemProperties")
-        val get = c.getMethod("get", String::class.java)
-        val result = get.invoke(c, key) as String
-        if (result.isNullOrBlank()) {
-            val process = Runtime.getRuntime().exec("getprop $key")
-            val output = process.inputStream.bufferedReader().use { it.readLine() }
-            if (output.isNullOrBlank()) "ACCESS DENIED" else output
-        } else result
-    } catch (_: Exception) {
-        "ACCESS DENIED"
-    }
-}
+fun getProp(key: String, default: String): String =
+    HardwareProbe.getProp(key).ifBlank { default.ifBlank { "ACCESS DENIED" } }
+
 fun safeExists(path: String): Boolean = try {
     val file = java.io.File(path)
     file.exists() && file.canRead()
@@ -469,7 +453,7 @@ fun StatRow(label: String, value: String, ok: Boolean) {
 @Composable
 fun SectionLabel(text: String) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
-        Icon(Icons.Rounded.Label, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+        Icon(Icons.AutoMirrored.Rounded.Label, null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.width(8.dp))
         Text(text, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary)
     }
@@ -513,7 +497,7 @@ fun RootChecker(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Spacer(Modifier.weight(1f))
-        Box(contentAlignment = Alignment.Center) {
+        Box(Modifier.size(300.dp), contentAlignment = Alignment.Center) {
             RootEmblem(
                 checking = isAnyProcessing,
                 reducedAnimations = reducedAnimations,
@@ -560,6 +544,7 @@ fun RootChecker(
                 animationSpec = if (reducedAnimations) tween(300) else spring()
             ),
             style = MaterialTheme.typography.headlineSmall,
+            minLines = 2,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -574,7 +559,9 @@ fun RootChecker(
                     checkState = 1
                     isRooted = false
                     scope.launch(Dispatchers.IO) {
-                        delay(1000)
+                        delay(1000.milliseconds)
+                        // These are intentional system root traces, not app data directories.
+                        @SuppressLint("SdCardPath")
                         val paths = arrayOf(
                             // A Rabbit Hole of a HELL LOT OF PATHS! (Feels like I am a Security Official tbh.)
                             // Magisk & Stealth Modules
@@ -655,7 +642,7 @@ fun RootChecker(
                     checkState = 3
                     isRooted = false
                     scope.launch(Dispatchers.IO) {
-                        delay(1200)
+                        delay(1200.milliseconds)
                         val suWorks = isSUWorking()
                         withContext(Dispatchers.Main) {
                             isRooted = suWorks
@@ -720,7 +707,6 @@ fun Busybox() { // Let's hope She ain't Busy!
     var foundPath by rememberSaveable { mutableStateOf("") }
     var suPath by rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
-    val ctx = LocalContext.current
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         Spacer(Modifier.height(16.dp))
         GuideCard(
@@ -793,14 +779,14 @@ fun Busybox() { // Let's hope She ain't Busy!
                             foundPath = ""
                             suPath = ""
                         }
-                        delay(800)
+                        delay(800.milliseconds)
                         val p = findBusyBoxPath()
                         withContext(Dispatchers.Main) {
                             foundPath = p
-                            checkState = if (p.isNotEmpty()) 2 else 2
+                            checkState = 2
                         }
                         if (p.isEmpty()) {
-                            delay(350)
+                            delay(350.milliseconds)
                             val rootedBusyBox = findBusyBoxPathBySU()
                             withContext(Dispatchers.Main) {
                                 suPath = rootedBusyBox
@@ -927,7 +913,7 @@ fun Settings(
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
             ) {
                 ListItem(
-                    headlineContent = { Text("Theme", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
+                    content = { Text("Theme", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
                     leadingContent = { Icon(Icons.Rounded.Palette, null, tint = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
                     trailingContent = {
                         ExposedDropdownMenuBox(
@@ -957,7 +943,7 @@ fun Settings(
             }
             Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                 ListItem(
-                    headlineContent = { Text("Monochrome Mode") },
+                    content = { Text("Monochrome Mode") },
                     leadingContent = {
                         Icon(
                             imageVector = Icons.Rounded.FormatColorReset,
@@ -972,7 +958,7 @@ fun Settings(
             if (Build.VERSION.SDK_INT >= 31) { // System Colors (Android 12+)
                 Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                     ListItem(
-                        headlineContent = { Text("Use System Colours", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
+                        content = { Text("Use System Colours", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
                         leadingContent = { Icon(Icons.Rounded.Brush, null, tint = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
                         trailingContent = { ExpressiveSwitch(checked = dyn, onCheckedChange = onDyn, enabled = !monochrome) },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
@@ -981,7 +967,7 @@ fun Settings(
             }
             Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
                 ListItem(
-                    headlineContent = { Text("Reduced Animations") },
+                    content = { Text("Reduced Animations") },
                     supportingContent = { if (isLowRam) Text("Forced on Low RAM Devices (<4GB)", color = MaterialTheme.colorScheme.primary) },
                     leadingContent = { Icon(Icons.Rounded.Animation, null) },
                     trailingContent = { ExpressiveSwitch(checked = reducedAnimations, onCheckedChange = onReducedAnimationsChange, enabled = !isLowRam) },
@@ -1041,18 +1027,19 @@ fun HistoryContent(logs: List<String>, monochrome: Boolean, onClear: () -> Unit)
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest)
                     ) {
                         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                            RootEmblem(
-                                checking = false,
-                                reducedAnimations = true,
+                            Surface(
                                 modifier = Modifier.size(48.dp),
+                                shape = AppShapes.root,
                                 color = rootResultColor(isOk, monochrome)
                             ) {
-                                Icon(
-                                    if (isOk) Icons.Rounded.Check else Icons.Rounded.Close,
-                                    null,
-                                    modifier = Modifier.size(24.dp),
-                                    tint = if (monochrome) Color.Black else Color.White
-                                )
+                                Box(contentAlignment = Alignment.Center) {
+                                    Icon(
+                                        if (isOk) Icons.Rounded.Check else Icons.Rounded.Close,
+                                        null,
+                                        modifier = Modifier.size(24.dp),
+                                        tint = if (monochrome) Color.Black else Color.White
+                                    )
+                                }
                             }
                             Spacer(Modifier.width(16.dp))
                             Column {
