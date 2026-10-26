@@ -10,17 +10,17 @@ FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for 
 
 Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
 
-**App Version** : `v37.23.3.0`
+**App Version** : `v37.24.4.0`
 
 **Package ID** : `foss.chillastro.root.checker` 
 
 **Offline Flavour** : `foss.chillastro.root.checker.offline` 
 
-( Lacks Update Checker )
+( Lacks Self-Updates )
 
 **Codename** : `FRC-SU`
 
-**Requirements** : `Android 6 and Higher`
+**Requirements** : `Android 7 and Higher`
 
 An Online Version of the App's Guide is given [here](https://github.com/Chill-Astro/Android-Rooting-Guide).
 
@@ -56,33 +56,14 @@ _- TRUSTED SOURCES -_
 
 ---
 
-## v37.24.4.0 IS COMING SOON!
-
-- New Material 3 Expressive Design!
-
-<div align="center">
-
-https://github.com/user-attachments/assets/8ebd2c1f-5664-4d52-9f57-fe5032b0e313
-
-</div>
-
-- UI Improvements across the entire App.
-- Sun-setting Android 6. ( Yes ) 💀
-- A BETTER UPDATE CHECKER! Yes, a Self-Updater ( WITH CONSENT ) !
-- Faster update checking from [repo-data.json](https://chill-astro.github.io/assets/data/repo-data.json) instead of `Github Gists`.
-- Improvements to Monochrome Mode.
-- Bug fixes coming too!
-
----
-
 ## Key Features :
 
-- Ultra Low Footprint of 1.55MB ONLY!
+- Ultra Low Footprint of ~2MB!
 - Privacy First Design with full transparency. ✅
 - Reduced Animations Enforced on Low end Devices ( if RAM < 4 GB ). ✅
 - No Ads, In-App Purchases and no Data Collection. ✅
 - Modern Material UI with Monet Theming. ✅
-- Support for Android 6+ Devices. ✅
+- Support for Android 7+ Devices. ✅
 - Monochrome Mode for Minimalists. ✅
 - Works with Magisk, KernelSU, KSU Forks, APatch and older Methods ✅
 - Thorough Guidance provided on Rooting and Unlocking Bootloader. ✅
@@ -95,16 +76,16 @@ https://github.com/user-attachments/assets/8ebd2c1f-5664-4d52-9f57-fe5032b0e313
 
 <H2>
 
-v`37`.`23`.`3`.`0`
+v`37`.`24`.`4`.`0`
 
 </H2>
 
 </div>
 
 - `37` -> Target SDK ( Her Target SDK is Android 17 whose API Level is '37' )
-- `23` -> Minimum SDK ( She installs on Android 6 and Higher whose API Level is '23' )
-- `3` -> Major Update ( Refers to the QOL Update ) 
-- `0` -> Minor Update ( Currently there hasn't been any Changes in v3 Series. )
+- `24` -> Minimum SDK ( She installs on Android 6 and Higher whose API Level is '24' )
+- `3` -> Major Update ( Refers to the M3E + Self Updater Update ) 
+- `0` -> Minor Update ( Currently there hasn't been any Changes in v4 Series. )
 
 ---
 
