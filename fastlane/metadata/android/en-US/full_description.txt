@@ -11,7 +11,7 @@ How it works:
 
 Key Features:
 
-- Ultra Low Footprint: Only 1.54MB.
+- Ultra Low Footprint: ~2MB.
 - Privacy First: No ads, no data collection, and no internet permission.
 - Optimization: Reduced animations for devices with less than 4GB RAM.
 - Modern UI: Material You design with Monet theming support.
