@@ -1,6 +1,6 @@
 <p align="center">
   <kbd>
-  <img width="1920" height="1080" alt="Root Checker Promo" src="https://github.com/user-attachments/assets/4ad497bc-2a8d-4b58-b9ff-e6b08b1b47c9" />
+  <img width="1920" height="1080" alt="Root Checker Promo" src="https://chill-astro.github.io/assets/images/root-checker-hero.webp" />
   </kbd>
 </p>
 
