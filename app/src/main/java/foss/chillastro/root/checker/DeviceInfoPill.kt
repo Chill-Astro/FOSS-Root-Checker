@@ -71,7 +71,8 @@ internal fun DeviceInfoPill(
         BoxWithConstraints(
             Modifier.windowInsetsPadding(WindowInsets.statusBars).padding(horizontal = 8.dp, vertical = 8.dp)
         ) {
-            val expandedDetails = maxWidth < 320.dp || LocalDensity.current.fontScale >= 1.5f
+            val ultraLargeText = LocalDensity.current.fontScale >= 1.5f
+            val expandedDetails = maxWidth < 320.dp || ultraLargeText
             val heading: @Composable () -> Unit = {
                 Text(
                     buildAnnotatedString {
@@ -88,10 +89,17 @@ internal fun DeviceInfoPill(
             val details: @Composable () -> Unit = {
                 Text(
                     buildAnnotatedString {
-                        append("Bootloader: $bootloader ")
-                        appendInlineContent("bootloader", "\uFFFC")
-                        append(if (expandedDetails) "\ndm-verity: $verity " else " • dm-verity: $verity ")
-                        appendInlineContent("verity", "\uFFFC")
+                        if (ultraLargeText) {
+                            append("BL: ")
+                            appendInlineContent("bootloader", "\uFFFC")
+                            append(" • dm-verity: ")
+                            appendInlineContent("verity", "\uFFFC")
+                        } else {
+                            append("Bootloader: $bootloader ")
+                            appendInlineContent("bootloader", "\uFFFC")
+                            append(if (expandedDetails) "\ndm-verity: $verity " else " • dm-verity: $verity ")
+                            appendInlineContent("verity", "\uFFFC")
+                        }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     inlineContent = detailIcons,
