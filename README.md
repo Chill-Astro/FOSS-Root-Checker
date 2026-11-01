@@ -12,12 +12,6 @@ Well that's why I made this App! It is just a simple Root Checker for Newbies bu
 
 **App Version** : `v37.24.4.1`
 
-**Package ID** : `foss.chillastro.root.checker` 
-
-**Offline Flavour** : `foss.chillastro.root.checker.offline` 
-
-( Lacks Self-Updates )
-
 **Codename** : `FRC-SU`
 
 **Requirements** : `Android 7 and Higher`
@@ -33,6 +27,7 @@ _- TRUSTED SOURCES -_
 | **IzzyOnDroid** (Offline) | [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="40" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/foss.chillastro.root.checker.offline) |
 | **Uptodown** (Official) | <a href='https://foss-chillastro-root-checker.en.uptodown.com/android' title='Download Root Checker' ><img src='https://stc.utdstc.com/img/mediakit/download-gio-big.png' height="40" alt='Download Root Checker'></a> |
 | **OpenAPK** (Both)| <a href="https://www.openapk.net/root-checker/foss.chillastro.root.checker.offline/"><img src="https://www.openapk.net/images/openapk-badge.png" height="40" alt="OpenAPK.net"></a> |
+
 ---
 
 </div>
@@ -40,8 +35,15 @@ _- TRUSTED SOURCES -_
 > [!IMPORTANT]
 > This Project is not Affiliated with Google, Magisk, and other Open Source / Closed Source Referenced in this Project. Certain Brands mentioned are for General Information Only.
 
-> [!WARNING]
-> Do not trust sources listed in [this page](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) and NEVER TRUST .ZIP FILES PROVIDED IN ANY FORKED / STOLEN REPOSITORY'S READMEs! They Bypass Github's Security Checks and may Compromise your System with Malware and Steal your ENTIRE Data!
+---
+
+## Uh, Why are there 2 Releases?
+
+For Privacy of course! Let me break this down in simple terms :
+
+- **Official** ( `foss.chillastro.root.checker` ) : Has sensitive permissions like `INTERNET`, `STORAGE` and `SELF-INSTALLING APPS` alongside `Superuser`. This facilitates the `Self-Updater` Feature!  
+
+- **Offline** ( `foss.chillastro.root.checker.offline` ) : If you are afraid of Internet, this **LACKS** the `Self-Updater`! Enjoy Privacy! :)
 
 ---
 
@@ -70,7 +72,7 @@ _- TRUSTED SOURCES -_
 
 ---    
 
-## Version Structure :
+## Why is this at v37?! :
 
 <div align="center">
 
@@ -82,25 +84,10 @@ v`37`.`24`.`4`.`1`
 
 </div>
 
-- `37` -> Target SDK ( Her Target SDK is Android 17 whose API Level is '37' )
-- `24` -> Minimum SDK ( She installs on Android 6 and Higher whose API Level is '24' )
-- `3` -> Major Update
+- `37` -> Target Android API Level
+- `24` -> Minimum Android Version to Install App
+- `4` -> Major Update
 - `1` -> Minor Update
-
----
-
-
-## TRAILER on @delta-v-sfs :
-
-<div align="center">
-  <kbd>
-  <a href="https://www.youtube.com/watch?v=ikYPs2zk7Yc">
-    <img src="https://img.youtube.com/vi/ikYPs2zk7Yc/maxresdefault.jpg" alt="Watch the FOSS Root Checker Trailer"style="border-radius:10px;">
-    <br>
-    <b><h3>▶ Click to Watch the Official Trailer</h3></b>
-  </a>
-</kbd>
-</div>
 
 ---
 
@@ -120,6 +107,21 @@ v`37`.`24`.`4`.`1`
 
 https://github.com/user-attachments/assets/0e689ce8-6e08-46a0-beb4-00703fd31ff8
 
+</div>
+
+---
+
+
+## TRAILER on @delta-v-sfs :
+
+<div align="center">
+  <kbd>
+  <a href="https://www.youtube.com/watch?v=ikYPs2zk7Yc">
+    <img src="https://img.youtube.com/vi/ikYPs2zk7Yc/maxresdefault.jpg" alt="Watch the FOSS Root Checker Trailer"style="border-radius:10px;">
+    <br>
+    <b><h3>▶ Click to Watch the Official Trailer</h3></b>
+  </a>
+</kbd>
 </div>
 
 ---
@@ -146,45 +148,20 @@ This method is RECOMMENDED as this is how I build myself.
 
 ---
 
-## HALL OF FAME : 
+## ⚠️ SAYING NO TO MALWARE CLONES
 
-// Will add Forked Repos which are genuinely good. I will list everything Good about them.
-
----
-
-## HALL OF NEUTRALITY :
-
-// Will add Inactive Forks. Uh yeah that's it at least it's Forking not Cloning!
-
-- RamsesAupart/FOSS-Root-Checker
-- vloco2417-lab/FOSS-Root-Checker
-- puichay012889/FOSS-Root-Checker
-- mariasanchez77989-lgtm/FOSS-Root-Checker
-- mdfarooqmdfarooq885-ship-it/FOSS-Root-Checker
-- webbrain-one/FOSS-Root-Checker
+> [!WARNING]
+> Please be aware : There are fraudulent repositories on GitHub that are cloning this project's name and using AI-generated Readmes, but they contain **completely random and unrelated files in each release**. These are NOT official versions of this project.
+>
+> **ALWAYS ensure you are downloading or cloning this project ONLY from its official and legitimate source:**
+> 
+> `https://github.com/Chill-Astro/FOSS-Root-Checker`
+>
+> Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more details. I am trying my best to report these people.
 
 ---
 
-## HALL OF SHAME :
-
-// Includes Clones who are working against the MIT Licence and Distributing Malware. All Flaws are mentioned. 
-
-- ~~RuotianJoy/FOSS-Root-Checker ( Cloned + Distributing Malware  )~~ ( Removed Successfully )
-
----
-
-## ⚠️ IMPORTANT NOTICE ⚠️
-
-Please be aware: There are fraudulent repositories on GitHub that are cloning this project's name and using AI-generated readmes, but they contain **completely random and unrelated files in each release**. These are NOT official versions of this project.
-
-**ALWAYS ensure you are downloading or cloning this project ONLY from its official and legitimate source:**
-`https://github.com/Chill-Astro/FOSS-Root-Checker`
-
-Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more details. I am trying my best to report these people.
-
----
-
-## ⚠️ Smoking Gun for Danger :
+## ⚠️ HOW TO AVOID MALWARE :
 
 <details>
 <summary><b>View Details</b></summary>
@@ -196,15 +173,33 @@ Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more
 * **Hidden Scripts:** Text files like `asm.txt` used to execute malicious code on your PC.
 * The Following Folder Structure is used by Malware (Shown in a VM) :
 
-![Screenshot_2026-03-01-18-52-39-337_com clone android dual space](https://github.com/user-attachments/assets/be691c9f-7def-4e8b-982c-c7ca2e9a067d)
-
-![Screenshot_2026-03-01-18-53-09-759_com clone android dual space](https://github.com/user-attachments/assets/1c75031d-95be-4716-9347-b762e3dad5b8)
+<div align="center">
+  
+<table>
+  <tr>
+    <td align="center">
+      <kbd>
+      <img width="270" alt="Malware Clone Screenshot 1" src="https://github.com/user-attachments/assets/be691c9f-7def-4e8b-982c-c7ca2e9a067d" />
+      </kbd>
+    </td>
+    <td align="center">
+      <kbd>
+      <img width="270" alt="Malware Clone Screenshot 2" src="https://github.com/user-attachments/assets/1c75031d-95be-4716-9347-b762e3dad5b8" />
+      </kbd>
+    </td>
+  </tr>
+</table>
+</div>
 
 </details>
 
 ---
 
 ## Credits :
+
+<details>
+
+<summary>Very Long List 😴</summary>
 
 - [Magisk by @topjohnwu](https://github.com/topjohnwu/Magisk) : For Rooting pretty much anything these days.
 - [KernelSU by @tiann](https://github.com/tiann/KernelSU) : For Kernel-Level Rooting on GKI Devices.
@@ -225,8 +220,10 @@ Check [here](https://github.com/Chill-Astro/FOSS-Root-Checker/issues/1) for more
 - [SkiSU Ultra by @SkiSU-Ultra](https://github.com/SkiSU-Ultra/SkiSU-Ultra) : For providing specialized kernel-level rooting features.
 - [TWRP & OrangeFox](https://twrp.me/) : For the custom recoveries that make flashing these modules possible.
 
+</details>
+
 ## Note from Developer :
 
-Appreciate my effort? Why not leave a Star ⭐ ! Also if forked, please credit me for my effort and thanks if you do! :)
+A Star ⭐ will be Appreciated to Support this Project! 
 
 ---
