@@ -177,6 +177,6 @@ This method is RECOMMENDED as this is how I build myself.
 
 ## Note from Developer :
 
-A Star ⭐ will be Appreciated to Support this Project! 
+A Star ⭐ will be Appreciated to Support this Project! :)
 
 ---
