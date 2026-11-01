@@ -48,7 +48,3 @@
 </details>
 
 ---
-
-YouTube : [DELTA-V SFS](https://youtube.com/@delta-v-sfs)
-
----
