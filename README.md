@@ -6,9 +6,7 @@
 
 <div align="center">
 
-FOSS Root Checker as the name suggests is an `Open Source` Root Checker app for verifying `Root Access` on Android Mobile Devices. Ever wondered what Root Checker Apps do behind the scenes on your Phones once you give them Root Access?
-
-Well that's why I made this App! It is just a simple Root Checker for Newbies but with Transparency of what is done.
+FOSS Root Checker is an **Open-Source** ***Root Checker*** **ANDROID APP** for **Verifying Superuser Access** and **Busybox Verification** for Magisk, KernelSU, APatch & Older Methods on Mobile Devices.
 
 **App Version** : `v37.24.4.1`
 
