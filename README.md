@@ -35,7 +35,7 @@ _- TRUSTED SOURCES -_
 
 ---
 
-## Uh, Why are there 2 Releases?
+## Uh, Why are there 2 APKs?
 
 For Privacy of course! Let me break this down in simple terms :
 
