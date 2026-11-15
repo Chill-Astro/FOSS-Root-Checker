@@ -60,10 +60,13 @@ private const val VERIFY_UPDATE_CHECKSUM = true
 
 internal data class UpdateRelease(val tag: String, val url: String, val sha256: String)
 
+internal fun displayVersion(value: String): String = "v${value.removePrefix("v")}"
+
 internal fun newerRelease(remote: String, current: String): Boolean {
     fun parts(value: String): List<Long> {
-        require(Regex("v?\\d+(\\.\\d+)*").matches(value)) { "The Server Returned an Invalid Version Number!" }
-        return value.removePrefix("v").split('.').map { it.toLong() }
+        val normalized = value.removePrefix("v")
+        require(Regex("\\d+(\\.\\d+)*").matches(normalized)) { "The Server Returned an Invalid Version Number!" }
+        return normalized.split('.').map { it.toLong() }
     }
     val r = parts(remote)
     val c = parts(current)
@@ -73,7 +76,6 @@ internal fun newerRelease(remote: String, current: String): Boolean {
     }
     return false
 }
-
 class OfficialUpdater(application: Application) : AndroidViewModel(application) {
     private val app = application
     private val currentVersion: String = run {
@@ -170,7 +172,7 @@ class OfficialUpdater(application: Application) : AndroidViewModel(application) 
                         if (manual) {
                             withContext(Dispatchers.Main) {
                                 message = if (newerRelease(currentVersion, tag)) {
-                                    "This is a DEV. BUILD!\n\nApp Version = $currentVersion\nLatest Version = $tag"
+                                    "This is a DEV. BUILD!\n\nApp Version = ${displayVersion(currentVersion)}\nLatest Version = ${displayVersion(tag)}"
                                 } else "Root Checker is UP TO DATE!"
                                 messageTitle = "Update Check"
                             }
@@ -437,7 +439,7 @@ fun UpdateHost() {
             onDismissRequest = model::dismissRelease,
             icon = { Icon(Icons.Rounded.SystemUpdate, null) },
             title = { Text("Update Available!") },
-            text = { Text("${next.tag} is OUT NOW!\n\nThe APK will be saved in Downloads!") },
+            text = { Text("${displayVersion(next.tag)} is OUT NOW!\n\nThe APK will be saved in Downloads!") },
             confirmButton = {
                 UpdateAction("Update", Icons.Rounded.Download, enabled = !model.busy) {
                     if (Build.VERSION.SDK_INT <= 28 && context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)

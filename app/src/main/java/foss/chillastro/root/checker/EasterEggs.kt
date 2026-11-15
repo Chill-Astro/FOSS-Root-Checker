@@ -68,8 +68,8 @@ fun EasterEggsHeader() {
                 @Suppress("DEPRECATION")
                 ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
             }
-        } catch (_: Exception) { "37.23.3.0" }
-    }
+        } catch (_: Exception) { "37.24.4.0" }
+    }.orEmpty().let { if (it.startsWith("v")) it else "v$it" }
 
     if (showPoem) { // God comes with Dedication and so does FREEDOM. So tap 108 times ig for an Easter egg!
         BasicAlertDialog(onDismissRequest = { showPoem = false }, properties = DialogProperties(dismissOnClickOutside = false)) {

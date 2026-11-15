@@ -16,7 +16,7 @@ android {
         create("offline") {
             dimension = "distribution"
             applicationIdSuffix = ".offline"
-            versionNameSuffix = "-OFFLINE"
+            versionNameSuffix = "o"
         }
         create("official") {
             dimension = "distribution"
@@ -32,8 +32,8 @@ android {
         applicationId = "foss.chillastro.root.checker"
         minSdk = 24
         targetSdk = 37
-        versionCode = 5
-        versionName = "v37.24.4.1"
+        versionCode = 6
+        versionName = "37.24.4.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

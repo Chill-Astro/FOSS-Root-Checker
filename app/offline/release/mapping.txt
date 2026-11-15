@@ -1,10 +1,10 @@
 # compiler: R8
-# compiler_version: 9.5.28
+# compiler_version: 9.5.29
 # min_api: 24
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.2"}
-# pg_map_id: c4096d2731ee11b1074d9d9cd631d944b145e2a1ca965b88b3f9a0eff9883513
-# pg_map_hash: SHA-256 c4096d2731ee11b1074d9d9cd631d944b145e2a1ca965b88b3f9a0eff9883513
+# pg_map_id: 45c0516779dc87e21f171fe63c00ebddd80da444c40aa4652dc47402d55b19a9
+# pg_map_hash: SHA-256 45c0516779dc87e21f171fe63c00ebddd80da444c40aa4652dc47402d55b19a9
 _COROUTINE.ArtificialStackFrames -> R8$$REMOVED$$CLASS$$0:
 # {"id":"sourceFile","fileName":"CoroutineDebugging.kt"}
 _COROUTINE.ArtificialStackFramesUnsafe -> ib:
@@ -56614,9 +56614,9 @@ androidx.compose.foundation.text.contextmenu.internal.AndroidTextContextMenuTool
     203:206:kotlin.Unit androidx.compose.material3.ExposedDropdownMenuKt$ExposedDropdownMenuBox$scope$1$1.menuAnchor_2Hz36ac$lambda$0(java.lang.String,androidx.compose.runtime.MutableState):173:173 -> invoke
     207:210:kotlin.Unit androidx.compose.material3.ExposedDropdownMenuKt.ExposedDropdownMenu_kbRbctU$lambda$1$0(androidx.compose.runtime.MutableState):365:365 -> invoke
     211:212:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):57:57 -> invoke
-    211:212:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$19$lambda$18(androidx.compose.runtime.MutableState):75 -> invoke
-    213:216:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):262:262 -> invoke
-    213:216:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$19$lambda$18(androidx.compose.runtime.MutableState):75 -> invoke
+    211:212:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$20$lambda$19(androidx.compose.runtime.MutableState):75 -> invoke
+    213:216:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):263:263 -> invoke
+    213:216:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$20$lambda$19(androidx.compose.runtime.MutableState):75 -> invoke
     217:228:boolean androidx.compose.foundation.text.CoreTextFieldKt.CoreTextField$lambda$14(androidx.compose.runtime.State):1514:1514 -> invoke
     217:228:boolean androidx.compose.foundation.text.CoreTextFieldKt.access$CoreTextField$lambda$14(androidx.compose.runtime.State):1 -> invoke
     217:228:boolean androidx.compose.foundation.text.CoreTextFieldKt$CoreTextField$5$1.invokeSuspend$lambda$0(androidx.compose.runtime.State):366 -> invoke
@@ -92103,13 +92103,13 @@ androidx.compose.material3.internal.AccessibilityServiceStateProvider_androidKt$
     355:357:java.lang.Object AccessibilityServiceStateProvider_androidKt$$ExternalSyntheticLambda1.invoke():0 -> invoke
     358:364:java.lang.Object AccessibilityServiceStateProvider_androidKt$$ExternalSyntheticLambda1.invoke():0:0 -> invoke
     365:366:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):57:57 -> invoke
-    365:366:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24$lambda$23$lambda$22$lambda$21(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState):111 -> invoke
+    365:366:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25$lambda$24$lambda$23$lambda$22(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState):111 -> invoke
     365:366:java.lang.Object AccessibilityServiceStateProvider_androidKt$$ExternalSyntheticLambda1.invoke():0 -> invoke
-    367:369:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):262:262 -> invoke
-    367:369:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24$lambda$23$lambda$22$lambda$21(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState):111 -> invoke
+    367:369:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):263:263 -> invoke
+    367:369:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25$lambda$24$lambda$23$lambda$22(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState):111 -> invoke
     367:369:java.lang.Object AccessibilityServiceStateProvider_androidKt$$ExternalSyntheticLambda1.invoke():0 -> invoke
-    370:375:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$16(androidx.compose.runtime.MutableIntState,int):271:271 -> invoke
-    370:375:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24$lambda$23$lambda$22$lambda$21(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState):111 -> invoke
+    370:375:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$16(androidx.compose.runtime.MutableIntState,int):272:272 -> invoke
+    370:375:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25$lambda$24$lambda$23$lambda$22(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState):111 -> invoke
     370:375:java.lang.Object AccessibilityServiceStateProvider_androidKt$$ExternalSyntheticLambda1.invoke():0 -> invoke
     376:379:java.lang.Object AccessibilityServiceStateProvider_androidKt$$ExternalSyntheticLambda1.invoke():0:0 -> invoke
     380:381:kotlin.jvm.functions.Function1 androidx.compose.foundation.text.contextmenu.data.TextContextMenuItem.getOnClick():41:41 -> invoke
@@ -116786,59 +116786,59 @@ androidx.compose.runtime.internal.AwaiterQueue$$ExternalSyntheticLambda0 -> wb:
     695:697:kotlin.Unit androidx.compose.runtime.GapComposer.insertMovableContentGuarded$lambda$0$0$0$0(androidx.compose.runtime.GapComposer,androidx.compose.runtime.composer.gapbuffer.changelist.ChangeList,androidx.compose.runtime.composer.gapbuffer.SlotReader,androidx.compose.runtime.MovableContentStateReference):3839:3839 -> invoke
     695:697:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
     698:703:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0:0 -> invoke
-    704:711:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$15(androidx.compose.runtime.MutableIntState):270:270 -> invoke
-    704:711:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):126 -> invoke
+    704:711:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$15(androidx.compose.runtime.MutableIntState):271:271 -> invoke
+    704:711:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):126 -> invoke
     704:711:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    712:714:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$16(androidx.compose.runtime.MutableIntState,int):271:271 -> invoke
-    712:714:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):126 -> invoke
+    712:714:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$16(androidx.compose.runtime.MutableIntState,int):272:272 -> invoke
+    712:714:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):126 -> invoke
     712:714:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    715:726:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$15(androidx.compose.runtime.MutableIntState):270:270 -> invoke
-    715:726:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):127 -> invoke
+    715:726:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$15(androidx.compose.runtime.MutableIntState):271:271 -> invoke
+    715:726:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):127 -> invoke
     715:726:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    727:735:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):146:146 -> invoke
+    727:735:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):146:146 -> invoke
     727:735:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
     736:737:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):57:57 -> invoke
-    736:737:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):147 -> invoke
+    736:737:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):147 -> invoke
     736:737:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    738:740:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):262:262 -> invoke
-    738:740:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):147 -> invoke
+    738:740:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$4(androidx.compose.runtime.MutableState,boolean):263:263 -> invoke
+    738:740:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):147 -> invoke
     738:740:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    741:745:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$16(androidx.compose.runtime.MutableIntState,int):271:271 -> invoke
-    741:745:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):148 -> invoke
+    741:745:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$16(androidx.compose.runtime.MutableIntState,int):272:272 -> invoke
+    741:745:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):148 -> invoke
     741:745:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    746:756:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):144:144 -> invoke
+    746:756:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):144:144 -> invoke
     746:756:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    757:767:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):143:143 -> invoke
+    757:767:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):143:143 -> invoke
     757:767:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    768:778:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):142:142 -> invoke
+    768:778:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):142:142 -> invoke
     768:778:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    779:789:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):141:141 -> invoke
+    779:789:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):141:141 -> invoke
     779:789:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    790:800:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):140:140 -> invoke
+    790:800:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):140:140 -> invoke
     790:800:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    801:811:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):139:139 -> invoke
+    801:811:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):139:139 -> invoke
     801:811:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    812:822:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):138:138 -> invoke
+    812:822:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):138:138 -> invoke
     812:822:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    823:836:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):137:137 -> invoke
+    823:836:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):137:137 -> invoke
     823:836:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    837:848:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):136:136 -> invoke
+    837:848:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):136:136 -> invoke
     837:848:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    849:860:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):135:135 -> invoke
+    849:860:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):135:135 -> invoke
     849:860:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    861:872:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):134:134 -> invoke
+    861:872:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):134:134 -> invoke
     861:872:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    873:882:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):133:133 -> invoke
+    873:882:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):133:133 -> invoke
     873:882:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    883:892:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):132:132 -> invoke
+    883:892:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):132:132 -> invoke
     883:892:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    893:902:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):131:131 -> invoke
+    893:902:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):131:131 -> invoke
     893:902:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    903:913:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):130:130 -> invoke
+    903:913:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):130:130 -> invoke
     903:913:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    914:923:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):129:129 -> invoke
+    914:923:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):129:129 -> invoke
     914:923:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
-    924:933:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$27$lambda$26(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):128:128 -> invoke
+    924:933:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$28$lambda$27(android.content.Context,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.MutableState):128:128 -> invoke
     924:933:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0 -> invoke
     934:942:java.lang.Object AwaiterQueue$$ExternalSyntheticLambda0.invoke():0:0 -> invoke
     943:944:androidx.compose.foundation.gestures.BringIntoViewRequestPriorityQueue androidx.compose.foundation.gestures.ContentInViewNode.access$getBringIntoViewRequests$p(androidx.compose.foundation.gestures.ContentInViewNode):63:63 -> invoke
@@ -164148,7 +164148,7 @@ androidx.compose.ui.platform.AndroidComposeView$Companion$$ExternalSyntheticLamb
       # {"id":"com.android.tools.r8.synthesized"}
     1:1:void AndroidComposeView$Companion$$ExternalSyntheticLambda2.<init>(byte):0:0 -> <init>
       # {"id":"com.android.tools.r8.synthesized"}
-    7:17:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35$lambda$34():178:178 -> run
+    7:17:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36$lambda$35():178:178 -> run
     7:17:void AndroidComposeView$Companion$$ExternalSyntheticLambda2.run():0 -> run
       # {"id":"com.android.tools.r8.synthesized"}
     18:22:void AndroidComposeView$Companion$$ExternalSyntheticLambda2.run():0:0 -> run
@@ -219705,320 +219705,320 @@ foss.chillastro.root.checker.EasterEggsKt$$ExternalSyntheticLambda12 -> lx:
     1:1:void EasterEggsKt$$ExternalSyntheticLambda12.<init>(android.content.Context,MutableIntState,byte):0:0 -> <init>
       # {"id":"com.android.tools.r8.synthesized"}
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/content/Context;Lgs0;B)V"}
-    15:21:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    15:21:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):168 -> invoke
+    15:21:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    15:21:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):168 -> invoke
       # {"id":"com.android.tools.r8.residualsignature","signature":"()Ljava/lang/Object;"}
-    22:24:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$12(androidx.compose.runtime.MutableIntState,int):268:268 -> invoke
-    22:24:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):168 -> invoke
-    25:30:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    25:30:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):169 -> invoke
-    31:39:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):169:169 -> invoke
-    40:47:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    40:47:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):170 -> invoke
-    48:56:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):170:170 -> invoke
-    57:64:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    57:64:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):171 -> invoke
-    65:73:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):171:171 -> invoke
-    74:81:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    74:81:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):172 -> invoke
-    82:90:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):172:172 -> invoke
-    91:98:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    91:98:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):173 -> invoke
-    99:107:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):173:173 -> invoke
-    108:115:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    108:115:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):174 -> invoke
-    116:124:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):174:174 -> invoke
-    125:132:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    125:132:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):175 -> invoke
-    133:141:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):175:175 -> invoke
-    142:149:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):267:267 -> invoke
-    142:149:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):176 -> invoke
-    150:158:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):177:177 -> invoke
-    159:178:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$36$lambda$35(android.content.Context,androidx.compose.runtime.MutableIntState):178:178 -> invoke
-    179:185:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$7(androidx.compose.runtime.MutableIntState):264:264 -> invoke
-    179:185:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$31$lambda$30(android.content.Context,androidx.compose.runtime.MutableIntState):157 -> invoke
-    186:188:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$8(androidx.compose.runtime.MutableIntState,int):265:265 -> invoke
-    186:188:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$31$lambda$30(android.content.Context,androidx.compose.runtime.MutableIntState):157 -> invoke
-    189:194:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$7(androidx.compose.runtime.MutableIntState):264:264 -> invoke
-    189:194:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$31$lambda$30(android.content.Context,androidx.compose.runtime.MutableIntState):157 -> invoke
-    195:203:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$31$lambda$30(android.content.Context,androidx.compose.runtime.MutableIntState):158:158 -> invoke
-    204:208:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$8(androidx.compose.runtime.MutableIntState,int):265:265 -> invoke
-    204:208:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$31$lambda$30(android.content.Context,androidx.compose.runtime.MutableIntState):159 -> invoke
-foss.chillastro.root.checker.EasterEggsKt$$ExternalSyntheticLambda14 -> mx:
+    22:24:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$12(androidx.compose.runtime.MutableIntState,int):269:269 -> invoke
+    22:24:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):168 -> invoke
+    25:30:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    25:30:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):169 -> invoke
+    31:39:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):169:169 -> invoke
+    40:47:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    40:47:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):170 -> invoke
+    48:56:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):170:170 -> invoke
+    57:64:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    57:64:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):171 -> invoke
+    65:73:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):171:171 -> invoke
+    74:81:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    74:81:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):172 -> invoke
+    82:90:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):172:172 -> invoke
+    91:98:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    91:98:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):173 -> invoke
+    99:107:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):173:173 -> invoke
+    108:115:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    108:115:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):174 -> invoke
+    116:124:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):174:174 -> invoke
+    125:132:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    125:132:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):175 -> invoke
+    133:141:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):175:175 -> invoke
+    142:149:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$11(androidx.compose.runtime.MutableIntState):268:268 -> invoke
+    142:149:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):176 -> invoke
+    150:158:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):177:177 -> invoke
+    159:178:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37$lambda$36(android.content.Context,androidx.compose.runtime.MutableIntState):178:178 -> invoke
+    179:185:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$7(androidx.compose.runtime.MutableIntState):265:265 -> invoke
+    179:185:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$32$lambda$31(android.content.Context,androidx.compose.runtime.MutableIntState):157 -> invoke
+    186:188:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$8(androidx.compose.runtime.MutableIntState,int):266:266 -> invoke
+    186:188:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$32$lambda$31(android.content.Context,androidx.compose.runtime.MutableIntState):157 -> invoke
+    189:194:int foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$7(androidx.compose.runtime.MutableIntState):265:265 -> invoke
+    189:194:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$32$lambda$31(android.content.Context,androidx.compose.runtime.MutableIntState):157 -> invoke
+    195:203:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$32$lambda$31(android.content.Context,androidx.compose.runtime.MutableIntState):158:158 -> invoke
+    204:208:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$8(androidx.compose.runtime.MutableIntState,int):266:266 -> invoke
+    204:208:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$32$lambda$31(android.content.Context,androidx.compose.runtime.MutableIntState):159 -> invoke
+foss.chillastro.root.checker.EasterEggsKt$$ExternalSyntheticLambda13 -> mx:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
-    byte EasterEggsKt$$ExternalSyntheticLambda14.$r8$classId -> f
+    byte EasterEggsKt$$ExternalSyntheticLambda13.$r8$classId -> f
       # {"id":"com.android.tools.r8.synthesized"}
-    androidx.compose.runtime.MutableState foss.chillastro.root.checker.EasterEggsKt$$InternalSyntheticLambda$9$a5cc056fc606af9d75b3dda4f52a872fae08e1f37db389ccd10869527395cb06$0.f$0 -> g
+    androidx.compose.runtime.MutableState foss.chillastro.root.checker.EasterEggsKt$$InternalSyntheticLambda$9$bc5797c9058cc2745d8ef8ce17eac32c18158bb09ce960482da6d85136eb6da1$0.f$0 -> g
       # {"id":"com.android.tools.r8.residualsignature","signature":"Lct0;"}
       # {"id":"com.android.tools.r8.synthesized"}
-    androidx.compose.runtime.MutableIntState foss.chillastro.root.checker.EasterEggsKt$$InternalSyntheticLambda$9$a5cc056fc606af9d75b3dda4f52a872fae08e1f37db389ccd10869527395cb06$0.f$1 -> h
+    androidx.compose.runtime.MutableIntState foss.chillastro.root.checker.EasterEggsKt$$InternalSyntheticLambda$9$bc5797c9058cc2745d8ef8ce17eac32c18158bb09ce960482da6d85136eb6da1$0.f$1 -> h
       # {"id":"com.android.tools.r8.residualsignature","signature":"Lgs0;"}
       # {"id":"com.android.tools.r8.synthesized"}
-    1:1:void EasterEggsKt$$ExternalSyntheticLambda14.<init>(MutableState,MutableIntState,byte):0:0 -> <init>
+    1:1:void EasterEggsKt$$ExternalSyntheticLambda13.<init>(MutableState,MutableIntState,byte):0:0 -> <init>
       # {"id":"com.android.tools.r8.synthesized"}
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lct0;Lgs0;B)V"}
-    41:48:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):0:0 -> invoke
-    41:48:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    41:48:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):0:0 -> invoke
+    41:48:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
       # {"id":"com.android.tools.r8.synthesized"}
     49:50:androidx.compose.runtime.ProvidableCompositionLocal androidx.compose.material3.MaterialThemeKt.access$get_localMaterialTheme$p():1:1 -> invoke
     49:50:androidx.compose.runtime.CompositionLocal androidx.compose.material3.MaterialTheme.getLocalMaterialTheme():163 -> invoke
     49:50:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme.getShapes(androidx.compose.runtime.Composer,int):146 -> invoke
-    49:50:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):77 -> invoke
-    49:50:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    49:50:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):77 -> invoke
+    49:50:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     51:56:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme.getShapes(androidx.compose.runtime.Composer,int):298:298 -> invoke
-    51:56:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):77 -> invoke
-    51:56:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    51:56:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):77 -> invoke
+    51:56:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     57:58:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme$Values.getShapes():180:180 -> invoke
     57:58:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme.getShapes(androidx.compose.runtime.Composer,int):146 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    57:58:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):77 -> invoke
-    57:58:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    57:58:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):77 -> invoke
+    57:58:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     59:60:androidx.compose.foundation.shape.CornerBasedShape androidx.compose.material3.Shapes.getExtraLarge():88:88 -> invoke
-    59:60:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):77 -> invoke
+    59:60:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):77 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    59:60:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    59:60:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     61:66:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):296:296 -> invoke
-    61:66:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):78 -> invoke
-    61:66:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    61:66:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):78 -> invoke
+    61:66:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     67:68:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme$Values.getColorScheme():178:178 -> invoke
     67:68:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    67:68:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):78 -> invoke
-    67:68:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    67:68:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):78 -> invoke
+    67:68:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     69:72:long androidx.compose.material3.ColorScheme.getSurface-0d7_KjU():166:166 -> invoke
-    69:72:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):78 -> invoke
+    69:72:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):78 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    69:72:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    73:80:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):80:80 -> invoke
-    73:80:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    81:107:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):81:81 -> invoke
-    81:107:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    108:113:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):76:76 -> invoke
-    108:113:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    114:117:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):75:75 -> invoke
-    114:117:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    118:137:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0:0 -> invoke
-    138:147:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):0:0 -> invoke
-    138:147:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    148:151:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):83:83 -> invoke
-    148:151:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    69:72:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    73:80:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):80:80 -> invoke
+    73:80:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    81:107:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):81:81 -> invoke
+    81:107:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    108:113:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):76:76 -> invoke
+    108:113:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    114:117:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):75:75 -> invoke
+    114:117:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    118:137:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0:0 -> invoke
+    138:147:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):0:0 -> invoke
+    138:147:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    148:151:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):83:83 -> invoke
+    148:151:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     152:153:androidx.compose.ui.Alignment$Horizontal androidx.compose.ui.Alignment$Companion.getCenterHorizontally():105:105 -> invoke
-    152:153:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):84 -> invoke
-    152:153:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    152:153:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):84 -> invoke
+    152:153:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     154:157:androidx.compose.foundation.layout.Arrangement$Vertical androidx.compose.foundation.layout.Arrangement.getTop():154:154 -> invoke
-    154:157:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):275 -> invoke
-    154:157:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    158:161:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):279:279 -> invoke
-    158:161:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    154:157:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):276 -> invoke
+    154:157:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    158:161:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):280:280 -> invoke
+    158:161:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     162:163:long androidx.compose.runtime.GapComposer.getCompositeKeyHashCode():596:596 -> invoke
     162:163:long androidx.compose.runtime.ComposablesKt.getCurrentCompositeKeyHashCode(androidx.compose.runtime.Composer,int):269 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    162:163:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):285 -> invoke
-    162:163:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    164:167:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):285:285 -> invoke
-    164:167:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    162:163:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):286 -> invoke
+    162:163:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    164:167:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):286:286 -> invoke
+    164:167:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     168:171:androidx.compose.runtime.CompositionLocalMap androidx.compose.runtime.GapComposer.getCurrentCompositionLocalMap():1064:1064 -> invoke
-    168:171:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):286 -> invoke
-    168:171:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    172:175:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):287:287 -> invoke
-    172:175:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    176:182:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):289:289 -> invoke
-    176:182:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    183:185:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):292:292 -> invoke
-    183:185:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    168:171:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):287 -> invoke
+    168:171:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    172:175:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):288:288 -> invoke
+    172:175:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    176:182:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):290:290 -> invoke
+    176:182:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    183:185:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):293:293 -> invoke
+    183:185:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     186:187:boolean androidx.compose.runtime.GapComposer.getInserting():577:577 -> invoke
-    186:187:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):293 -> invoke
-    186:187:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    188:191:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):293:293 -> invoke
-    188:191:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    192:195:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):294:294 -> invoke
-    192:195:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    196:198:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):296:296 -> invoke
-    196:198:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    186:187:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):294 -> invoke
+    186:187:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    188:191:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):294:294 -> invoke
+    188:191:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    192:195:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):295:295 -> invoke
+    192:195:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    196:198:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):297:297 -> invoke
+    196:198:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     199:200:kotlin.jvm.functions.Function2 androidx.compose.ui.node.ComposeUiNode$Companion.getSetMeasurePolicy():47:47 -> invoke
-    199:200:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):299 -> invoke
-    199:200:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    201:203:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):299:299 -> invoke
-    201:203:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    199:200:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):300 -> invoke
+    199:200:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    201:203:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):300:300 -> invoke
+    201:203:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     204:205:kotlin.jvm.functions.Function2 androidx.compose.ui.node.ComposeUiNode$Companion.getSetResolvedCompositionLocals():44:44 -> invoke
-    204:205:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):300 -> invoke
-    204:205:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    206:208:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):300:300 -> invoke
-    206:208:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    209:212:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):301:301 -> invoke
-    209:212:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    204:205:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):301 -> invoke
+    204:205:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    206:208:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):301:301 -> invoke
+    206:208:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    209:212:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):302:302 -> invoke
+    209:212:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     213:214:kotlin.jvm.functions.Function2 androidx.compose.ui.node.ComposeUiNode$Companion.getSetCompositeKeyHash():54:54 -> invoke
-    213:214:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):301 -> invoke
-    213:214:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    215:217:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):301:301 -> invoke
-    215:217:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    218:220:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):302:302 -> invoke
-    218:220:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    213:214:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):302 -> invoke
+    213:214:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    215:217:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):302:302 -> invoke
+    215:217:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    218:220:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):303:303 -> invoke
+    218:220:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     221:222:kotlin.jvm.functions.Function2 androidx.compose.ui.node.ComposeUiNode$Companion.getSetModifier():42:42 -> invoke
-    221:222:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):303 -> invoke
-    221:222:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    223:225:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):303:303 -> invoke
-    223:225:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    221:222:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):304 -> invoke
+    221:222:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    223:225:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):304:304 -> invoke
+    223:225:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     226:232:androidx.compose.ui.Modifier androidx.compose.foundation.layout.SizeKt.fillMaxWidth(androidx.compose.ui.Modifier,float):478:478 -> invoke
     226:232:androidx.compose.ui.Modifier androidx.compose.foundation.layout.SizeKt.fillMaxWidth$default(androidx.compose.ui.Modifier,float,int,java.lang.Object):477 -> invoke
-    226:232:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):88 -> invoke
-    226:232:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    233:236:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91:91 -> invoke
-    233:236:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    226:232:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):88 -> invoke
+    226:232:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    233:236:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91:91 -> invoke
+    233:236:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     237:246:androidx.compose.ui.graphics.Color androidx.compose.ui.graphics.Color.box-impl(long):0:0 -> invoke
-    237:246:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91 -> invoke
-    237:246:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    247:250:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91:91 -> invoke
-    247:250:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    237:246:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91 -> invoke
+    237:246:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    247:250:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91:91 -> invoke
+    247:250:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     251:260:androidx.compose.ui.graphics.Color androidx.compose.ui.graphics.Color.box-impl(long):0:0 -> invoke
-    251:260:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91 -> invoke
-    251:260:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    261:264:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91:91 -> invoke
-    261:264:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    251:260:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91 -> invoke
+    251:260:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    261:264:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91:91 -> invoke
+    261:264:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     265:269:androidx.compose.ui.graphics.Color androidx.compose.ui.graphics.Color.box-impl(long):0:0 -> invoke
-    265:269:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91 -> invoke
-    265:269:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    270:277:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91:91 -> invoke
-    270:277:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    265:269:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91 -> invoke
+    265:269:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    270:277:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):91:91 -> invoke
+    270:277:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     278:286:androidx.compose.ui.graphics.Brush androidx.compose.ui.graphics.Brush$Companion.linearGradient-mHitzGk(java.util.List,long,long,int):117:117 -> invoke
     278:286:androidx.compose.ui.graphics.Brush androidx.compose.ui.graphics.Brush$Companion.verticalGradient-8A-3gB4(java.util.List,float,float,int):222 -> invoke
     278:286:androidx.compose.ui.graphics.Brush androidx.compose.ui.graphics.Brush$Companion.verticalGradient-8A-3gB4$default(androidx.compose.ui.graphics.Brush$Companion,java.util.List,float,float,int,int,java.lang.Object):217 -> invoke
-    278:286:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):90 -> invoke
-    278:286:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    278:286:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):90 -> invoke
+    278:286:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     287:289:void androidx.compose.ui.graphics.LinearGradient.<init>(java.util.List,java.util.List,long,long,int,kotlin.jvm.internal.DefaultConstructorMarker):0:0 -> invoke
     287:289:androidx.compose.ui.graphics.Brush androidx.compose.ui.graphics.Brush$Companion.linearGradient-mHitzGk(java.util.List,long,long,int):117 -> invoke
     287:289:androidx.compose.ui.graphics.Brush androidx.compose.ui.graphics.Brush$Companion.verticalGradient-8A-3gB4(java.util.List,float,float,int):222 -> invoke
     287:289:androidx.compose.ui.graphics.Brush androidx.compose.ui.graphics.Brush$Companion.verticalGradient-8A-3gB4$default(androidx.compose.ui.graphics.Brush$Companion,java.util.List,float,float,int,int,java.lang.Object):217 -> invoke
-    287:289:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):90 -> invoke
-    287:289:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    287:289:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):90 -> invoke
+    287:289:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     290:291:androidx.compose.runtime.ProvidableCompositionLocal androidx.compose.material3.MaterialThemeKt.access$get_localMaterialTheme$p():1:1 -> invoke
     290:291:androidx.compose.runtime.CompositionLocal androidx.compose.material3.MaterialTheme.getLocalMaterialTheme():163 -> invoke
     290:291:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme.getShapes(androidx.compose.runtime.Composer,int):146 -> invoke
-    290:291:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):93 -> invoke
-    290:291:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    290:291:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):93 -> invoke
+    290:291:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     292:297:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme.getShapes(androidx.compose.runtime.Composer,int):298:298 -> invoke
-    292:297:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):93 -> invoke
-    292:297:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    292:297:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):93 -> invoke
+    292:297:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     298:299:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme$Values.getShapes():180:180 -> invoke
     298:299:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme.getShapes(androidx.compose.runtime.Composer,int):146 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    298:299:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):93 -> invoke
-    298:299:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    298:299:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):93 -> invoke
+    298:299:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     300:301:androidx.compose.foundation.shape.CornerBasedShape androidx.compose.material3.Shapes.getLarge():87:87 -> invoke
-    300:301:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):93 -> invoke
+    300:301:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):93 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    300:301:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    302:307:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):89:89 -> invoke
-    302:307:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    308:311:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):95:95 -> invoke
-    308:311:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    300:301:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    302:307:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):89:89 -> invoke
+    302:307:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    308:311:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):95:95 -> invoke
+    308:311:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     312:314:androidx.compose.ui.Alignment androidx.compose.ui.Alignment$Companion.getCenter():92:92 -> invoke
-    312:314:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):96 -> invoke
-    312:314:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    315:318:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):311:311 -> invoke
-    315:318:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    312:314:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):96 -> invoke
+    312:314:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    315:318:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):312:312 -> invoke
+    315:318:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     319:320:long androidx.compose.runtime.GapComposer.getCompositeKeyHashCode():596:596 -> invoke
     319:320:long androidx.compose.runtime.ComposablesKt.getCurrentCompositeKeyHashCode(androidx.compose.runtime.Composer,int):269 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    319:320:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):317 -> invoke
-    319:320:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    321:324:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):317:317 -> invoke
-    321:324:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    319:320:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):318 -> invoke
+    319:320:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    321:324:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):318:318 -> invoke
+    321:324:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     325:328:androidx.compose.runtime.CompositionLocalMap androidx.compose.runtime.GapComposer.getCurrentCompositionLocalMap():1064:1064 -> invoke
-    325:328:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):318 -> invoke
-    325:328:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    329:332:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):319:319 -> invoke
-    329:332:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    333:337:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):324:324 -> invoke
-    333:337:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    325:328:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):319 -> invoke
+    325:328:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    329:332:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):320:320 -> invoke
+    329:332:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    333:337:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):325:325 -> invoke
+    333:337:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     338:341:boolean androidx.compose.runtime.GapComposer.getInserting():577:577 -> invoke
-    338:341:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):325 -> invoke
-    338:341:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    342:345:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):326:326 -> invoke
-    342:345:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    346:348:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):328:328 -> invoke
-    346:348:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    349:351:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):331:331 -> invoke
-    349:351:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    352:354:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):332:332 -> invoke
-    352:354:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    355:357:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0:0 -> invoke
-    358:360:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):335:335 -> invoke
-    358:360:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    338:341:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):326 -> invoke
+    338:341:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    342:345:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):327:327 -> invoke
+    342:345:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    346:348:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):329:329 -> invoke
+    346:348:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    349:351:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):332:332 -> invoke
+    349:351:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    352:354:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):333:333 -> invoke
+    352:354:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    355:357:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0:0 -> invoke
+    358:360:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):336:336 -> invoke
+    358:360:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     361:366:androidx.compose.material3.Typography androidx.compose.material3.MaterialTheme.getTypography(androidx.compose.runtime.Composer,int):297:297 -> invoke
-    361:366:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):100 -> invoke
-    361:366:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    361:366:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):100 -> invoke
+    361:366:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     367:368:androidx.compose.material3.Typography androidx.compose.material3.MaterialTheme$Values.getTypography():179:179 -> invoke
     367:368:androidx.compose.material3.Typography androidx.compose.material3.MaterialTheme.getTypography(androidx.compose.runtime.Composer,int):138 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    367:368:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):100 -> invoke
-    367:368:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    367:368:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):100 -> invoke
+    367:368:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     369:370:androidx.compose.ui.text.TextStyle androidx.compose.material3.Typography.getTitleMedium():119:119 -> invoke
-    369:370:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):100 -> invoke
+    369:370:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):100 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    369:370:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    369:370:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     371:374:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight.access$getBold$cp():30:30 -> invoke
     371:374:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight$Companion.getBold():66 -> invoke
-    371:374:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):101 -> invoke
-    371:374:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    375:378:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):102:102 -> invoke
-    375:378:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    371:374:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):101 -> invoke
+    371:374:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    375:378:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):102:102 -> invoke
+    375:378:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     379:390:long androidx.compose.ui.graphics.Color.access$getBlack$cp():113:113 -> invoke
     379:390:long androidx.compose.ui.graphics.Color$Companion.getBlack-0d7_KjU():260 -> invoke
-    379:390:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):103 -> invoke
-    379:390:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    391:394:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):100:100 -> invoke
-    391:394:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    379:390:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):103 -> invoke
+    379:390:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    391:394:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):100:100 -> invoke
+    391:394:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     395:405:androidx.compose.ui.text.style.TextAlign androidx.compose.ui.text.style.TextAlign.box-impl(int):0:0 -> invoke
-    395:405:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):105 -> invoke
-    395:405:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    406:438:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):98:98 -> invoke
-    406:438:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    395:405:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):105 -> invoke
+    395:405:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    406:438:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):98:98 -> invoke
+    406:438:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     439:443:void androidx.compose.runtime.GapComposer.endNode():710:710 -> invoke
-    439:443:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):338 -> invoke
-    439:443:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    444:450:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):108:108 -> invoke
-    444:450:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    439:443:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):339 -> invoke
+    439:443:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    444:450:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):108:108 -> invoke
+    444:450:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     451:456:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme.getShapes(androidx.compose.runtime.Composer,int):298:298 -> invoke
-    451:456:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):112 -> invoke
-    451:456:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    451:456:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):112 -> invoke
+    451:456:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     457:458:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme$Values.getShapes():180:180 -> invoke
     457:458:androidx.compose.material3.Shapes androidx.compose.material3.MaterialTheme.getShapes(androidx.compose.runtime.Composer,int):146 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    457:458:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):112 -> invoke
-    457:458:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    457:458:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):112 -> invoke
+    457:458:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     459:461:androidx.compose.foundation.shape.CornerBasedShape androidx.compose.material3.Shapes.getMedium():86:86 -> invoke
-    459:461:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):112 -> invoke
+    459:461:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):112 -> invoke
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    459:461:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    462:465:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):112:112 -> invoke
-    462:465:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    466:474:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):111:111 -> invoke
-    466:474:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    475:480:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):343:343 -> invoke
-    475:480:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    459:461:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    462:465:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):112:112 -> invoke
+    462:465:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    466:474:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):111:111 -> invoke
+    466:474:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    475:480:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):344:344 -> invoke
+    475:480:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     481:484:java.lang.Object androidx.compose.runtime.Composer$Companion.getEmpty():942:942 -> invoke
-    481:484:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):344 -> invoke
-    481:484:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    485:491:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):111:111 -> invoke
-    485:491:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    492:494:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):346:346 -> invoke
-    492:494:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    495:497:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):111:111 -> invoke
-    495:497:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    481:484:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):345 -> invoke
+    481:484:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    485:491:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):111:111 -> invoke
+    485:491:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    492:494:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):347:347 -> invoke
+    492:494:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    495:497:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):111:111 -> invoke
+    495:497:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     498:514:kotlin.jvm.functions.Function3 foss.chillastro.root.checker.ComposableSingletons$EasterEggsKt.getLambda$-441698056$app():0:0 -> invoke
-    498:514:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):110 -> invoke
-    498:514:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    515:518:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):109:109 -> invoke
-    515:518:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    498:514:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):110 -> invoke
+    498:514:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    515:518:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):109:109 -> invoke
+    515:518:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     519:522:void androidx.compose.runtime.GapComposer.endNode():710:710 -> invoke
-    519:522:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):349 -> invoke
-    519:522:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    523:529:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):291:291 -> invoke
-    523:529:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
-    530:534:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$25$lambda$24(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):81:81 -> invoke
-    530:534:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda14.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    519:522:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):350 -> invoke
+    519:522:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    523:529:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):292:292 -> invoke
+    523:529:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
+    530:534:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$26$lambda$25(androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableIntState,androidx.compose.runtime.Composer,int):81:81 -> invoke
+    530:534:java.lang.Object EasterEggsKt$$ExternalSyntheticLambda13.invoke(java.lang.Object,java.lang.Object):0 -> invoke
 foss.chillastro.root.checker.ExpressiveComponentsKt$$ExternalSyntheticLambda0 -> s00:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
@@ -243164,102 +243164,106 @@ kotlinx.coroutines.BuildersKt__Builders_commonKt -> tg:
     194:208:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):69:69 -> h
     209:210:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):71:71 -> h
     211:213:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):218:218 -> h
-    214:215:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):63:63 -> h
-    216:230:boolean foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$3(androidx.compose.runtime.MutableState):261:261 -> h
-    216:230:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):74 -> h
-    231:233:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):74:74 -> h
-    234:237:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):75:75 -> h
-    238:245:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):221:221 -> h
-    246:251:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):75:75 -> h
-    252:254:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):224:224 -> h
-    255:287:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):75:75 -> h
-    288:297:void androidx.compose.runtime.GapComposer.endGroup():658:658 -> h
-    288:297:void androidx.compose.runtime.GapComposer.endReplaceGroup():398 -> h
-    288:297:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):74 -> h
-    298:304:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):74:74 -> h
-    305:308:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):122:122 -> h
-    309:310:androidx.compose.runtime.ProvidableCompositionLocal androidx.compose.material3.MaterialThemeKt.access$get_localMaterialTheme$p():1:1 -> h
-    309:310:androidx.compose.runtime.CompositionLocal androidx.compose.material3.MaterialTheme.getLocalMaterialTheme():163 -> h
-    309:310:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> h
-    309:310:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):124 -> h
-    311:316:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):296:296 -> h
-    311:316:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):124 -> h
-    317:318:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme$Values.getColorScheme():178:178 -> h
-    317:318:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> h
+    214:217:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):63:63 -> h
+    218:219:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):72:72 -> h
+    220:227:boolean kotlin.text.StringsKt__StringsJVMKt.startsWith(java.lang.String,java.lang.String,boolean):440:440 -> h
+    220:227:boolean kotlin.text.StringsKt__StringsJVMKt.startsWith$default(java.lang.String,java.lang.String,boolean,int,java.lang.Object):438 -> h
+    220:227:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):72 -> h
+    228:231:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):72:72 -> h
+    232:246:boolean foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$3(androidx.compose.runtime.MutableState):262:262 -> h
+    232:246:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):74 -> h
+    247:249:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):74:74 -> h
+    250:253:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):75:75 -> h
+    254:261:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):222:222 -> h
+    262:267:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):75:75 -> h
+    268:270:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):225:225 -> h
+    271:303:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):75:75 -> h
+    304:313:void androidx.compose.runtime.GapComposer.endGroup():658:658 -> h
+    304:313:void androidx.compose.runtime.GapComposer.endReplaceGroup():398 -> h
+    304:313:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):74 -> h
+    314:320:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):74:74 -> h
+    321:324:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):122:122 -> h
+    325:326:androidx.compose.runtime.ProvidableCompositionLocal androidx.compose.material3.MaterialThemeKt.access$get_localMaterialTheme$p():1:1 -> h
+    325:326:androidx.compose.runtime.CompositionLocal androidx.compose.material3.MaterialTheme.getLocalMaterialTheme():163 -> h
+    325:326:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> h
+    325:326:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):124 -> h
+    327:332:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):296:296 -> h
+    327:332:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):124 -> h
+    333:334:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme$Values.getColorScheme():178:178 -> h
+    333:334:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> h
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    317:318:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):124 -> h
-    319:322:long androidx.compose.material3.ColorScheme.getPrimary-0d7_KjU():151:151 -> h
-    319:322:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):124 -> h
+    333:334:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):124 -> h
+    335:338:long androidx.compose.material3.ColorScheme.getPrimary-0d7_KjU():151:151 -> h
+    335:338:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):124 -> h
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    323:344:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):125:125 -> h
-    345:355:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):228:228 -> h
-    356:363:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):125:125 -> h
-    364:366:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):231:231 -> h
-    367:403:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):125:125 -> h
-    404:413:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):121:121 -> h
-    414:418:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):234:234 -> h
-    419:425:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154:154 -> h
-    426:431:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):296:296 -> h
-    426:431:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154 -> h
-    432:433:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme$Values.getColorScheme():178:178 -> h
-    432:433:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> h
+    339:360:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):125:125 -> h
+    361:371:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):229:229 -> h
+    372:379:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):125:125 -> h
+    380:382:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):232:232 -> h
+    383:419:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):125:125 -> h
+    420:429:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):121:121 -> h
+    430:434:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):235:235 -> h
+    435:441:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154:154 -> h
+    442:447:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):296:296 -> h
+    442:447:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154 -> h
+    448:449:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme$Values.getColorScheme():178:178 -> h
+    448:449:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> h
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    432:433:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154 -> h
-    434:466:long androidx.compose.material3.ColorScheme.getPrimary-0d7_KjU():151:151 -> h
-    434:466:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154 -> h
+    448:449:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154 -> h
+    450:482:long androidx.compose.material3.ColorScheme.getPrimary-0d7_KjU():151:151 -> h
+    450:482:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154 -> h
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    467:471:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154:154 -> h
-    472:475:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):235:235 -> h
-    476:480:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154:154 -> h
-    481:483:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):239:239 -> h
-    484:488:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):234:234 -> h
-    489:491:void androidx.compose.runtime.GapComposer.endGroup():658:658 -> h
-    489:491:void androidx.compose.runtime.GapComposer.endReplaceGroup():398 -> h
-    489:491:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154 -> h
-    492:496:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight.access$getExtraBold$cp():30:30 -> h
-    492:496:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight$Companion.getExtraBold():68 -> h
-    492:496:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):155 -> h
-    497:509:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):156:156 -> h
-    510:517:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):242:242 -> h
-    518:523:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):156:156 -> h
-    524:526:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):245:245 -> h
-    527:595:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):156:156 -> h
-    596:606:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):153:153 -> h
-    607:611:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):248:248 -> h
-    612:618:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165:165 -> h
-    619:624:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):296:296 -> h
-    619:624:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
-    625:626:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme$Values.getColorScheme():178:178 -> h
-    625:626:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> h
+    483:487:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154:154 -> h
+    488:491:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):236:236 -> h
+    492:496:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154:154 -> h
+    497:499:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):240:240 -> h
+    500:504:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):235:235 -> h
+    505:507:void androidx.compose.runtime.GapComposer.endGroup():658:658 -> h
+    505:507:void androidx.compose.runtime.GapComposer.endReplaceGroup():398 -> h
+    505:507:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):154 -> h
+    508:512:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight.access$getExtraBold$cp():30:30 -> h
+    508:512:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight$Companion.getExtraBold():68 -> h
+    508:512:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):155 -> h
+    513:525:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):156:156 -> h
+    526:533:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):243:243 -> h
+    534:539:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):156:156 -> h
+    540:542:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):246:246 -> h
+    543:611:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):156:156 -> h
+    612:622:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):153:153 -> h
+    623:627:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):249:249 -> h
+    628:634:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165:165 -> h
+    635:640:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):296:296 -> h
+    635:640:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
+    641:642:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme$Values.getColorScheme():178:178 -> h
+    641:642:androidx.compose.material3.ColorScheme androidx.compose.material3.MaterialTheme.getColorScheme(androidx.compose.runtime.Composer,int):130 -> h
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    625:626:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
-    627:659:long androidx.compose.material3.ColorScheme.getPrimary-0d7_KjU():151:151 -> h
-    627:659:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
+    641:642:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
+    643:675:long androidx.compose.material3.ColorScheme.getPrimary-0d7_KjU():151:151 -> h
+    643:675:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    660:664:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165:165 -> h
-    665:668:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):249:249 -> h
-    669:675:androidx.compose.ui.text.AnnotatedString$Builder androidx.compose.ui.text.AnnotatedString$Builder.append(java.lang.CharSequence):499:499 -> h
-    669:675:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
-    676:678:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):253:253 -> h
-    679:683:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):248:248 -> h
-    684:686:void androidx.compose.runtime.GapComposer.endGroup():658:658 -> h
-    684:686:void androidx.compose.runtime.GapComposer.endReplaceGroup():398 -> h
-    684:686:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
-    687:690:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight.access$getBold$cp():30:30 -> h
-    687:690:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight$Companion.getBold():66 -> h
-    687:690:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):166 -> h
-    691:701:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):167:167 -> h
-    702:711:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):255:255 -> h
-    712:717:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):167:167 -> h
-    718:720:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):258:258 -> h
-    721:762:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):167:167 -> h
-    763:767:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):164:164 -> h
-    768:772:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):253:253 -> h
-    773:778:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):239:239 -> h
-    779:781:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):52:52 -> h
-    782:795:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):182:182 -> h
-    796:798:void androidx.compose.runtime.RecomposeScopeImpl.updateScope(kotlin.jvm.functions.Function2):249:249 -> h
-    796:798:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):182 -> h
+    676:680:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165:165 -> h
+    681:686:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):250:250 -> h
+    687:689:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165:165 -> h
+    690:692:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):254:254 -> h
+    693:697:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):249:249 -> h
+    698:700:void androidx.compose.runtime.GapComposer.endGroup():658:658 -> h
+    698:700:void androidx.compose.runtime.GapComposer.endReplaceGroup():398 -> h
+    698:700:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):165 -> h
+    701:704:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight.access$getBold$cp():30:30 -> h
+    701:704:androidx.compose.ui.text.font.FontWeight androidx.compose.ui.text.font.FontWeight$Companion.getBold():66 -> h
+    701:704:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):166 -> h
+    705:715:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):167:167 -> h
+    716:725:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):256:256 -> h
+    726:731:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):167:167 -> h
+    732:734:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):259:259 -> h
+    735:776:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):167:167 -> h
+    777:781:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):164:164 -> h
+    782:786:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):254:254 -> h
+    787:792:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):240:240 -> h
+    793:795:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):52:52 -> h
+    796:809:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):182:182 -> h
+    810:812:void androidx.compose.runtime.RecomposeScopeImpl.updateScope(kotlin.jvm.functions.Function2):249:249 -> h
+    810:812:void foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader(androidx.compose.runtime.Composer,int):182 -> h
     5:7:long androidx.compose.ui.input.key.Key_androidKt.Key(int):1461:1461 -> i
     1:71:void androidx.compose.foundation.lazy.layout.LazyLayoutItemContentFactoryKt.SkippableItem-JVlU9Rs(androidx.compose.foundation.lazy.layout.LazyLayoutItemProvider,java.lang.Object,int,java.lang.Object,androidx.compose.runtime.Composer,int):125:125 -> j
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Leh0;Ljava/lang/Object;ILjava/lang/Object;Lzm;I)V"}
@@ -244729,7 +244733,7 @@ kotlinx.coroutines.CoroutineContextKt$$ExternalSyntheticLambda1 -> eq:
     694:697:boolean kotlinx.coroutines.flow.FlowKt__DistinctKt.defaultAreEquivalent$lambda$1$FlowKt__DistinctKt(java.lang.Object,java.lang.Object):44:44 -> invoke
     694:697:java.lang.Object CoroutineContextKt$$ExternalSyntheticLambda1.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     698:722:java.lang.Object CoroutineContextKt$$ExternalSyntheticLambda1.invoke(java.lang.Object,java.lang.Object):0:0 -> invoke
-    723:730:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$37(int,androidx.compose.runtime.Composer,int):0:0 -> invoke
+    723:730:kotlin.Unit foss.chillastro.root.checker.EasterEggsKt.EasterEggsHeader$lambda$38(int,androidx.compose.runtime.Composer,int):0:0 -> invoke
     723:730:java.lang.Object CoroutineContextKt$$ExternalSyntheticLambda1.invoke(java.lang.Object,java.lang.Object):0 -> invoke
     731:738:java.lang.Object CoroutineContextKt$$ExternalSyntheticLambda1.invoke(java.lang.Object,java.lang.Object):0:0 -> invoke
     739:743:kotlin.coroutines.CoroutineContext kotlinx.coroutines.CoroutineContextKt.foldCopies$lambda$2(kotlin.coroutines.CoroutineContext,kotlin.coroutines.CoroutineContext$Element):81:81 -> invoke
