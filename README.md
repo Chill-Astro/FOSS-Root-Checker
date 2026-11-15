@@ -8,7 +8,7 @@
 
 FOSS Root Checker is an **Open-Source** ***Root Checker*** **ANDROID APP** for **Verifying Superuser Access** and **Busybox Verification** for Magisk, KernelSU, APatch & Older Methods on Mobile Devices.
 
-**App Version** : `v37.24.4.1`
+**App Version** : `v37.24.4.2` & `v37.24.4.2o`
 
 **Codename** : `FRC-SU`
 
@@ -76,7 +76,7 @@ For Privacy of course! Let me break this down in simple terms :
 
 <H2>
 
-v`37`.`24`.`4`.`1`
+v`37`.`24`.`4`.`2` `o`
 
 </H2>
 
@@ -85,7 +85,8 @@ v`37`.`24`.`4`.`1`
 - `37` -> Target Android API Level
 - `24` -> Minimum Android Version to Install App
 - `4` -> Major Update
-- `1` -> Minor Update
+- `2` -> Minor Update
+- 'o' -> Offline Version Indicator
 
 ---
 

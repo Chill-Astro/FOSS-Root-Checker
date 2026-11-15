@@ -20,11 +20,13 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
@@ -479,14 +481,14 @@ fun UpdateSettings(monochrome: Boolean) {
     Card(
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().height(80.dp),
     ) {
-        ListItem(
-            content = { Text("Check for Updates") },
-            leadingContent = { Icon(Icons.Rounded.Refresh, null) },
-            trailingContent = { ExpressiveSwitch(checked = model.automatic, onCheckedChange = model::updateAutomaticChecks) },
-            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-        )
+        Row(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+            GuidePointIcon(Icons.Rounded.Refresh, iconSize = 20.dp)
+            Spacer(Modifier.width(16.dp))
+            Text("Check for Updates", modifier = Modifier.weight(1f))
+            ExpressiveSwitch(checked = model.automatic, onCheckedChange = model::updateAutomaticChecks)
+        }
     }
     Spacer(Modifier.height(16.dp))
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {

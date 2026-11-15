@@ -92,6 +92,8 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalBottomSheetProperties
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShortNavigationBar
 import androidx.compose.material3.ShortNavigationBarItem
@@ -909,70 +911,69 @@ fun Settings(
             Card(
                 shape = MaterialTheme.shapes.large,
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().height(80.dp),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
             ) {
-                ListItem(
-                    content = { Text("Theme", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
-                    leadingContent = { Icon(Icons.Rounded.Palette, null, tint = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
-                    trailingContent = {
-                        ExposedDropdownMenuBox(
-                            expanded = expanded,
-                            onExpandedChange = { if (!monochrome) expanded = !expanded },
-                            modifier = Modifier.width(130.dp).padding(end = 4.dp)
-                        ) {
-                                TextField(
-                                    value = when (themeMode) { 1 -> "Light"; 2 -> "Dark"; else -> "System" },
-                                    onValueChange = {},
-                                    readOnly = true,
-                                    enabled = !monochrome,
-                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                                    colors = ExposedDropdownMenuDefaults.textFieldColors(unfocusedContainerColor = Color.Transparent, focusedContainerColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent, focusedIndicatorColor = Color.Transparent),
-                                    modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = !monochrome),
-                                    textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp)
-                                )
-                                ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                                    DropdownMenuItem(text = { Text("System") }, onClick = { onThemeChange(0); expanded = false })
-                                    DropdownMenuItem(text = { Text("Light") }, onClick = { onThemeChange(1); expanded = false })
-                                    DropdownMenuItem(text = { Text("Dark") }, onClick = { onThemeChange(2); expanded = false })
-                                }
-                            }
-                    },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                )
-            }
-            Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
-                ListItem(
-                    content = { Text("Monochrome Mode") },
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Rounded.FormatColorReset,
-                            contentDescription = "Color Reset",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                Row(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    GuidePointIcon(Icons.Rounded.Palette, tone = if (monochrome) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.primary, iconSize = 20.dp)
+                    Spacer(Modifier.width(16.dp))
+                    Text("Theme", modifier = Modifier.weight(1f), color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface)
+                    ExposedDropdownMenuBox(
+                        expanded = expanded,
+                        onExpandedChange = { if (!monochrome) expanded = !expanded },
+                        modifier = Modifier.width(130.dp).padding(end = 4.dp)
+                    ) {
+                        OutlinedTextField(
+                            value = when (themeMode) { 1 -> "Light"; 2 -> "Dark"; else -> "System" },
+                            onValueChange = {},
+                            readOnly = true,
+                            enabled = !monochrome,
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                unfocusedContainerColor = Color.Transparent,
+                                focusedContainerColor = Color.Transparent,
+                                disabledContainerColor = Color.Transparent,
+                                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                                focusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                                disabledBorderColor = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                            ),
+                            shape = MaterialTheme.shapes.large,
+                            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = !monochrome),
+                            textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp)
                         )
-                    },
-                    trailingContent = { ExpressiveSwitch(checked = monochrome, onCheckedChange = onMonochromeChange) },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                )
-            }
-            if (Build.VERSION.SDK_INT >= 31) { // System Colors (Android 12+)
-                Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
-                    ListItem(
-                        content = { Text("Use System Colours", color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
-                        leadingContent = { Icon(Icons.Rounded.Brush, null, tint = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface) },
-                        trailingContent = { ExpressiveSwitch(checked = dyn, onCheckedChange = onDyn, enabled = !monochrome) },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                            DropdownMenuItem(text = { Text("System") }, onClick = { onThemeChange(0); expanded = false })
+                            DropdownMenuItem(text = { Text("Light") }, onClick = { onThemeChange(1); expanded = false })
+                            DropdownMenuItem(text = { Text("Dark") }, onClick = { onThemeChange(2); expanded = false })
+                        }
+                    }
                 }
             }
-            Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth()) {
-                ListItem(
-                    content = { Text("Reduced Animations") },
-                    supportingContent = { if (isLowRam) Text("Forced on Low RAM Devices (<4GB)", color = MaterialTheme.colorScheme.primary) },
-                    leadingContent = { Icon(Icons.Rounded.Animation, null) },
-                    trailingContent = { ExpressiveSwitch(checked = reducedAnimations, onCheckedChange = onReducedAnimationsChange, enabled = !isLowRam) },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                )
+            Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth().height(80.dp)) {
+                Row(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    GuidePointIcon(Icons.Rounded.FormatColorReset, tone = MaterialTheme.colorScheme.primary, iconSize = 20.dp)
+                    Spacer(Modifier.width(16.dp))
+                    Text("Monochrome Mode", modifier = Modifier.weight(1f))
+                    ExpressiveSwitch(checked = monochrome, onCheckedChange = onMonochromeChange)
+                }
+            }
+            if (Build.VERSION.SDK_INT >= 31) { // System Colors (Android 12+)
+                Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth().height(80.dp)) {
+                    Row(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                        GuidePointIcon(Icons.Rounded.Brush, tone = if (monochrome) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.primary, iconSize = 20.dp)
+                        Spacer(Modifier.width(16.dp))
+                        Text("Use System Colours", modifier = Modifier.weight(1f), color = if (monochrome) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else MaterialTheme.colorScheme.onSurface)
+                        ExpressiveSwitch(checked = dyn, onCheckedChange = onDyn, enabled = !monochrome)
+                    }
+                }
+            }
+            Card(shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow), modifier = Modifier.fillMaxWidth().height(80.dp)) {
+                Row(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    GuidePointIcon(Icons.Rounded.Animation, tone = MaterialTheme.colorScheme.primary, iconSize = 20.dp)
+                    Spacer(Modifier.width(16.dp))
+                    Text("Reduced Animations", modifier = Modifier.weight(1f))
+                    ExpressiveSwitch(checked = reducedAnimations, onCheckedChange = onReducedAnimationsChange, enabled = !isLowRam)
+                }
             }
             UpdateSettings(monochrome)
         }

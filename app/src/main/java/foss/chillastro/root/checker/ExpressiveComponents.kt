@@ -87,8 +87,8 @@ internal fun GuidePointIcon(
     Surface(
         modifier = Modifier.size(iconSize + 20.dp),
         shape = AppShapes.flower,
-        color = if (monochrome) Color.Black else tone.copy(alpha = 0.14f),
-        contentColor = if (monochrome) Color.White else tone
+        color = if (monochrome) Color.White else tone.copy(alpha = 0.14f),
+        contentColor = if (monochrome) Color.Black else tone
     ) {
         Icon(icon, contentDescription = null, modifier = Modifier.padding(10.dp))
     }
