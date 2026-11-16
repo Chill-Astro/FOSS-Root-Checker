@@ -32,34 +32,6 @@ _- TRUSTED SOURCES -_
 > [!IMPORTANT]
 > This Project is not Affiliated with Google, Magisk, and other Open Source / Closed Source Referenced in this Project. Certain Brands mentioned are for General Information Only.
 
-> [!WARNING]
->UNKNOWN CLONE ALERT!
->
-> - Source : [com.panruyiapps.root.checker](https://galaxystore.samsung.com/detail/com.panruyiapps.root.checker)
->
-> What's Concerning?
->
-> 1. This is Closed Source and **~2X THE FILE SIZE** of **v36.23.2.0**.
-> 2. **3.12MB** IS MORE than **1.54MB**, which means it might have : **TRACKERS**, **UNKNOWN SDKs**, etc.
-> 3. It's on Samsung Galaxy Store, so I can't check this as I don't have a Samsung Phone.
-> 4. `foss.chillastro.root.checker.offline` is Upstream & IzzyonDroid Approved so please use mine for safety! :)
->
-> Any Grievances / Misunderstanding can be Reported.
-
----
-
-## UPDATE :
-
-- The Above Clone HAS ADS & NO ATTRIBUTION.
-- Developer Name, MIT License NONE are there.
-- THIS IS AGAINST MIT LICENSE.
-
-Here's the App on Samsung's Device Lab Thingy :
-
-https://github.com/user-attachments/assets/784b4709-c76c-40f2-a013-fcb601b944d3
-
----
-
 ---
 
 ## Uh, Why are there 2 APKs?
