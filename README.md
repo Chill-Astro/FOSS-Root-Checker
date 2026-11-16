@@ -24,7 +24,6 @@ _- TRUSTED SOURCES -_
 | **Appteka** (Official) | <a href="https://appteka.store/app/951r339865" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Appteka&color=2ECC71&labelColor=000000&style=for-the-badge&logo=android&logoColor=2ECC71" height="40" alt="Appteka"></a> |
 | **IzzyOnDroid** (Offline) | [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="40" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/foss.chillastro.root.checker.offline) |
 | **Uptodown** (Official) | <a href='https://foss-chillastro-root-checker.en.uptodown.com/android' title='Download Root Checker' ><img src='https://stc.utdstc.com/img/mediakit/download-gio-big.png' height="40" alt='Download Root Checker'></a> |
-| **OpenAPK** (Both)| <a href="https://www.openapk.net/root-checker/foss.chillastro.root.checker.offline/"><img src="https://www.openapk.net/images/openapk-badge.png" height="40" alt="OpenAPK.net"></a> |
 
 ---
 
