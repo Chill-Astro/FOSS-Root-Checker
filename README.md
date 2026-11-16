@@ -48,6 +48,18 @@ _- TRUSTED SOURCES -_
 
 ---
 
+## UPDATE :
+
+- The Above Clone HAS ADS & NO ATTRIBUTION.
+- Developer Name, MIT License NONE are there.
+- THIS IS AGAINST MIT LICENSE.
+
+Here's the App on Samsung's Device Lab Thingy :
+
+https://github.com/user-attachments/assets/784b4709-c76c-40f2-a013-fcb601b944d3
+
+---
+
 ---
 
 ## Uh, Why are there 2 APKs?
