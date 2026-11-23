@@ -22,6 +22,7 @@ _- TRUSTED SOURCES -_
 | :--- | :--- |
 | **GitHub** (Both) | <a href="https://github.com/Chill-Astro/FOSS-Root-Checker/releases/latest" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=GitHub&color=FFFFFF&labelColor=000000&style=for-the-badge&logo=github&logoColor=FFFFFF" height="40" alt="GitHub"></a> |
 | **Appteka** (Official) | <a href="https://appteka.store/app/951r339865" target="_blank"><img src="https://img.shields.io/static/v1?label=%20&message=Appteka&color=2ECC71&labelColor=000000&style=for-the-badge&logo=android&logoColor=2ECC71" height="40" alt="Appteka"></a> |
+| **Obtainium** (Both) | <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22foss.chillastro.root.checker%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2FChill-Astro%2FFOSS-Root-Checker%22%2C%22author%22%3A%22Chill-Astro%22%2C%22name%22%3A%22Root%20Checker%22%7D" target="_blank"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" height="50" alt="Get it on Obtainium"></a> |
 | **IzzyOnDroid** (Offline) | [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="40" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/foss.chillastro.root.checker.offline) |
 | **Uptodown** (Official) | <a href='https://foss-chillastro-root-checker.en.uptodown.com/android' title='Download Root Checker' ><img src='https://stc.utdstc.com/img/mediakit/download-gio-big.png' height="40" alt='Download Root Checker'></a> |
 
