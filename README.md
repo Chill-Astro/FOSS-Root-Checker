@@ -86,7 +86,7 @@ v`37`.`24`.`4`.`2` `o`
 - `24` -> Minimum Android Version to Install App
 - `4` -> Major Update
 - `2` -> Minor Update
-- 'o' -> Offline Version Indicator
+- `o` -> Offline Version Indicator
 
 ---
 
